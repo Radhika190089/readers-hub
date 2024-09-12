@@ -5,6 +5,7 @@ import {
   BookOutlined,
   HomeOutlined,
   TeamOutlined,
+  FormOutlined
 } from "@ant-design/icons";
 import { Button, Input, Layout, Menu, Space } from "antd";
 import {
@@ -24,7 +25,7 @@ import { Avatar } from "evergreen-ui";
 const { Header, Content, Sider } = Layout;
 
 const AdminPortal: React.FC = () => {
-  const user = JSON.parse(localStorage.getItem("loggedUser") || "");
+  const user = JSON.parse(localStorage.getItem("loggedUser") || "[]");
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedNavItems, setSelectedNavItems] = useState<string>(
@@ -43,6 +44,9 @@ const AdminPortal: React.FC = () => {
     navigate(menuItems.key);
     setSelectedNavItems(menuItems.key);
   };
+
+
+
 
   return (
     <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
@@ -119,7 +123,7 @@ const AdminPortal: React.FC = () => {
           <Menu.Item
             key="/reader"
             icon={
-              <UserOutlined
+              <FormOutlined
                 style={{
                   color: selectedNavItems === "/reader" ? "#fb3453" : "white",
                   fontSize: "17px",
@@ -153,7 +157,7 @@ const AdminPortal: React.FC = () => {
           <Menu.Item
             key="/profile"
             icon={
-              <UploadOutlined
+              <UserOutlined
                 style={{
                   color: selectedNavItems === "/profile" ? "#fb3453" : "white",
                   fontSize: "20px",
@@ -208,7 +212,7 @@ const AdminPortal: React.FC = () => {
                   Admin
                 </p>
               </div>
-                        
+
             </div>
           </div>
         </Header>

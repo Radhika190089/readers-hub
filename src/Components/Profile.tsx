@@ -51,16 +51,15 @@ const Profile: React.FC = () => {
           <div className="profileValue">9876543210</div>
         </div>
 
-        <div className="avatarContainer">
+        <div className="avatarContainer" style={{marginRight:'50px', marginTop:'1px'}}>
           <Avatar
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
+            src="https://th.bing.com/th/id/OIP.zwopwehds0tzVkU1UCSlEAHaEK?rs=1&pid=ImgDetMain"
             name={"Suresh"}
-            size={250}
+            size={200}
             className="avatar"
           />
         </div>
-
-        <button className="logoutButton" onClick={() => navigate("/Login")}>
+        <button className="logoutButton" onClick={() => navigate("/Login")} style={{marginBottom:'50px', marginRight:'120px'}}>
           Log Out
         </button>
       </div>
