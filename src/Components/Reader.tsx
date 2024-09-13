@@ -1,22 +1,46 @@
 import "./Styles/st.css";
 import React, { useEffect, useState } from "react";
 import type { TableColumnsType } from "antd";
-import { Table } from "antd";
+import { Input, Table } from "antd";
 import { Link } from "react-router-dom";
-import { Transaction } from "./Mana";
+import { PlusOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
+import { ColumnsType } from "antd/es/table";
+
+interface Transaction {
+  transactionId: number;
+  userId: number;
+  bookId: number;
+  date: Date;
+  type: "borrow" | "return";
+}
 
 const Reader: React.FC = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [filteredData, setFilteredData] = useState<Transaction[]>([]);
+  const [data, setData] = useState<Transaction[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const localTransaction = JSON.parse(
-      localStorage.getItem("transactions") || "[]"
-    );
-
-    setTransactions(localTransaction);
+      localStorage.getItem("transactions") || "[]");
+    setData(localTransaction);
   }, []);
 
-  const columns: TableColumnsType<Transaction> = [
+  useEffect(() => {
+    if (searchTerm.trim()) {
+      const filtered = data.filter(
+        (user) =>
+          user.userId.toString().includes(searchTerm) ||
+          user.bookId.toString().includes(searchTerm)
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
+    }
+  }, [searchTerm, data]);
+
+
+
+  const columns: ColumnsType<Transaction> = [
     {
       title: "Transaction Id",
       dataIndex: "transactionId",
@@ -39,7 +63,7 @@ const Reader: React.FC = () => {
       title: "Date",
       dataIndex: "date",
       key: "date",
-      render: (date) => new Date(date).toLocaleDateString(),
+      render: (date: any) => new Date(date).toLocaleDateString(),
     },
     {
       title: "Type",
@@ -127,14 +151,23 @@ const Reader: React.FC = () => {
       >
         <div className="mx-1 mt-2 d-flex justify-content-between">
           <h3>Recent Transaction</h3>
-          <Link to={"/user"} style={{ textDecoration: "none" }}>
-            <h6 style={{ color: "#Fb3453", paddingTop: "10px" }}>View Users</h6>
-          </Link>
+          <div className="d-flex gap-2" >
+            <Input
+              placeholder="Search by Name or Reader ID"
+              prefix={<SearchOutlined />}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ marginBottom: 16, width: 300 }}
+            />
+            <Link to={"/user"} style={{ textDecoration: "none" }}>
+              <h6 style={{ color: "#Fb3453", paddingTop: "10px" }}>View Users</h6>
+            </Link>
+          </div>
         </div>
         <div className="mt-3">
           <Table
             columns={columns}
-            dataSource={transactions}
+            dataSource={filteredData}
             pagination={false}
           />
         </div>

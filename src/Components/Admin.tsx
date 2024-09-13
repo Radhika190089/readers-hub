@@ -232,6 +232,8 @@ const AdminPortal: React.FC = () => {
               boxSizing: "border-box",
             }}
           >
+
+            
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/reader" element={<Reader />} />
