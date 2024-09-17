@@ -23,8 +23,6 @@ export interface Transaction {
   bookId: number;
   date: Date;
   type: "borrow" | "return";
-  dueDate?: Date;
-  fine?: number;
 }
 
 const Mana = () => {
