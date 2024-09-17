@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
           <Carousel autoplay>
             <div>
               <div className="slidebar">
-                <div className='justify-content-spacebetween'>
+                <div className='justify-content-spacebetween rounded-5'>
                   <h1 style={{ fontSize: '75px' }} >Welcome Back!</h1>
                   <h4>Continue exploring the library.</h4>
                 </div>
@@ -92,17 +92,7 @@ const Dashboard: React.FC = () => {
             boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
           }}
         >
-          <h4 className="mx-4 mt-3">Visit & Read</h4>
-          <LineChart
-            width={710}
-            height={270}
-            series={[
-              { data: Visit, label: "Visit", color: "#Fb3453" },
-              { data: Read, label: "Read" },
-            ]}
-            xAxis={[{ scaleType: "point", data: xLabels }]}
-            yAxis={[{ scaleType: "linear" }]}
-          />
+
         </div>
       </div>
 
@@ -113,8 +103,8 @@ const Dashboard: React.FC = () => {
           borderRadius: "20px",
         }}
       >
-        <div className="mx-3 d-flex justify-content-between fs-6">
-          <h3>Book Categories</h3>
+        <div className="mx-3 d-flex justify-content-between fs-6 ">
+            <h2>Book Categories</h2>
           <Link
             to={"/books"}
             style={{
@@ -150,4 +140,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Dashboard;

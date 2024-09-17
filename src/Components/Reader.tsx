@@ -1,7 +1,7 @@
 import "./Styles/st.css";
 import React, { useEffect, useState } from "react";
 import type { TableColumnsType } from "antd";
-import { Input, Table } from "antd";
+import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { PlusOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { ColumnsType } from "antd/es/table";
@@ -152,13 +152,6 @@ const Reader: React.FC = () => {
         <div className="mx-1 mt-2 d-flex justify-content-between">
           <h3>Recent Transaction</h3>
           <div className="d-flex gap-2" >
-            <Input
-              placeholder="Search by Name or Reader ID"
-              prefix={<SearchOutlined />}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ marginBottom: 16, width: 300 }}
-            />
             <Link to={"/user"} style={{ textDecoration: "none" }}>
               <h6 style={{ color: "#Fb3453", paddingTop: "10px" }}>View Users</h6>
             </Link>
