@@ -57,17 +57,17 @@ const Dashboard: React.FC = () => {
                   {/* <img src="\Images\Booktree.png" alt="Welcome" className="bottom" height={'320px'} /> */}
                 </div>
                 <div>
-                  <span className="bottom-left" onClick={() => navigate("/books")}><h6>Add New Books →</h6></span>
+                  <span className="bottom-left" onClick={() => navigate("/books")} style={{cursor:'pointer'}}><h6>Add New Books →</h6></span>
                 </div>
               </div>
             </div>
             <div>
               <div className="slidebar">
                 <div className='justify-content-spacebetween'>
-                  <h1 style={{ fontSize: '75px' }}>Manage Users</h1>
-                  <h4>Add or update user information easily.</h4>
+                  <h1 style={{ fontSize: '75px' }}>Manage Readers</h1>
+                  <h4>Add or update Readers information easily.</h4>
                 </div>
-                <span className="bottom-left" onClick={() => navigate("/users")}><h6>Go to User Management →</h6></span>
+                <span className="bottom-left" onClick={() => navigate("/users")} style={{cursor:'pointer'}}><h6>Manage Readers →</h6></span>
               </div>
             </div>
             <div>
@@ -79,7 +79,7 @@ const Dashboard: React.FC = () => {
                 <div>
                   {/* <img src="\Images\profile.png" alt="Admin Profile" className="bottom" height={'180px'} /> */}
                 </div>
-                <span className="bottom-left" onClick={() => navigate("/profile")}><h6>View Profile →</h6></span>
+                <span className="bottom-left" onClick={() => navigate("/profile")} style={{cursor:'pointer'}}><h6>View Profile →</h6></span>
               </div>
             </div>
           </Carousel>
@@ -97,14 +97,14 @@ const Dashboard: React.FC = () => {
       </div>
 
       <div
-        className="mt-4 pt-5 pb-2 px-1"
+        className="mt-4 pt-4 pb-2 px-3"
         style={{
           boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
           borderRadius: "20px",
         }}
       >
         <div className="mx-3 d-flex justify-content-between fs-6 ">
-            <h2>Book Categories</h2>
+          <h2 style={{fontWeight:'700'}}>Top Choices</h2>
           <Link
             to={"/books"}
             style={{

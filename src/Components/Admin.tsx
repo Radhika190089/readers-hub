@@ -68,7 +68,7 @@ const AdminPortal: React.FC = () => {
             style={{
               color: "white",
               fontFamily: "Racing Sans One",
-              fontSize: "35px",
+              fontSize: "30px",
               margin: "0px 20px",
             }}
           >
@@ -233,7 +233,7 @@ const AdminPortal: React.FC = () => {
             }}
           >
 
-            
+
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/reader" element={<Reader />} />

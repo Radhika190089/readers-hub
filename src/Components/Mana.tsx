@@ -244,9 +244,9 @@ const Mana = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "20px",
+                backgroundColor: '#fb3453'
               }}
               type="primary"
-              danger
               onClick={showAddModal}
             >
               Add Book
@@ -258,9 +258,9 @@ const Mana = () => {
                 style={{
                   boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                   borderRadius: "20px",
+                  backgroundColor: '#fb3453'
                 }}
                 type="primary"
-                danger
                 onClick={showBorrowModal}
               >
                 Borrow Book
@@ -271,9 +271,9 @@ const Mana = () => {
                 style={{
                   boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                   borderRadius: "20px",
+                  backgroundColor: '#fb3453'
                 }}
                 type="primary"
-                danger
                 onClick={showReturnModal}
               >
                 Return Book
