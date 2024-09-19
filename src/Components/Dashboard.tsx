@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
                   {/* <img src="\Images\Booktree.png" alt="Welcome" className="bottom" height={'320px'} /> */}
                 </div>
                 <div>
-                  <span className="bottom-left" onClick={() => navigate("/books")} style={{cursor:'pointer'}}><h6>Add New Books →</h6></span>
+                  <span className="bottom-left" onClick={() => navigate("/books")} style={{ cursor: 'pointer' }}><h6>Add New Books →</h6></span>
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@ const Dashboard: React.FC = () => {
                   <h1 style={{ fontSize: '75px' }}>Manage Readers</h1>
                   <h4>Add or update Readers information easily.</h4>
                 </div>
-                <span className="bottom-left" onClick={() => navigate("/users")} style={{cursor:'pointer'}}><h6>Manage Readers →</h6></span>
+                <span className="bottom-left" onClick={() => navigate("/users")} style={{ cursor: 'pointer' }}><h6>Manage Readers →</h6></span>
               </div>
             </div>
             <div>
@@ -79,7 +79,7 @@ const Dashboard: React.FC = () => {
                 <div>
                   {/* <img src="\Images\profile.png" alt="Admin Profile" className="bottom" height={'180px'} /> */}
                 </div>
-                <span className="bottom-left" onClick={() => navigate("/profile")} style={{cursor:'pointer'}}><h6>View Profile →</h6></span>
+                <span className="bottom-left" onClick={() => navigate("/profile")} style={{ cursor: 'pointer' }}><h6>View Profile →</h6></span>
               </div>
             </div>
           </Carousel>
@@ -87,12 +87,39 @@ const Dashboard: React.FC = () => {
         <div
           style={{
             width: "49%",
-            backgroundColor: "",
+            padding: '20px',
             borderRadius: "10px",
             boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
           }}
         >
-
+          <h4 className="px-2"> Recent Books</h4>
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" style={{ color: '#fb3453' }}>Book Id</th>
+                <th scope="col" style={{ color: '#fb3453' }}>Title</th>
+                <th scope="col" style={{ color: '#fb3453' }}>Author</th>
+                <th scope="col" style={{ color: '#fb3453' }}>Available</th>
+                <th scope="col" style={{ color: '#fb3453' }}>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="fw-medium">12432</td>
+                <td>Aot</td>
+                <td>Eren</td>
+                <td>9</td>
+                <td>1900</td>
+              </tr>
+              <tr>
+                <td className="fw-medium">22432</td>
+                <td>Naruto</td>
+                <td>Kisimoto</td>
+                <td>7</td>
+                <td>2500</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -104,7 +131,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         <div className="mx-3 d-flex justify-content-between fs-6 ">
-          <h2 style={{fontWeight:'700'}}>Top Choices</h2>
+          <h2 style={{ fontWeight: '600' }}>Top Choices</h2>
           <Link
             to={"/books"}
             style={{

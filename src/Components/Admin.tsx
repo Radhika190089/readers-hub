@@ -5,9 +5,11 @@ import {
   BookOutlined,
   HomeOutlined,
   TeamOutlined,
-  FormOutlined
+  FormOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined
 } from "@ant-design/icons";
-import { Button, Input, Layout, Menu, Space } from "antd";
+import { Button, Layout, Menu, Space } from "antd";
 import {
   useNavigate,
   useLocation,
@@ -28,6 +30,7 @@ const AdminPortal: React.FC = () => {
   const user = JSON.parse(localStorage.getItem("loggedUser") || "[]");
   const navigate = useNavigate();
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
   const [selectedNavItems, setSelectedNavItems] = useState<string>(
     location.pathname
   );
@@ -45,8 +48,9 @@ const AdminPortal: React.FC = () => {
     setSelectedNavItems(menuItems.key);
   };
 
-
-
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   return (
     <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
@@ -54,7 +58,8 @@ const AdminPortal: React.FC = () => {
         width={350}
         style={{ backgroundColor: "#fb3453" }}
         breakpoint="lg"
-        collapsedWidth="0"
+        collapsed={collapsed}
+        collapsedWidth="95"
       >
         <div
           style={{
@@ -69,13 +74,14 @@ const AdminPortal: React.FC = () => {
               color: "white",
               fontFamily: "Racing Sans One",
               fontSize: "30px",
-              margin: "0px 20px",
+              margin: "0px 15px",
             }}
           >
-            LIBRARY MANAGEMENT
-          </h5>
-        </div>
+            {collapsed ? "LM" : "LIBRARY MANAGEMENT"}
 
+          </h5>
+
+        </div>
         <Menu
           mode="inline"
           selectedKeys={[selectedNavItems]}
@@ -185,8 +191,12 @@ const AdminPortal: React.FC = () => {
             height: "74px",
           }}
         >
+          <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#fb3453', color: 'white', height: '40px', border: 'none', margin: '10px', width: '60px' }}>
+            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          </Button>
           <div className="d-flex align-items-center ms-auto">
             <div className="d-flex align-items-center ms-auto">
+
               <div className="mt-4">
                 <Avatar
                   onClick={() => navigate("/profile")}

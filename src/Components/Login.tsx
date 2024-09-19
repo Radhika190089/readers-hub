@@ -63,6 +63,7 @@ const Login = () => {
                 <Input
                   placeholder="Enter your Email"
                   className="form-control"
+                  style={{ color: "#000", opacity: 0.5 }}
                 />
               </Form.Item>
 
@@ -75,7 +76,8 @@ const Login = () => {
               >
                 <Input.Password
                   placeholder="Enter your Password"
-                  className="form-control"
+                  style={{ color: "#000", opacity: 0.9 }}
+                // className="form-control"
                 />
               </Form.Item>
 

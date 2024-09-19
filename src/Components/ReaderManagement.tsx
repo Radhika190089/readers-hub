@@ -136,10 +136,10 @@ const User: React.FC = () => {
           className="mx-2 p-4"
           style={{
             boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-            borderRadius: "20px",
+            borderRadius: "10px",backgroundColor:'#fb3453'
           }}
           type="primary"
-          danger
+
           onClick={showUserModal}
         >
           Add Reader
