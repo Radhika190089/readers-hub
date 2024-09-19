@@ -16,6 +16,7 @@
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "antd": "^5.20.6",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "evergreen-ui": "^7.1.9",
     "font-awesome": "^4.7.0",
