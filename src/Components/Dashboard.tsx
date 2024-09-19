@@ -131,7 +131,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         <div className="mx-3 d-flex justify-content-between fs-6 ">
-          <h2 style={{ fontWeight: '600' }}>Top Choices</h2>
+          <h2 style={{ fontWeight: '700' }}>Top Choices</h2>
           <Link
             to={"/books"}
             style={{
@@ -145,22 +145,25 @@ const Dashboard: React.FC = () => {
           </Link>
         </div>
         <div className="d-flex flex-direction-column overflow-auto">
-          {randomBooks.map((book) => (
-            <div
-              key={book.id}
-              style={{ margin: "20px", lineHeight: 0.5, cursor: "pointer" }}
-              className="card1"
-            >
-              <img
-                src={book.bookPic}
-                alt={book.title}
-                height={"250px"}
-              />
-              <h6 className="mt-2">{book.title}</h6>
-              <p style={{ color: "rgb(125,125,125)" }}>{book.author}</p>
-              <h6 style={{ color: "#Fb3453" }}>{book.category}</h6>
-            </div>
-          ))}
+          {randomBooks.map((book) => {
+            console.log("book", book)
+            return (
+              <div
+                key={book.id}
+                style={{ margin: "20px", lineHeight: 0.5, cursor: "pointer" }}
+                className="card1"
+              >
+                <img
+                  src={book.bookPic}
+                  alt={book.title}
+                  height={"250px"}
+                />
+                <h6 className="mt-2">{book.title}</h6>
+                <p style={{ color: "rgb(125,125,125)" }}>{book.author}</p>
+                <h6 style={{ color: "#Fb3453" }}>{book.category}</h6>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

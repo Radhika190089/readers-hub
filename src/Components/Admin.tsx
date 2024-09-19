@@ -23,6 +23,7 @@ import Mana from "./Mana";
 import User from "./ReaderManagement";
 import Profile from "./Profile";
 import { Avatar } from "evergreen-ui";
+import Book from "./Book";
 
 const { Header, Content, Sider } = Layout;
 
@@ -161,6 +162,24 @@ const AdminPortal: React.FC = () => {
             Reader Management
           </Menu.Item>
           <Menu.Item
+            key="/book"
+            icon={
+              <BookOutlined
+                style={{
+                  color: selectedNavItems === "/book" ? "#fb3453" : "white",
+                  fontSize: "20px",
+                }}
+              />
+            }
+            style={{
+              color: selectedNavItems === "/book" ? "#fb3453" : "white",
+              position: "relative",
+
+            }} // Adjusted to the same position
+          >
+            Book
+          </Menu.Item>
+          <Menu.Item
             key="/profile"
             icon={
               <UserOutlined
@@ -250,6 +269,7 @@ const AdminPortal: React.FC = () => {
               <Route path="/books" element={<Mana />} />
               <Route path="/user" element={<User />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/book" element={<Book />} />
             </Routes>
           </div>
         </Content>
