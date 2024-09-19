@@ -11,7 +11,7 @@ export interface UserType {
   phoneNo: number;
 }
 
-const User: React.FC = () => {
+const ReaderManagement: React.FC = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState<UserType[]>([]);
   const [filteredData, setFilteredData] = useState<UserType[]>([]);
@@ -106,16 +106,16 @@ const User: React.FC = () => {
       render: (_: any, record: UserType) => (
         <Button
           icon={<EyeOutlined />}
-          className="mx-2 p-4"
+          className="mx-2 px-3"
           style={{
-            boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-            borderRadius: "20px",
+            boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
+            borderRadius: "10px",backgroundColor:'#fb3453',padding:'20px 0px'
           }}
           type="primary"
-          danger
+          
           onClick={() => handleViewDetails(record)}
         >
-          Edit Details
+          Edit
         </Button>
       ),
     },
@@ -136,7 +136,7 @@ const User: React.FC = () => {
           className="mx-2 p-4"
           style={{
             boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-            borderRadius: "10px",backgroundColor:'#fb3453'
+            borderRadius: "10px", backgroundColor: '#fb3453'
           }}
           type="primary"
 
@@ -267,4 +267,4 @@ const User: React.FC = () => {
   );
 };
 
-export default User;
+export default ReaderManagement;

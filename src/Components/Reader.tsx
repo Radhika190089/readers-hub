@@ -152,8 +152,8 @@ const Reader: React.FC = () => {
         <div className="mx-1 mt-2 d-flex justify-content-between">
           <h3>Recent Transaction</h3>
           <div className="d-flex gap-2" >
-            <Link to={"/user"} style={{ textDecoration: "none" }}>
-              <h6 style={{ color: "#Fb3453", paddingTop: "10px" }}>View Users</h6>
+            <Link to={"/readerManagement"} style={{ textDecoration: "none" }}>
+              <h6 style={{ color: "#Fb3453", paddingTop: "10px" }}>View Readers</h6>
             </Link>
           </div>
         </div>

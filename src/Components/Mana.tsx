@@ -241,7 +241,7 @@ const Mana = () => {
               className="mx-2 p-4"
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "20px",
+                borderRadius: "15px",
                 backgroundColor: '#fb3453'
               }}
               type="primary"
@@ -255,7 +255,7 @@ const Mana = () => {
                 className="mx-2 p-4"
                 style={{
                   boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                  borderRadius: "20px",
+                  borderRadius: "15px",
                   backgroundColor: '#fb3453'
                 }}
                 type="primary"
@@ -268,7 +268,7 @@ const Mana = () => {
                 className="mx-2 p-4"
                 style={{
                   boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                  borderRadius: "20px",
+                  borderRadius: "15px",
                   backgroundColor: '#fb3453'
                 }}
                 type="primary"

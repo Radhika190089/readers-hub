@@ -20,10 +20,10 @@ import {
 import Dashboard from "./Dashboard";
 import Reader from "./Reader";
 import Mana from "./Mana";
-import User from "./ReaderManagement";
 import Profile from "./Profile";
 import { Avatar } from "evergreen-ui";
 import Book from "./Book";
+import ReaderManagement from "./ReaderManagement";
 
 const { Header, Content, Sider } = Layout;
 
@@ -145,17 +145,17 @@ const AdminPortal: React.FC = () => {
             Transactions
           </Menu.Item>
           <Menu.Item
-            key="/user"
+            key="/readerManagement"
             icon={
               <TeamOutlined
                 style={{
-                  color: selectedNavItems === "/user" ? "#fb3453" : "white",
+                  color: selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
                   fontSize: "17px",
                 }}
               />
             }
             style={{
-              color: selectedNavItems === "/user" ? "#fb3453" : "white",
+              color: selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
               marginTop: "10px",
             }}
           >
@@ -261,13 +261,11 @@ const AdminPortal: React.FC = () => {
               boxSizing: "border-box",
             }}
           >
-
-
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/reader" element={<Reader />} />
               <Route path="/books" element={<Mana />} />
-              <Route path="/user" element={<User />} />
+              <Route path="/readerManagement" element={<ReaderManagement />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/book" element={<Book />} />
             </Routes>

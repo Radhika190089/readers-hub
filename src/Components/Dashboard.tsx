@@ -67,7 +67,7 @@ const Dashboard: React.FC = () => {
                   <h1 style={{ fontSize: '75px' }}>Manage Readers</h1>
                   <h4>Add or update Readers information easily.</h4>
                 </div>
-                <span className="bottom-left" onClick={() => navigate("/users")} style={{ cursor: 'pointer' }}><h6>Manage Readers →</h6></span>
+                <span className="bottom-left" onClick={() => navigate("/readerManagement")} style={{ cursor: 'pointer' }}><h6>Manage Readers →</h6></span>
               </div>
             </div>
             <div>
