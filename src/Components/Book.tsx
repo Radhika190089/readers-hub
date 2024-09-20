@@ -65,7 +65,7 @@ const User: React.FC = () => {
         localStorage.setItem("books", JSON.stringify(updatedData));
         setSelectedBook(null);
         setViewDetailsModal(false);
-        form.resetFields(); 
+        form.resetFields();
       }
     });
   };
@@ -79,7 +79,7 @@ const User: React.FC = () => {
     setViewDetailsModal(false);
   };
 
- 
+
   const columns = [
     {
       title: "BookPic",
@@ -99,15 +99,11 @@ const User: React.FC = () => {
       dataIndex: "BookDetails",
       render: (_: any, record: Booktype) => (
         <div className="d-flex gap-3">
-          <Button
-            type="primary"
-            style={{ backgroundColor: '#fb3453', padding: '20px 15px' }}
-            onClick={() => handleViewDetails(record)}
-          >
-            Edit Details
+          <Button type="primary" onClick={() => handleViewDetails(record)}>
+            <EditOutlined />
           </Button>
-          <Button key="delete" type="primary" style={{ backgroundColor: '#fb3453', padding: '20px 15px' }} onClick={handleDeleteBook}>
-            Delete
+          <Button type="primary" danger onClick={() => handleDeleteBook(record)}>
+            <DeleteOutlined />
           </Button>
         </div>
       ),
@@ -116,20 +112,20 @@ const User: React.FC = () => {
 
   return (
     <div className="mt-2">
-      <div className="mb-3 d-flex">
-        <Input className="search"
-          placeholder="Search Book"
-          prefix={<SearchOutlined style={{ paddingRight: '5px' }} />}
+      <div className="mb-3 d-flex justify-content-between">
+        <Input
+          placeholder="Search by Booktitle or BookID"
+          prefix={<SearchOutlined />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: 300 }}
+          style={{ marginBottom: 16, width: 300 }}
         />
       </div>
       <Table
         bordered
         dataSource={filteredData}
         columns={columns}
-        rowKey="id" 
+        rowKey="id"
         pagination={{ pageSize: 10 }}
       />
       <Modal
@@ -137,10 +133,10 @@ const User: React.FC = () => {
         open={viewDetailsModal}
         onCancel={() => {
           setViewDetailsModal(false);
-          form.resetFields(); 
+          form.resetFields();
         }}
         footer={[
-          <Button key="save" style={{ backgroundColor: '#fb3453', color: 'white', border: 'none' }} onClick={handleSaveChanges}>
+          <Button key="save" type="primary" onClick={handleSaveChanges}>
             Save Changes
           </Button>,
         ]}
