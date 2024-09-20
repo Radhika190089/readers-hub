@@ -19,7 +19,6 @@ const Profile: React.FC = () => {
       <div className="profileCard">
         <div className="profileDetails">
           <h1 className="profileTitle">PROFILE</h1>
-
           <div className="profileLabel">
             <FaUser className="profileLabelIcon" />
             <span>Full Name</span>
@@ -51,7 +50,7 @@ const Profile: React.FC = () => {
           <div className="profileValue">9876543210</div>
         </div>
 
-        <div className="avatarContainer" style={{marginRight:'50px', marginTop:'1px'}}>
+        <div className="avatarContainer" style={{ marginRight: '50px', marginTop: '1px' }}>
           <Avatar
             src="https://i.pinimg.com/474x/33/b7/45/33b7457105d6c4c0e108ae368c2f37ff.jpg"
             name={"Suresh"}
@@ -59,7 +58,7 @@ const Profile: React.FC = () => {
             className="avatar"
           />
         </div>
-        <button className="logoutButton" onClick={() => navigate("/Login")} style={{marginBottom:'50px', marginRight:'120px'}}>
+        <button className="logoutButton" onClick={() => navigate("/Login")} style={{ marginBottom: '50px', marginRight: '120px' }}>
           Log Out
         </button>
       </div>
