@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { PlusOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, Modal, Select, Table } from "antd";
+import { SearchOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Modal, Table } from "antd";
 
 export interface Booktype {
-  author: string
+  author: string;
   title: string;
   id: number;
   category: string;
   bookPic: string;
-  price: number
+  price: number;
 }
 
 const User: React.FC = () => {
@@ -19,17 +19,20 @@ const User: React.FC = () => {
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Booktype | null>(null);
 
+
   useEffect(() => {
-    const localUsers = JSON.parse(localStorage.getItem("books") || "[]");
-    setData(localUsers);
-    setFilteredData(localUsers);
+    const localBooks = JSON.parse(localStorage.getItem("books") || "[]");
+    setData(localBooks);
+    setFilteredData(localBooks);
   }, []);
+
 
   useEffect(() => {
     if (searchTerm) {
       const filtered = data.filter(
         (book) =>
           book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           book.id.toString().includes(searchTerm)
       );
       setFilteredData(filtered);
@@ -38,14 +41,19 @@ const User: React.FC = () => {
     }
   }, [searchTerm, data]);
 
-  const handleEditBook = (user: Omit<Booktype, "id">) => {
-  };
 
   const handleViewDetails = (record: Booktype) => {
     setSelectedBook(record);
-    form.setFieldsValue(record);
+    form.setFieldsValue({
+      author: record.author,
+      title: record.title,
+      category: record.category,
+      bookPic: record.bookPic,
+      price: record.price,
+    });
     setViewDetailsModal(true);
   };
+
 
   const handleSaveChanges = () => {
     form.validateFields().then((values) => {
@@ -57,33 +65,28 @@ const User: React.FC = () => {
         localStorage.setItem("books", JSON.stringify(updatedData));
         setSelectedBook(null);
         setViewDetailsModal(false);
-        form.resetFields();
+        form.resetFields(); 
       }
     });
   };
 
-  const handleDeleteBook = () => {
-    if (selectedBook) {
-      const updatedData = data.filter(
-        (item) => item.id !== selectedBook.id
-      );
-      setData(updatedData);
-      localStorage.setItem("books", JSON.stringify(updatedData));
-      setSelectedBook(null);
-      setViewDetailsModal(false);
-    }
+
+  const handleDeleteBook = (record: Booktype) => {
+    const updatedData = data.filter((item) => item.id !== record.id);
+    setData(updatedData);
+    localStorage.setItem("books", JSON.stringify(updatedData));
+    setSelectedBook(null);
+    setViewDetailsModal(false);
   };
 
+ 
   const columns = [
     {
-      title: "Book Pic", dataIndex: "bookPic", width: "10%",
+      title: "BookPic",
+      dataIndex: "bookPic",
+      width: "10%",
       render: (_: any, record: Booktype) => (
-
-        <img
-          src={record.bookPic}
-          alt={record.title}
-          height={"250px"}
-        />
+        <img src={record.bookPic} alt={record.title} height={"250px"} />
       ),
     },
     { title: "BookID", dataIndex: "id", width: "8%" },
@@ -92,27 +95,17 @@ const User: React.FC = () => {
     { title: "Category", dataIndex: "category", width: "10%" },
     { title: "Price", dataIndex: "price", width: "10%" },
     {
-      title: "View Details",
-      dataIndex: "viewDetails",
+      title: "Book details",
+      dataIndex: "BookDetails",
       render: (_: any, record: Booktype) => (
         <div className="d-flex gap-3">
-
-          <Button
-
-
-
-
-            type="primary"
-            danger
-            onClick={() => handleViewDetails(record)}
-          >
-            Edit Details
+          <Button type="primary" onClick={() => handleViewDetails(record)}>
+            <EditOutlined />
           </Button>
-          <Button key="delete" type="primary" danger onClick={handleDeleteBook}>
-            Delete
+          <Button type="primary" danger onClick={() => handleDeleteBook(record)}>
+            <DeleteOutlined />
           </Button>
         </div>
-
       ),
     },
   ];
@@ -121,7 +114,7 @@ const User: React.FC = () => {
     <div className="mt-2">
       <div className="mb-3 d-flex justify-content-between">
         <Input
-          placeholder="Search by Name or Reader ID"
+          placeholder="Search by Booktitle or BookID"
           prefix={<SearchOutlined />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -132,22 +125,23 @@ const User: React.FC = () => {
         bordered
         dataSource={filteredData}
         columns={columns}
-        rowKey="BookId"
-        pagination={{ pageSize: 13 }}
+        rowKey="id" 
+        pagination={{ pageSize: 10 }}
       />
       <Modal
-        title="User Details"
+        title="Book Details"
         open={viewDetailsModal}
-        onCancel={() => setViewDetailsModal(false)}
+        onCancel={() => {
+          setViewDetailsModal(false);
+          form.resetFields(); 
+        }}
         footer={[
           <Button key="save" type="primary" onClick={handleSaveChanges}>
             Save Changes
           </Button>,
-
         ]}
-
       >
-        <Form layout="vertical" onFinish={handleEditBook}>
+        <Form layout="vertical" form={form}>
           <Form.Item
             name="title"
             label="Book Title"
@@ -165,18 +159,14 @@ const User: React.FC = () => {
           <Form.Item
             name="category"
             label="Category"
-            rules={[
-              { required: true, message: "Please input the category!" },
-            ]}
+            rules={[{ required: true, message: "Please input the category!" }]}
           >
             <Input autoComplete="off" />
           </Form.Item>
           <Form.Item
-            name="book-pic"
+            name="bookPic"
             label="Book Cover Image URL"
-            rules={[
-              { required: true, message: "Please input the image URL!" },
-            ]}
+            rules={[{ required: true, message: "Please input the image URL!" }]}
           >
             <Input type="string" autoComplete="off" />
           </Form.Item>
