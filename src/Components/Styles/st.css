@@ -256,3 +256,11 @@ body {
 .logoutButton:hover {
     background-color: #d12f45;
 }
+
+.search.ant-input-outlined:hover {
+    border: 1px solid #fb3453;
+}
+
+.search.ant-input-outlined{
+    border: 1px solid #fb3453;
+}

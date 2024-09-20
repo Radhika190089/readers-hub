@@ -109,10 +109,10 @@ const ReaderManagement: React.FC = () => {
           className="mx-2 px-3"
           style={{
             boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-            borderRadius: "10px",backgroundColor:'#fb3453',padding:'20px 0px'
+            borderRadius: "10px", backgroundColor: '#fb3453', padding: '20px 0px'
           }}
           type="primary"
-          
+
           onClick={() => handleViewDetails(record)}
         >
           Edit
@@ -124,18 +124,18 @@ const ReaderManagement: React.FC = () => {
   return (
     <div className="mt-2">
       <div className="mb-3 d-flex justify-content-between">
-        <Input
+        <Input className="search"
           placeholder="Search by Name or Reader ID"
-          prefix={<SearchOutlined />}
+          prefix={<SearchOutlined style={{ paddingRight: '5px' }} />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ marginBottom: 16, width: 300 }}
+          style={{ width: 300, height: 30, marginTop: '20px' }}
         />
         <Button
           icon={<PlusOutlined />}
-          className="mx-2 p-4"
+          className="mx-1 p-4"
           style={{
-            boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+            boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
             borderRadius: "10px", backgroundColor: '#fb3453'
           }}
           type="primary"

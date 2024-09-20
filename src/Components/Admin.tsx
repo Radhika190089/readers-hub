@@ -7,7 +7,8 @@ import {
   TeamOutlined,
   FormOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  FileTextOutlined
 } from "@ant-design/icons";
 import { Button, Layout, Menu, Space } from "antd";
 import {
@@ -79,9 +80,7 @@ const AdminPortal: React.FC = () => {
             }}
           >
             {collapsed ? "LM" : "LIBRARY MANAGEMENT"}
-
           </h5>
-
         </div>
         <Menu
           mode="inline"
@@ -109,7 +108,24 @@ const AdminPortal: React.FC = () => {
           >
             Dashboard
           </Menu.Item>
+          <Menu.Item
+            key="/book"
+            icon={
+              <FileTextOutlined
+                style={{
+                  color: selectedNavItems === "/book" ? "#fb3453" : "white",
+                  fontSize: "17px",
+                }}
+              />
+            }
+            style={{
+              color: selectedNavItems === "/book" ? "#fb3453" : "white",
+              position: "relative",
 
+            }}
+          >
+            Book Details
+          </Menu.Item>
           <Menu.Item
             key="/books"
             icon={
@@ -127,6 +143,7 @@ const AdminPortal: React.FC = () => {
           >
             Books Management
           </Menu.Item>
+
           <Menu.Item
             key="/reader"
             icon={
@@ -162,24 +179,6 @@ const AdminPortal: React.FC = () => {
             Reader Management
           </Menu.Item>
           <Menu.Item
-            key="/book"
-            icon={
-              <BookOutlined
-                style={{
-                  color: selectedNavItems === "/book" ? "#fb3453" : "white",
-                  fontSize: "20px",
-                }}
-              />
-            }
-            style={{
-              color: selectedNavItems === "/book" ? "#fb3453" : "white",
-              position: "relative",
-
-            }} // Adjusted to the same position
-          >
-            Book
-          </Menu.Item>
-          <Menu.Item
             key="/profile"
             icon={
               <UserOutlined
@@ -192,7 +191,7 @@ const AdminPortal: React.FC = () => {
             style={{
               color: selectedNavItems === "/profile" ? "#fb3453" : "white",
               position: "relative",
-              top: 560,
+              top: 500,
             }} // Adjusted to the same position
           >
             Profile
