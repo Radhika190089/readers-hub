@@ -35,9 +35,6 @@ const Mana = () => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
-  const [bookIdInput, setBookIdInput] = useState<number | null>(null);
-  const [userIdInput, setUserIdInput] = useState<number | null>(null);
-
   const [addBookForm] = Form.useForm();
   const [borrowBookForm] = Form.useForm();
   const [returnBookForm] = Form.useForm();
@@ -75,32 +72,10 @@ const Mana = () => {
   const notifyAdmin = (userId: number, fine: number) => {
     const user = users.find((x) => x.userId === userId);
     notification.warning({
-      message: "There is a Over due Book.",
-      description: `${user?.name} has a overdue fine of ₹${fine}`,
+      message: "There is an overdue book.",
+      description: `${user?.name} has an overdue fine of ₹${fine}`,
     });
   };
-
-  useEffect(() => {
-    if (bookIdInput !== null) {
-      const book = books.find((b) => b.id === bookIdInput);
-      if (book) {
-        setSelectedBookId(book.id.toString());
-        borrowBookForm.setFieldsValue({ bookId: book.id });
-        returnBookForm.setFieldsValue({ bookId: book.id });
-      }
-    }
-  }, [bookIdInput, books, borrowBookForm, returnBookForm]);
-
-  useEffect(() => {
-    if (userIdInput !== null) {
-      const user = users.find((u) => u.userId === userIdInput);
-      if (user) {
-        setSelectedUserId(user.userId.toString());
-        borrowBookForm.setFieldsValue({ userId: user.userId });
-        returnBookForm.setFieldsValue({ userId: user.userId });
-      }
-    }
-  }, [userIdInput, users, borrowBookForm, returnBookForm]);
 
   const showAddModal = () => {
     setViewAddModal(true);
@@ -130,37 +105,35 @@ const Mana = () => {
       const bookID = Number(selectedBookId);
       const userID = Number(selectedUserId);
 
-      if (!isNaN(bookID) && !isNaN(userID)) {
-        const bookIndex = books.findIndex((b) => b.id === bookID);
+      const bookIndex = books.findIndex((b) => b.id === bookID);
 
-        if (bookIndex !== -1 && books[bookIndex].bookCount > 0) {
-          const updatedBooks = [...books];
-          updatedBooks[bookIndex].bookCount -= 1;
-          setBooks(updatedBooks);
-          localStorage.setItem("books", JSON.stringify(updatedBooks));
-          const newTransaction: Transaction = {
-            transactionId: transactions.length + 1,
-            bookId: bookID,
-            userId: userID,
-            type: "borrow",
-            date: new Date(),
-          };
-          const updatedTransactions = [...transactions, newTransaction];
-          localStorage.setItem(
-            "transactions",
-            JSON.stringify(updatedTransactions)
-          );
-          setTransactions(updatedTransactions);
-          setViewBorrowModal(false);
-          borrowBookForm.resetFields();
+      if (bookIndex !== -1 && books[bookIndex].bookCount > 0) {
+        const updatedBooks = [...books];
+        updatedBooks[bookIndex].bookCount -= 1;
+        setBooks(updatedBooks);
+        localStorage.setItem("books", JSON.stringify(updatedBooks));
+        const newTransaction: Transaction = {
+          transactionId: transactions.length + 1,
+          bookId: bookID,
+          userId: userID,
+          type: "borrow",
+          date: new Date(),
+        };
+        const updatedTransactions = [...transactions, newTransaction];
+        localStorage.setItem(
+          "transactions",
+          JSON.stringify(updatedTransactions)
+        );
+        setTransactions(updatedTransactions);
+        setViewBorrowModal(false);
+        borrowBookForm.resetFields();
 
-          alert("Book Borrowed Successfully.");
-        } else {
-          console.error("Book not found or out of stock");
-        }
+        alert("Book Borrowed Successfully.");
       } else {
-        alert("Invalid UserId or BookId.");
+        console.error("Book not found or out of stock");
       }
+    } else {
+      alert("Please select a User and Book.");
     }
   };
 
@@ -169,48 +142,46 @@ const Mana = () => {
       const bookID = Number(selectedBookId);
       const userID = Number(selectedUserId);
 
-      if (!isNaN(bookID) && !isNaN(userID)) {
-        const borrewedBook = transactions.find((transaction) => {
-          return (
-            transaction.bookId === bookID &&
-            transaction.userId === userID &&
-            transaction.type === "borrow"
+      const borrowedBook = transactions.find((transaction) => {
+        return (
+          transaction.bookId === bookID &&
+          transaction.userId === userID &&
+          transaction.type === "borrow"
+        );
+      });
+
+      if (borrowedBook) {
+        const bookIndex = books.findIndex((b) => b.id === bookID);
+
+        if (bookIndex !== -1) {
+          const updatedBooks = [...books];
+          updatedBooks[bookIndex].bookCount += 1;
+          setBooks(updatedBooks);
+          localStorage.setItem("books", JSON.stringify(updatedBooks));
+          const newTransaction: Transaction = {
+            transactionId: transactions.length + 1,
+            bookId: bookID,
+            userId: userID,
+            type: "return",
+            date: new Date(),
+          };
+
+          const updatedTransactions = [...transactions, newTransaction];
+          localStorage.setItem(
+            "transactions",
+            JSON.stringify(updatedTransactions)
           );
-        });
-
-        if (borrewedBook) {
-          const bookIndex = books.findIndex((b) => b.id === bookID);
-
-          if (bookIndex !== -1) {
-            const updatedBooks = [...books];
-            updatedBooks[bookIndex].bookCount += 1;
-            setBooks(updatedBooks);
-            localStorage.setItem("books", JSON.stringify(updatedBooks));
-            const newTransaction: Transaction = {
-              transactionId: transactions.length + 1,
-              bookId: bookID,
-              userId: userID,
-              type: "return",
-              date: new Date(),
-            };
-
-            const updatedTransactions = [...transactions, newTransaction];
-            localStorage.setItem(
-              "transactions",
-              JSON.stringify(updatedTransactions)
-            );
-            setTransactions(updatedTransactions);
-            setViewReturnModal(false);
-            returnBookForm.resetFields();
-          } else {
-            console.error("Book not found");
-          }
+          setTransactions(updatedTransactions);
+          setViewReturnModal(false);
+          returnBookForm.resetFields();
         } else {
-          alert("No borrowed transactoin found of this book by the user.");
+          console.error("Book not found");
         }
       } else {
-        console.error("Invalid bookId or userId");
+        alert("No borrowed transaction found for this book by the user.");
       }
+    } else {
+      alert("Please select a User and Book.");
     }
   };
 
@@ -242,7 +213,7 @@ const Mana = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "15px",
-                backgroundColor: '#fb3453'
+                backgroundColor: "#fb3453",
               }}
               type="primary"
               onClick={showAddModal}
@@ -256,7 +227,7 @@ const Mana = () => {
                 style={{
                   boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                   borderRadius: "15px",
-                  backgroundColor: '#fb3453'
+                  backgroundColor: "#fb3453",
                 }}
                 type="primary"
                 onClick={showBorrowModal}
@@ -269,7 +240,7 @@ const Mana = () => {
                 style={{
                   boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                   borderRadius: "15px",
-                  backgroundColor: '#fb3453'
+                  backgroundColor: "#fb3453",
                 }}
                 type="primary"
                 onClick={showReturnModal}
@@ -305,114 +276,90 @@ const Mana = () => {
                     <img src={book.bookPic} alt="" height={"250px"} />
                     <h6 className="mt-2">Book Id: {book.id}</h6>
                     <h6 className="mt-2">{book.title}</h6>
-                    <p style={{ color: "rgb(125,125,125)" }}>{book.author}</p>
-                    <h6 style={{ color: "#Fb3453" }}>₹{book.price}</h6>
+                    <h6 className="mt-2">Book Count: {book.bookCount}</h6>
+                    <h6 className="mt-2">Price: {book.price}</h6>
+                    <h6 className="mt-2">Author: {book.author}</h6>
                   </div>
                 ))}
             </div>
           </div>
         ))}
 
+        {/* Add Book Modal */}
         <Modal
-          title="Add New Book"
-          open={viewAddModal}
+          visible={viewAddModal}
+          title="Add Book"
           onCancel={handleCancelAddModal}
           footer={null}
         >
-          <Form form={addBookForm} layout="vertical" onFinish={handleAddBook}>
+          <Form
+            form={addBookForm}
+            onFinish={handleAddBook}
+            layout="vertical"
+          >
             <Form.Item
               name="title"
               label="Book Title"
-              rules={[{ required: true, message: "Please input the title!" }]}
+              rules={[{ required: true, message: "Please enter book title" }]}
             >
-              <Input autoComplete="off" />
+              <Input />
             </Form.Item>
             <Form.Item
               name="author"
               label="Author"
-              rules={[{ required: true, message: "Please input the author!" }]}
+              rules={[{ required: true, message: "Please enter author name" }]}
             >
-              <Input autoComplete="off" />
+              <Input />
             </Form.Item>
             <Form.Item
               name="category"
               label="Category"
-              rules={[
-                { required: true, message: "Please input the category!" },
-              ]}
+              rules={[{ required: true, message: "Please enter book category" }]}
             >
-              <Input autoComplete="off" />
+              <Input />
             </Form.Item>
             <Form.Item
               name="bookCount"
               label="Book Count"
-              rules={[
-                { required: true, message: "Please input the book count!" },
-              ]}
+              rules={[{ required: true, message: "Please enter book count" }]}
             >
               <Input type="number" />
             </Form.Item>
             <Form.Item
               name="bookPic"
-              label="Book Cover Image URL"
-              rules={[
-                { required: true, message: "Please input the image URL!" },
-              ]}
+              label="Book Picture URL"
+              rules={[{ required: true, message: "Please enter book picture URL" }]}
             >
-              <Input type="string" autoComplete="off" />
+              <Input />
             </Form.Item>
             <Form.Item
               name="price"
               label="Price"
-              rules={[{ required: true, message: "Please input the price!" }]}
+              rules={[{ required: true, message: "Please enter book price" }]}
             >
-              <Input type="number" autoComplete="off" />
+              <Input type="number" />
             </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Add Book
-              </Button>
-            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Add Book
+            </Button>
           </Form>
         </Modal>
 
+        {/* Borrow Book Modal */}
         <Modal
+          visible={viewBorrowModal}
           title="Borrow Book"
-          open={viewBorrowModal}
           onCancel={handleCancelBorrowModal}
           footer={null}
         >
-          <Form
-            form={borrowBookForm}
-            layout="vertical"
-            onFinish={handleBorrowBook}
-          >
-            <Form.Item name="bookIdInput" label="Book ID">
-              <Input
-                type="number"
-                value={bookIdInput !== null ? bookIdInput : ""}
-                onChange={(e) => setBookIdInput(Number(e.target.value))}
-              />
-            </Form.Item>
-            <Form.Item name="userIdInput" label="User ID">
-              <Input
-                type="number"
-                value={userIdInput !== null ? userIdInput : ""}
-                onChange={(e) => setUserIdInput(Number(e.target.value))}
-              />
-            </Form.Item>
-            <Form.Item name="bookId" label="Book" rules={[{ required: true }]}>
-              <Select onChange={(value) => setSelectedBookId(value)}>
-                {books.map((book) => (
-                  <Select.Option key={book.id} value={book.id}>
-                    {book.title}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item name="userId" label="User" rules={[{ required: true }]}>
+          <Form form={borrowBookForm} onFinish={handleBorrowBook} layout="vertical">
+            <Form.Item
+              name="user"
+              label="Select User"
+              rules={[{ required: true, message: "Please select a user" }]}
+            >
               <Select
-                value={selectedUserId}
+                placeholder="Select User"
                 onChange={(value) => setSelectedUserId(value)}
               >
                 {users.map((user) => (
@@ -422,46 +369,14 @@ const Mana = () => {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Borrow Book
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
 
-        <Modal
-          title="Return Book"
-          open={viewReturnModal}
-          onCancel={handleCancelReturnModal}
-          footer={null}
-        >
-          <Form
-            form={returnBookForm}
-            layout="vertical"
-            onFinish={handleReturnBook}
-          >
-            <Form.Item name="bookIdInput" label="Book ID">
-              <Input
-                type="number"
-                value={bookIdInput !== null ? bookIdInput : ""}
-                onChange={(e) => setBookIdInput(Number(e.target.value))}
-              />
-            </Form.Item>
-            <Form.Item name="userIdInput" label="User ID">
-              <Input
-                type="number"
-                value={userIdInput !== null ? userIdInput : ""}
-                onChange={(e) => setUserIdInput(Number(e.target.value))}
-              />
-            </Form.Item>
             <Form.Item
-              name="bookId"
+              name="book"
               label="Select Book"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: "Please select a book" }]}
             >
               <Select
-                value={selectedBookId}
+                placeholder="Select Book"
                 onChange={(value) => setSelectedBookId(value)}
               >
                 {books.map((book) => (
@@ -471,13 +386,27 @@ const Mana = () => {
                 ))}
               </Select>
             </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Borrow Book
+            </Button>
+          </Form>
+        </Modal>
+
+        {/* Return Book Modal */}
+        <Modal
+          visible={viewReturnModal}
+          title="Return Book"
+          onCancel={handleCancelReturnModal}
+          footer={null}
+        >
+          <Form form={returnBookForm} onFinish={handleReturnBook} layout="vertical">
             <Form.Item
-              name="userId"
+              name="user"
               label="Select User"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: "Please select a user" }]}
             >
               <Select
-                value={selectedUserId}
+                placeholder="Select User"
                 onChange={(value) => setSelectedUserId(value)}
               >
                 {users.map((user) => (
@@ -487,11 +416,26 @@ const Mana = () => {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Return Book
-              </Button>
+
+            <Form.Item
+              name="book"
+              label="Select Book"
+              rules={[{ required: true, message: "Please select a book" }]}
+            >
+              <Select
+                placeholder="Select Book"
+                onChange={(value) => setSelectedBookId(value)}
+              >
+                {books.map((book) => (
+                  <Select.Option key={book.id} value={book.id}>
+                    {book.title}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Return Book
+            </Button>
           </Form>
         </Modal>
       </div>
