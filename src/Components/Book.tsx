@@ -113,7 +113,7 @@ const User: React.FC = () => {
   return (
     <div className="mt-2">
       <div className="mb-3 d-flex justify-content-between">
-        <Input
+        <Input className="search"
           placeholder="Search by Booktitle or BookID"
           prefix={<SearchOutlined />}
           value={searchTerm}

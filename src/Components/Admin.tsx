@@ -66,20 +66,21 @@ const AdminPortal: React.FC = () => {
         <div
           style={{
             height: "64px",
-            margin: "12px",
             display: "flex",
-            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <h5
             style={{
               color: "white",
-              fontFamily: "Racing Sans One",
-              fontSize: "30px",
-              margin: "0px 15px",
+              fontFamily: "poppins",
+              fontSize: "15px",
+              fontWeight: "800",
+              margin: '0px 10px'
             }}
           >
-            {collapsed ? "LM" : "LIBRARY MANAGEMENT"}
+            {collapsed ? <img src="/LMS.png" alt="LMS" height={"85px"} width={"85px"} style={{ display: 'flex', justifyContent: 'center' }} />
+              : (<div className="d-flex"><img src="/LMS.png" alt="Library Management" height={"85px"} width={"85px"} /> <div className="mt-2 ms-2">LIBRARY <span className="fs-3"> MANAGEMENT </span> <br /> SYSTEM</div></div>)}
           </h5>
         </div>
         <Menu
@@ -87,7 +88,7 @@ const AdminPortal: React.FC = () => {
           selectedKeys={[selectedNavItems]}
           onClick={handleNavClick}
           style={{
-            marginTop: "30px",
+            marginTop: "35px",
             color: "white",
             backgroundColor: "#Fb3454",
             fontFamily: "Poppins",
@@ -109,6 +110,23 @@ const AdminPortal: React.FC = () => {
             Dashboard
           </Menu.Item>
           <Menu.Item
+            key="/books"
+            icon={
+              <BookOutlined
+                style={{
+                  color: selectedNavItems === "/books" ? "#fb3453" : "white",
+                  fontSize: "17px",
+                }}
+              />
+            }
+            style={{
+              color: selectedNavItems === "/books" ? "#fb3453" : "white",
+              marginTop: "10px",
+            }}
+          >
+            Books Management
+          </Menu.Item>
+          <Menu.Item
             key="/book"
             icon={
               <FileTextOutlined
@@ -126,24 +144,6 @@ const AdminPortal: React.FC = () => {
           >
             Book Details
           </Menu.Item>
-          <Menu.Item
-            key="/books"
-            icon={
-              <BookOutlined
-                style={{
-                  color: selectedNavItems === "/books" ? "#fb3453" : "white",
-                  fontSize: "17px",
-                }}
-              />
-            }
-            style={{
-              color: selectedNavItems === "/books" ? "#fb3453" : "white",
-              marginTop: "10px",
-            }}
-          >
-            Books Management
-          </Menu.Item>
-
           <Menu.Item
             key="/reader"
             icon={
