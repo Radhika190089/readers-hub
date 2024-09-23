@@ -4,6 +4,7 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { Link, useNavigate } from "react-router-dom";
 import "./Styles/st.css";
 import { BookType } from "./Mana";
+import { GetBookData } from "./Services/BookService";
 
 const Visit = [58, 91, 42, 50, 32, 31, 47];
 const Read = [30, 48, 20, 40, 60, 23, 18];
@@ -15,10 +16,16 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const localBooks = JSON.parse(localStorage.getItem("books") || "[]");
-    setBooks(localBooks);
+    (async () => {
+      try {
+        const data = await GetBookData();
+        setBooks(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
 
-    const groupedBooks: { [key: string]: BookType[] } = localBooks.reduce(
+    const groupedBooks: { [key: string]: BookType[] } = books.reduce(
       (acc: { [key: string]: BookType[] }, book: BookType) => {
         acc[book.category] = acc[book.category] || [];
         acc[book.category].push(book);
@@ -49,37 +56,52 @@ const Dashboard: React.FC = () => {
           <Carousel autoplay>
             <div>
               <div className="slidebar">
-                <div className='justify-content-spacebetween rounded-5'>
-                  <h1 style={{ fontSize: '75px' }} >Welcome Back!</h1>
+                <div className="justify-content-spacebetween rounded-5">
+                  <h1 style={{ fontSize: "75px" }}>Welcome Back!</h1>
                   <h4>Continue exploring the library.</h4>
                 </div>
                 <div>
-                  {/* <img src="\Images\Booktree.png" alt="Welcome" className="bottom" height={'320px'} /> */}
-                </div>
-                <div>
-                  <span className="bottom-left" onClick={() => navigate("/books")} style={{ cursor: 'pointer' }}><h6>Add New Books →</h6></span>
+                  <span
+                    className="bottom-left"
+                    onClick={() => navigate("/books")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <h6>Add New Books →</h6>
+                  </span>
                 </div>
               </div>
             </div>
             <div>
               <div className="slidebar">
-                <div className='justify-content-spacebetween'>
-                  <h1 style={{ fontSize: '75px' }}>Manage Readers</h1>
+                <div className="justify-content-spacebetween">
+                  <h1 style={{ fontSize: "75px" }}>Manage Readers</h1>
                   <h4>Add or update Readers information easily.</h4>
                 </div>
-                <span className="bottom-left" onClick={() => navigate("/readerManagement")} style={{ cursor: 'pointer' }}><h6>Manage Readers →</h6></span>
+                <span
+                  className="bottom-left"
+                  onClick={() => navigate("/readerManagement")}
+                  style={{ cursor: "pointer" }}
+                >
+                  <h6>Manage Readers →</h6>
+                </span>
               </div>
             </div>
             <div>
               <div className="slidebar">
-                <div className='justify-content-spacebetween'>
-                  <h1 style={{ fontSize: '75px' }}>Admin Profile</h1>
+                <div className="justify-content-spacebetween">
+                  <h1 style={{ fontSize: "75px" }}>Admin Profile</h1>
                   <h4>View and edit your profile details.</h4>
                 </div>
                 <div>
                   {/* <img src="\Images\profile.png" alt="Admin Profile" className="bottom" height={'180px'} /> */}
                 </div>
-                <span className="bottom-left" onClick={() => navigate("/profile")} style={{ cursor: 'pointer' }}><h6>View Profile →</h6></span>
+                <span
+                  className="bottom-left"
+                  onClick={() => navigate("/profile")}
+                  style={{ cursor: "pointer" }}
+                >
+                  <h6>View Profile →</h6>
+                </span>
               </div>
             </div>
           </Carousel>
@@ -87,7 +109,7 @@ const Dashboard: React.FC = () => {
         <div
           style={{
             width: "49%",
-            padding: '20px',
+            padding: "20px",
             borderRadius: "10px",
             boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
           }}
@@ -96,11 +118,21 @@ const Dashboard: React.FC = () => {
           <table className="table table-hover">
             <thead>
               <tr>
-                <th scope="col" style={{ color: '#fb3453' }}>Book Id</th>
-                <th scope="col" style={{ color: '#fb3453' }}>Title</th>
-                <th scope="col" style={{ color: '#fb3453' }}>Author</th>
-                <th scope="col" style={{ color: '#fb3453' }}>Available</th>
-                <th scope="col" style={{ color: '#fb3453' }}>Price</th>
+                <th scope="col" style={{ color: "#fb3453" }}>
+                  Book Id
+                </th>
+                <th scope="col" style={{ color: "#fb3453" }}>
+                  Title
+                </th>
+                <th scope="col" style={{ color: "#fb3453" }}>
+                  Author
+                </th>
+                <th scope="col" style={{ color: "#fb3453" }}>
+                  Available
+                </th>
+                <th scope="col" style={{ color: "#fb3453" }}>
+                  Price
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -131,7 +163,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         <div className="mx-3 d-flex justify-content-between fs-6 ">
-          <h2 style={{ fontWeight: '700' }}>Top Choices</h2>
+          <h2 style={{ fontWeight: "700" }}>Top Choices</h2>
           <Link
             to={"/books"}
             style={{
@@ -146,23 +178,19 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="d-flex flex-direction-column overflow-auto">
           {randomBooks.map((book) => {
-            console.log("book", book)
+            console.log("book", book);
             return (
               <div
-                key={book.id}
+                key={book.bookId}
                 style={{ margin: "20px", lineHeight: 0.5, cursor: "pointer" }}
                 className="card1"
               >
-                <img
-                  src={book.bookPic}
-                  alt={book.title}
-                  height={"250px"}
-                />
+                <img src={book.bookPic} alt={book.title} height={"250px"} />
                 <h6 className="mt-2">{book.title}</h6>
                 <p style={{ color: "rgb(125,125,125)" }}>{book.author}</p>
                 <h6 style={{ color: "#Fb3453" }}>{book.category}</h6>
               </div>
-            )
+            );
           })}
         </div>
       </div>
