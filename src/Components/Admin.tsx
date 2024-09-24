@@ -109,7 +109,7 @@ const AdminPortal: React.FC = () => {
           >
             Dashboard
           </Menu.Item>
-          <Menu.Item
+          {/* <Menu.Item
             key="/books"
             icon={
               <BookOutlined
@@ -125,11 +125,11 @@ const AdminPortal: React.FC = () => {
             }}
           >
             Books Management
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item
             key="/book"
             icon={
-              <FileTextOutlined
+              <BookOutlined
                 style={{
                   color: selectedNavItems === "/book" ? "#fb3453" : "white",
                   fontSize: "17px",
@@ -142,7 +142,7 @@ const AdminPortal: React.FC = () => {
 
             }}
           >
-            Book Details
+            Books
           </Menu.Item>
           <Menu.Item
             key="/reader"
@@ -263,7 +263,7 @@ const AdminPortal: React.FC = () => {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/reader" element={<Reader />} />
-              <Route path="/books" element={<Mana />} />
+              {/* <Route path="/books" element={<Mana />} />   */}
               <Route path="/readerManagement" element={<ReaderManagement />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/book" element={<Book />} />

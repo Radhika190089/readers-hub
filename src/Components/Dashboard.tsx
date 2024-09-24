@@ -52,23 +52,21 @@ const Dashboard: React.FC = () => {
           justifyContent: "space-between",
         }}
       >
-        <div style={{ width: "49%" }}>
-          <Carousel autoplay>
-            <div>
-              <div className="slidebar">
-                <div className="justify-content-spacebetween rounded-5">
-                  <h1 style={{ fontSize: "75px" }}>Welcome Back!</h1>
-                  <h4>Continue exploring the library.</h4>
-                </div>
-                <div>
-                  <span
-                    className="bottom-left"
-                    onClick={() => navigate("/books")}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <h6>Add New Books →</h6>
-                  </span>
-                </div>
+        <div style={{ width: "49%", overflow: "hidden" }}>
+          <Carousel autoplay >
+            <div className="slidebar ">
+              <div className="justify-content-spacebetween rounded-5">
+                <h1 style={{ fontSize: "75px" }}>Welcome Back!</h1>
+                <h4>Continue exploring the library.</h4>
+              </div>
+              <div>
+                <span
+                  className="bottom-left"
+                  onClick={() => navigate("/books")}
+                  style={{ cursor: "pointer" }}
+                >
+                  <h6>Add New Books →</h6>
+                </span>
               </div>
             </div>
             <div>
@@ -163,7 +161,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         <div className="mx-3 d-flex justify-content-between fs-6 ">
-          <h2 style={{ fontWeight: "700" }}>Top Choices</h2>
+          <h2 style={{ fontWeight: "600" }}>Top Choices</h2>
           <Link
             to={"/books"}
             style={{

@@ -79,6 +79,7 @@ body {
     padding: 20px;
     background-color: #fb3453;
     border-radius: 10px;
+    overflow: hidden;
     position: relative;
     justify-content: space-between;
     font-family: 'poppins';
