@@ -272,18 +272,16 @@ const Book: React.FC = () => {
   };
 
   const columns = [
+    { title: "BookID", dataIndex: "id", width: "4%" },
     {
-      title: "BookPic",
-      dataIndex: "bookPic",
-      width: "10%",
-      render: (_: any, record: BookType) => (
-        <img src={record.bookPic} alt={record.title} height={"250px"} />
+      title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
+        <div className="d-flex fs-7 gap-3">
+          <img src={record.bookPic} alt={record.title} height={"140px"} /><span className="d-flex justify-content-center align-items-center"><p className="m-0">{record.title}</p></span>
+        </div>
       ),
     },
-    { title: "BookID", dataIndex: "id", width: "8%" },
-    { title: "Author", dataIndex: "author", width: "25%" },
-    { title: "Book Title", dataIndex: "title", width: "10%" },
-    { title: "Category", dataIndex: "category", width: "10%" },
+    { title: "Author", dataIndex: "author", width: "15%" },
+    { title: "Category", dataIndex: "category", width: "15%" },
     { title: "Price", dataIndex: "price", width: "10%" },
     {
       title: "Book details",
@@ -308,8 +306,7 @@ const Book: React.FC = () => {
   return (
     <div className="mt-2">
       <div className="mb-3 d-flex justify-content-between">
-        <Input
-          className="search"
+        <Input className="search"
           placeholder="Search by Booktitle or BookID"
           prefix={<SearchOutlined />}
           value={searchTerm}
