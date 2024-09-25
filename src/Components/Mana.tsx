@@ -5,7 +5,7 @@ import {
   ArrowLeftOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { UserType } from "./ReaderManagement";
+import { ReaderType } from "./ReaderManagement";
 
 export interface BookType {
   id: number;
@@ -17,7 +17,7 @@ export interface BookType {
   price: number;
 }
 
-export interface Transaction {
+export interface TransactionType {
   transactionId: number;
   userId: number;
   bookId: number;
@@ -30,8 +30,8 @@ const Mana = () => {
   const [viewBorrowModal, setViewBorrowModal] = useState(false);
   const [viewReturnModal, setViewReturnModal] = useState(false);
   const [books, setBooks] = useState<BookType[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [users, setUsers] = useState<UserType[]>([]);
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [users, setUsers] = useState<ReaderType[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
@@ -53,7 +53,7 @@ const Mana = () => {
     setUsers(localUsers);
     setTransactions(localTransaction);
 
-    localTransaction.forEach((transaction: Transaction) => {
+    localTransaction.forEach((transaction: TransactionType) => {
       if (transaction.type === "borrow") {
         const dueDate = new Date(transaction.date);
         dueDate.setDate(dueDate.getDate() + overdueLimit);
@@ -112,7 +112,7 @@ const Mana = () => {
         updatedBooks[bookIndex].bookCount -= 1;
         setBooks(updatedBooks);
         localStorage.setItem("books", JSON.stringify(updatedBooks));
-        const newTransaction: Transaction = {
+        const newTransaction: TransactionType = {
           transactionId: transactions.length + 1,
           bookId: bookID,
           userId: userID,
@@ -158,7 +158,7 @@ const Mana = () => {
           updatedBooks[bookIndex].bookCount += 1;
           setBooks(updatedBooks);
           localStorage.setItem("books", JSON.stringify(updatedBooks));
-          const newTransaction: Transaction = {
+          const newTransaction: TransactionType = {
             transactionId: transactions.length + 1,
             bookId: bookID,
             userId: userID,
@@ -292,11 +292,7 @@ const Mana = () => {
           onCancel={handleCancelAddModal}
           footer={null}
         >
-          <Form
-            form={addBookForm}
-            onFinish={handleAddBook}
-            layout="vertical"
-          >
+          <Form form={addBookForm} onFinish={handleAddBook} layout="vertical">
             <Form.Item
               name="title"
               label="Book Title"
@@ -314,7 +310,9 @@ const Mana = () => {
             <Form.Item
               name="category"
               label="Category"
-              rules={[{ required: true, message: "Please enter book category" }]}
+              rules={[
+                { required: true, message: "Please enter book category" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -328,7 +326,9 @@ const Mana = () => {
             <Form.Item
               name="bookPic"
               label="Book Picture URL"
-              rules={[{ required: true, message: "Please enter book picture URL" }]}
+              rules={[
+                { required: true, message: "Please enter book picture URL" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -352,7 +352,11 @@ const Mana = () => {
           onCancel={handleCancelBorrowModal}
           footer={null}
         >
-          <Form form={borrowBookForm} onFinish={handleBorrowBook} layout="vertical">
+          <Form
+            form={borrowBookForm}
+            onFinish={handleBorrowBook}
+            layout="vertical"
+          >
             <Form.Item
               name="user"
               label="Select User"
@@ -399,7 +403,11 @@ const Mana = () => {
           onCancel={handleCancelReturnModal}
           footer={null}
         >
-          <Form form={returnBookForm} onFinish={handleReturnBook} layout="vertical">
+          <Form
+            form={returnBookForm}
+            onFinish={handleReturnBook}
+            layout="vertical"
+          >
             <Form.Item
               name="user"
               label="Select User"

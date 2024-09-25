@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
-  SearchOutlined, EditOutlined, DeleteOutlined, BookOutlined,
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  BookOutlined,
   ArrowLeftOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Input, Modal, notification, Select, Table } from "antd";
-import { UserType } from "./ReaderManagement";
+import { ReaderType } from "./ReaderManagement";
 
 export interface BookType {
   id: number;
@@ -17,7 +20,7 @@ export interface BookType {
   price: number;
 }
 
-export interface Transaction {
+export interface TransactionType {
   transactionId: number;
   userId: number;
   bookId: number;
@@ -36,8 +39,8 @@ const User: React.FC = () => {
   const [viewBorrowModal, setViewBorrowModal] = useState(false);
   const [viewReturnModal, setViewReturnModal] = useState(false);
   const [books, setBooks] = useState<BookType[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [users, setUsers] = useState<UserType[]>([]);
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [users, setUsers] = useState<ReaderType[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
@@ -59,7 +62,7 @@ const User: React.FC = () => {
     setUsers(localUsers);
     setTransactions(localTransaction);
 
-    localTransaction.forEach((transaction: Transaction) => {
+    localTransaction.forEach((transaction: TransactionType) => {
       if (transaction.type === "borrow") {
         const dueDate = new Date(transaction.date);
         dueDate.setDate(dueDate.getDate() + overdueLimit);
@@ -80,7 +83,6 @@ const User: React.FC = () => {
     setData(localBooks);
     setFilteredData(localBooks);
   }, []);
-
 
   useEffect(() => {
     if (searchTerm) {
@@ -139,7 +141,7 @@ const User: React.FC = () => {
         updatedBooks[bookIndex].bookCount -= 1;
         setBooks(updatedBooks);
         localStorage.setItem("books", JSON.stringify(updatedBooks));
-        const newTransaction: Transaction = {
+        const newTransaction: TransactionType = {
           transactionId: transactions.length + 1,
           bookId: bookID,
           userId: userID,
@@ -185,7 +187,7 @@ const User: React.FC = () => {
           updatedBooks[bookIndex].bookCount += 1;
           setBooks(updatedBooks);
           localStorage.setItem("books", JSON.stringify(updatedBooks));
-          const newTransaction: Transaction = {
+          const newTransaction: TransactionType = {
             transactionId: transactions.length + 1,
             bookId: bookID,
             userId: userID,
@@ -229,10 +231,6 @@ const User: React.FC = () => {
 
   const categories = Array.from(new Set(books.map((book) => book.category)));
 
-
-
-
-
   const handleViewDetails = (record: BookType) => {
     setSelectedBook(record);
     form.setFieldsValue({
@@ -244,7 +242,6 @@ const User: React.FC = () => {
     });
     setViewDetailsModal(true);
   };
-
 
   const handleSaveChanges = () => {
     form.validateFields().then((values) => {
@@ -261,7 +258,6 @@ const User: React.FC = () => {
     });
   };
 
-
   const handleDeleteBook = (record: BookType) => {
     const updatedData = data.filter((item) => item.id !== record.id);
     setData(updatedData);
@@ -269,7 +265,6 @@ const User: React.FC = () => {
     setSelectedBook(null);
     setViewDetailsModal(false);
   };
-
 
   const columns = [
     {
@@ -293,7 +288,11 @@ const User: React.FC = () => {
           <Button type="primary" onClick={() => handleViewDetails(record)}>
             <EditOutlined />
           </Button>
-          <Button type="primary" danger onClick={() => handleDeleteBook(record)}>
+          <Button
+            type="primary"
+            danger
+            onClick={() => handleDeleteBook(record)}
+          >
             <DeleteOutlined />
           </Button>
         </div>
@@ -304,7 +303,8 @@ const User: React.FC = () => {
   return (
     <div className="mt-2">
       <div className="mb-3 d-flex justify-content-between">
-        <Input className="search"
+        <Input
+          className="search"
           placeholder="Search by Booktitle or BookID"
           prefix={<SearchOutlined />}
           value={searchTerm}
@@ -422,11 +422,7 @@ const User: React.FC = () => {
         onCancel={handleCancelAddModal}
         footer={null}
       >
-        <Form
-          form={addBookForm}
-          onFinish={handleAddBook}
-          layout="vertical"
-        >
+        <Form form={addBookForm} onFinish={handleAddBook} layout="vertical">
           <Form.Item
             name="title"
             label="Book Title"
@@ -458,7 +454,9 @@ const User: React.FC = () => {
           <Form.Item
             name="bookPic"
             label="Book Picture URL"
-            rules={[{ required: true, message: "Please enter book picture URL" }]}
+            rules={[
+              { required: true, message: "Please enter book picture URL" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -482,7 +480,11 @@ const User: React.FC = () => {
         onCancel={handleCancelBorrowModal}
         footer={null}
       >
-        <Form form={borrowBookForm} onFinish={handleBorrowBook} layout="vertical">
+        <Form
+          form={borrowBookForm}
+          onFinish={handleBorrowBook}
+          layout="vertical"
+        >
           <Form.Item
             name="user"
             label="Select User"
@@ -529,7 +531,11 @@ const User: React.FC = () => {
         onCancel={handleCancelReturnModal}
         footer={null}
       >
-        <Form form={returnBookForm} onFinish={handleReturnBook} layout="vertical">
+        <Form
+          form={returnBookForm}
+          onFinish={handleReturnBook}
+          layout="vertical"
+        >
           <Form.Item
             name="user"
             label="Select User"

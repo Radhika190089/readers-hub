@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PlusOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Form, Input, InputNumber, Modal, Select, Table } from "antd";
 
-export interface UserType {
+export interface ReaderType {
   key: string;
   userId: number;
   name: string;
@@ -13,13 +13,13 @@ export interface UserType {
 
 const ReaderManagement: React.FC = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState<UserType[]>([]);
-  const [filteredData, setFilteredData] = useState<UserType[]>([]);
+  const [data, setData] = useState<ReaderType[]>([]);
+  const [filteredData, setFilteredData] = useState<ReaderType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [editingKey, setEditingKey] = useState<React.Key | null>(null);
   const [viewAddUserModal, setViewAddUserModal] = useState(false);
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
+  const [selectedUser, setSelectedUser] = useState<ReaderType | null>(null);
 
   useEffect(() => {
     const localUsers = JSON.parse(localStorage.getItem("users") || "[]");
@@ -44,7 +44,7 @@ const ReaderManagement: React.FC = () => {
     setViewAddUserModal(true);
   };
 
-  const handleAddUser = (user: Omit<UserType, "userId">) => {
+  const handleAddUser = (user: Omit<ReaderType, "userId">) => {
     const newUser = {
       userId: Math.floor(1000 + Math.random() * 9000 + Date.now()),
       ...user,
@@ -61,7 +61,7 @@ const ReaderManagement: React.FC = () => {
     setViewAddUserModal(false);
   };
 
-  const handleViewDetails = (record: UserType) => {
+  const handleViewDetails = (record: ReaderType) => {
     setSelectedUser(record);
     form.setFieldsValue(record);
     setViewDetailsModal(true);
@@ -103,16 +103,17 @@ const ReaderManagement: React.FC = () => {
     {
       title: "View Details",
       dataIndex: "viewDetails",
-      render: (_: any, record: UserType) => (
+      render: (_: any, record: ReaderType) => (
         <Button
           icon={<EyeOutlined />}
           className="mx-2 px-3"
           style={{
             boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-            borderRadius: "10px", backgroundColor: '#fb3453', padding: '20px 0px'
+            borderRadius: "10px",
+            backgroundColor: "#fb3453",
+            padding: "20px 0px",
           }}
           type="primary"
-
           onClick={() => handleViewDetails(record)}
         >
           Edit
@@ -124,22 +125,23 @@ const ReaderManagement: React.FC = () => {
   return (
     <div className="mt-2">
       <div className="mb-3 d-flex justify-content-between">
-        <Input className="search"
+        <Input
+          className="search"
           placeholder="Search by Name or Reader ID"
-          prefix={<SearchOutlined style={{ paddingRight: '5px' }} />}
+          prefix={<SearchOutlined style={{ paddingRight: "5px" }} />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: 300, height: 30, marginTop: '20px' }}
+          style={{ width: 300, height: 30, marginTop: "20px" }}
         />
         <Button
           icon={<PlusOutlined />}
           className="mx-1 p-4"
           style={{
             boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-            borderRadius: "10px", backgroundColor: '#fb3453'
+            borderRadius: "10px",
+            backgroundColor: "#fb3453",
           }}
           type="primary"
-
           onClick={showUserModal}
         >
           Add Reader

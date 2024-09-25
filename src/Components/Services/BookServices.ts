@@ -1,14 +1,11 @@
 import axios from "axios";
-import { BookType } from "../Mana";
 import { apiBaseURL } from "./Index";
+import { BookType } from "../Mana";
 
 export const GetBookData = async () => {
     const response = await axios.get(
       `${apiBaseURL}/LMS/Books/Get_All_Books`
     );
-    console.log(process.env.REACT_APP_API_URL);
-
-    
     return response.data as BookType[]
 };
 
@@ -24,10 +21,10 @@ export const AddNewBook = async (newBook : BookType) => {
   }
 }
 
-export const UpdateBook = async (id : string , updateBook : BookType) => {
+export const UpdateBook = async (bookId : string , updateBook : BookType) => {
   try {    
     await axios.post(
-      `${apiBaseURL}/LMS/Books/Update_Book/${id}` ,
+      `${apiBaseURL}/LMS/Books/Update_Book/${bookId}` ,
       updateBook
     )
   } catch (error) {
@@ -36,10 +33,10 @@ export const UpdateBook = async (id : string , updateBook : BookType) => {
   }
 }
 
-export const DeleteBook = async (id : string) => {
+export const DeleteBook = async (bookId : string) => {
   try {    
     await axios.post(
-      `${apiBaseURL}/LMS/Books/Remove_Book/${id}`
+      `${apiBaseURL}/LMS/Books/Remove_Book/${bookId}`
     )
   } catch (error) {
     console.error(error)

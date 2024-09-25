@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { PlusOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { ColumnsType } from "antd/es/table";
 
-interface Transaction {
+interface TransactionType {
   transactionId: number;
   userId: number;
   bookId: number;
@@ -15,13 +15,14 @@ interface Transaction {
 }
 
 const Reader: React.FC = () => {
-  const [filteredData, setFilteredData] = useState<Transaction[]>([]);
-  const [data, setData] = useState<Transaction[]>([]);
+  const [filteredData, setFilteredData] = useState<TransactionType[]>([]);
+  const [data, setData] = useState<TransactionType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const localTransaction = JSON.parse(
-      localStorage.getItem("transactions") || "[]");
+      localStorage.getItem("transactions") || "[]"
+    );
     setData(localTransaction);
   }, []);
 
@@ -38,11 +39,9 @@ const Reader: React.FC = () => {
     }
   }, [searchTerm, data]);
 
-
-
-  const columns: ColumnsType<Transaction> = [
+  const columns: ColumnsType<TransactionType> = [
     {
-      title: "Transaction Id",
+      title: "TransactionType Id",
       dataIndex: "transactionId",
       key: "transactionId",
       width: "5%",
@@ -150,10 +149,12 @@ const Reader: React.FC = () => {
         }}
       >
         <div className="mx-1 mt-2 d-flex justify-content-between">
-          <h3>Recent Transaction</h3>
-          <div className="d-flex gap-2" >
+          <h3>Recent TransactionType</h3>
+          <div className="d-flex gap-2">
             <Link to={"/readerManagement"} style={{ textDecoration: "none" }}>
-              <h6 style={{ color: "#Fb3453", paddingTop: "10px" }}>View Readers</h6>
+              <h6 style={{ color: "#Fb3453", paddingTop: "10px" }}>
+                View Readers
+              </h6>
             </Link>
           </div>
         </div>

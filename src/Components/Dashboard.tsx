@@ -4,7 +4,7 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { Link, useNavigate } from "react-router-dom";
 import "./Styles/st.css";
 import { BookType } from "./Mana";
-import { GetBookData } from "./Services/BookService";
+import { GetBookData } from "./Services/BookServices";
 
 const Visit = [58, 91, 42, 50, 32, 31, 47];
 const Read = [30, 48, 20, 40, 60, 23, 18];
