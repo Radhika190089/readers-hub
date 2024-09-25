@@ -303,7 +303,6 @@ const AdminPortal: React.FC = () => {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/transaction" element={<Transaction/>} />
-              {/* <Route path="/books" element={<Mana />} />   */}
               <Route path="/readerManagement" element={<ReaderManagement />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/book" element={<Book />} />

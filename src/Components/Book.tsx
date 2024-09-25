@@ -9,7 +9,6 @@ import {
 } from "@ant-design/icons";
 import { Button, Form, Input, Modal, notification, Select, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
-import { TransactionType } from "./Transaction";
 
 export interface BookType {
   id: number;
@@ -22,7 +21,17 @@ export interface BookType {
   price: number;
 }
 
-const User: React.FC = () => {
+export interface TransactionType {
+  transactionId: number;
+  readerId: number;
+  readerName: string;
+  bookISBN: string;
+  bookName: string;
+  date: Date;
+  type: "borrow" | "return";
+}
+
+const Book: React.FC = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState<BookType[]>([]);
   const [filteredData, setFilteredData] = useState<BookType[]>([]);
@@ -34,7 +43,7 @@ const User: React.FC = () => {
   const [viewReturnModal, setViewReturnModal] = useState(false);
   const [books, setBooks] = useState<BookType[]>([]);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const [users, setUsers] = useState<ReaderType[]>([]);
+  const [readers, setUsers] = useState<ReaderType[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
@@ -47,7 +56,7 @@ const User: React.FC = () => {
 
   useEffect(() => {
     const localBooks = JSON.parse(localStorage.getItem("books") || "[]");
-    const localUsers = JSON.parse(localStorage.getItem("users") || "[]");
+    const localUsers = JSON.parse(localStorage.getItem("readers") || "[]");
     const localTransaction = JSON.parse(
       localStorage.getItem("transactions") || "[]"
     );
@@ -93,10 +102,10 @@ const User: React.FC = () => {
   }, [searchTerm, data]);
 
   const notifyAdmin = (readerId: number, fine: number) => {
-    const user = users.find((x) => x.readerId === readerId);
+    const reader = readers.find((x) => x.readerId === readerId);
     notification.warning({
       message: "There is an overdue book.",
-      description: `${user?.name} has an overdue fine of ₹${fine}`,
+      description: `${reader?.name} has an overdue fine of ₹${fine}`,
     });
   };
 
@@ -125,10 +134,10 @@ const User: React.FC = () => {
 
   const handleBorrowBook = () => {
     if (selectedBookId && selectedUserId) {
-      const bookID = Number(selectedBookId);
-      const userID = Number(selectedUserId);
+      const bookISBN = selectedBookId;
+      const readerID = Number(selectedUserId);
 
-      const bookIndex = books.findIndex((b) => b.id === bookID);
+      const bookIndex = books.findIndex((b) => b.bookISBN === bookISBN);
 
       if (bookIndex !== -1 && books[bookIndex].bookCount > 0) {
         const updatedBooks = [...books];
@@ -137,8 +146,10 @@ const User: React.FC = () => {
         localStorage.setItem("books", JSON.stringify(updatedBooks));
         const newTransaction: TransactionType = {
           transactionId: transactions.length + 1,
-          bookId: bookID,
-          readerId: userID,
+          bookISBN: bookISBN,
+          bookName: books[bookIndex].title,
+          readerId: readerID,
+          readerName: readers.find((x) => x.readerId == readerID)?.name || "",
           type: "borrow",
           date: new Date(),
         };
@@ -162,19 +173,19 @@ const User: React.FC = () => {
 
   const handleReturnBook = () => {
     if (selectedBookId && selectedUserId) {
-      const bookID = Number(selectedBookId);
-      const userID = Number(selectedUserId);
+      const bookISBN = selectedBookId;
+      const readerID = Number(selectedUserId);
 
       const borrowedBook = transactions.find((transaction) => {
         return (
-          transaction.bookId === bookID &&
-          transaction.readerId === userID &&
+          transaction.bookISBN === bookISBN &&
+          transaction.readerId === readerID &&
           transaction.type === "borrow"
         );
       });
 
       if (borrowedBook) {
-        const bookIndex = books.findIndex((b) => b.id === bookID);
+        const bookIndex = books.findIndex((b) => b.bookISBN === bookISBN);
 
         if (bookIndex !== -1) {
           const updatedBooks = [...books];
@@ -183,8 +194,10 @@ const User: React.FC = () => {
           localStorage.setItem("books", JSON.stringify(updatedBooks));
           const newTransaction: TransactionType = {
             transactionId: transactions.length + 1,
-            bookId: bookID,
-            readerId: userID,
+            bookISBN: bookISBN,
+            bookName: books[bookIndex].title,
+            readerId: readerID,
+            readerName: readers.find((x) => x.readerId == readerID)?.name || "",
             type: "return",
             date: new Date(),
           };
@@ -201,7 +214,7 @@ const User: React.FC = () => {
           console.error("Book not found");
         }
       } else {
-        alert("No borrowed transaction found for this book by the user.");
+        alert("No borrowed transaction found for this book by the reader.");
       }
     } else {
       alert("Please select a User and Book.");
@@ -259,22 +272,18 @@ const User: React.FC = () => {
   };
 
   const columns = [
-    { title: "BookID", dataIndex: "id", width: "4%" },
     {
-      title: "Book Title",
-      dataIndex: "title",
-      width: "25%",
+      title: "BookPic",
+      dataIndex: "bookPic",
+      width: "10%",
       render: (_: any, record: BookType) => (
-        <div className="d-flex fs-7 gap-3">
-          <img src={record.bookPic} alt={record.title} height={"140px"} />
-          <span className="d-flex justify-content-center align-items-center">
-            <p className="m-0">{record.title}</p>
-          </span>
-        </div>
+        <img src={record.bookPic} alt={record.title} height={"250px"} />
       ),
     },
-    { title: "Author", dataIndex: "author", width: "15%" },
-    { title: "Category", dataIndex: "category", width: "15%" },
+    { title: "BookID", dataIndex: "id", width: "8%" },
+    { title: "Author", dataIndex: "author", width: "25%" },
+    { title: "Book Title", dataIndex: "title", width: "10%" },
+    { title: "Category", dataIndex: "category", width: "10%" },
     { title: "Price", dataIndex: "price", width: "10%" },
     {
       title: "Book details",
@@ -298,32 +307,32 @@ const User: React.FC = () => {
 
   return (
     <div className="mt-2">
-      <div className="my-3">
+      <div className="mb-3 d-flex justify-content-between">
+        <Input
+          className="search"
+          placeholder="Search by Booktitle or BookID"
+          prefix={<SearchOutlined />}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ marginBottom: 16, width: 300 }}
+        />
+      </div>
+      <div className="my-4">
         <div className="d-flex justify-content-between">
-          <div className="mb-3 d-flex justify-content-between">
-            <Input
-              className="search"
-              placeholder="Search by Booktitle or BookID"
-              prefix={<SearchOutlined style={{ paddingRight: "6px" }} />}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ width: 300, height: 40 }}
-            />
-          </div>
+          <Button
+            icon={<PlusOutlined />}
+            className="mx-2 p-4"
+            style={{
+              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+              borderRadius: "15px",
+              backgroundColor: "#fb3453",
+            }}
+            type="primary"
+            onClick={showAddModal}
+          >
+            Add Book
+          </Button>
           <div>
-            <Button
-              icon={<PlusOutlined />}
-              className="mx-2 p-4"
-              style={{
-                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "15px",
-                backgroundColor: "#fb3453",
-              }}
-              type="primary"
-              onClick={showAddModal}
-            >
-              Add Book
-            </Button>
             <Button
               icon={<BookOutlined />}
               className="mx-2 p-4"
@@ -482,17 +491,17 @@ const User: React.FC = () => {
           layout="vertical"
         >
           <Form.Item
-            name="user"
+            name="reader"
             label="Select User"
-            rules={[{ required: true, message: "Please select a user" }]}
+            rules={[{ required: true, message: "Please select a reader" }]}
           >
             <Select
               placeholder="Select User"
               onChange={(value) => setSelectedUserId(value)}
             >
-              {users.map((user) => (
-                <Select.Option key={user.readerId} value={user.readerId}>
-                  {user.name}
+              {readers.map((reader) => (
+                <Select.Option key={reader.readerId} value={reader.readerId}>
+                  {reader.name}
                 </Select.Option>
               ))}
             </Select>
@@ -533,17 +542,17 @@ const User: React.FC = () => {
           layout="vertical"
         >
           <Form.Item
-            name="user"
+            name="reader"
             label="Select User"
-            rules={[{ required: true, message: "Please select a user" }]}
+            rules={[{ required: true, message: "Please select a reader" }]}
           >
             <Select
               placeholder="Select User"
               onChange={(value) => setSelectedUserId(value)}
             >
-              {users.map((user) => (
-                <Select.Option key={user.readerId} value={user.readerId}>
-                  {user.name}
+              {readers.map((reader) => (
+                <Select.Option key={reader.readerId} value={reader.readerId}>
+                  {reader.name}
                 </Select.Option>
               ))}
             </Select>
@@ -574,4 +583,4 @@ const User: React.FC = () => {
   );
 };
 
-export default User;
+export default Book;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { apiBaseURL } from "./Index";
-import { BookType } from "../Mana";
+import { BookType } from "../Book";
 
 export const GetBookData = async () => {
     const response = await axios.get(

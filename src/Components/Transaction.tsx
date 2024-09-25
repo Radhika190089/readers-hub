@@ -3,16 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
+import { TransactionType } from "./Book";
 
-export interface TransactionType {
-  transactionId: number;
-  readerId: number;
-  readerName: string;
-  bookISBN: number;
-  bookName: string;
-  date: Date;
-  type: "borrow" | "return";
-}
 
 const Transaction: React.FC = () => {
   const [filteredData, setFilteredData] = useState<TransactionType[]>([]);
@@ -53,9 +45,9 @@ const Transaction: React.FC = () => {
       width: "20%",
     },
     {
-      title: "Book Id",
-      dataIndex: "bookId",
-      key: "bookId",
+      title: "Book ISBN",
+      dataIndex: "bookISBN",
+      key: "bookISBN",
       width: "20%",
     },
     {

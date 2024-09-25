@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import "./Styles/st.css";
-import { BookType } from "./Mana";
 import { GetBookData } from "./Services/BookServices";
+import { BookType } from "./Book";
 
 const Dashboard: React.FC = () => {
   const [books, setBooks] = useState<BookType[]>([]);
