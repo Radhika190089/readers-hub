@@ -97,21 +97,20 @@ const ReaderManagement: React.FC = () => {
   const columns = [
     { title: "User Id", dataIndex: "userId", width: "8%" },
     { title: "Name", dataIndex: "name", width: "25%" },
-    { title: "Gender", dataIndex: "gender", width: "10%" },
+    { title: "Gender", dataIndex: "gender", width: "20%" },
     { title: "Mail", dataIndex: "mail", width: "20%" },
-    { title: "Phone No", dataIndex: "phoneNo", width: "15%" },
+    { title: "Status", dataIndex: "status", width: "10%" },
+    { title: "Phone No", dataIndex: "phoneNo", width: "15%", },
     {
       title: "View Details",
       dataIndex: "viewDetails",
       render: (_: any, record: ReaderType) => (
         <Button
-          icon={<EyeOutlined />}
+          icon={<EyeOutlined />} 
           className="mx-2 px-3"
           style={{
             boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-            borderRadius: "10px",
-            backgroundColor: "#fb3453",
-            padding: "20px 0px",
+            borderRadius: "10px", backgroundColor: '#fb3453', padding: '20px 0px'
           }}
           type="primary"
           onClick={() => handleViewDetails(record)}
@@ -123,15 +122,15 @@ const ReaderManagement: React.FC = () => {
   ];
 
   return (
-    <div className="mt-2">
+    <div className="mt-2" style={{ fontFamily: 'sans-serif' }}>
       <div className="mb-3 d-flex justify-content-between">
         <Input
           className="search"
           placeholder="Search by Name or Reader ID"
-          prefix={<SearchOutlined style={{ paddingRight: "5px" }} />}
+          prefix={<SearchOutlined style={{ paddingRight: '5px' }} />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: 300, height: 30, marginTop: "20px" }}
+          style={{ width: 300, height: 30, marginTop: '20px' }}
         />
         <Button
           icon={<PlusOutlined />}

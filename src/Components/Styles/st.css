@@ -31,8 +31,11 @@
     width: 800px;
 }
 
-body {
-    font-family: 'Poppins';
+body,
+.search,
+.ant-modal,
+.ant-btn {
+    font-family: 'Poppins', sans-serif;
 }
 
 .span {
@@ -56,7 +59,7 @@ body {
     margin-top: 10px;
 }
 
-.custom-search .ant-input:hover {
+.custom-s2earch .ant-input:hover {
     border-color: #fb3453 !important;
 }
 
