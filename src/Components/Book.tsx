@@ -22,6 +22,7 @@ export interface BookType {
 }
 
 export interface TransactionType {
+  key: number;
   transactionId: number;
   readerId: number;
   readerName: string;
@@ -152,6 +153,7 @@ const Book: React.FC = () => {
           readerName: readers.find((x) => x.readerId == readerID)?.name || "",
           type: "borrow",
           date: new Date(),
+          key: 0
         };
         const updatedTransactions = [...transactions, newTransaction];
         localStorage.setItem(
@@ -200,6 +202,7 @@ const Book: React.FC = () => {
             readerName: readers.find((x) => x.readerId == readerID)?.name || "",
             type: "return",
             date: new Date(),
+            key: 0
           };
 
           const updatedTransactions = [...transactions, newTransaction];
@@ -272,17 +275,23 @@ const Book: React.FC = () => {
   };
 
   const columns = [
-    { title: "BookID", dataIndex: "id", width: "4%" },
+    { title: "BookID", dataIndex: "id", width: "6%" },
     {
       title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
         <div className="d-flex fs-7 gap-3">
-          <img src={record.bookPic} alt={record.title} height={"140px"} /><span className="d-flex justify-content-center align-items-center"><p className="m-0">{record.title}</p></span>
+          <img src={record.bookPic} alt={record.title} height={"140px"} width={"100px"} /><span className="d-flex justify-content-center align-items-center"><p className="ms-4">{record.title}</p></span>
         </div>
       ),
+      sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
+      defaultSortOrder: 'ascend' as const,
     },
     { title: "Author", dataIndex: "author", width: "15%" },
-    { title: "Category", dataIndex: "category", width: "15%" },
+    {
+      title: "Category", dataIndex: "category", width: "15%"
+    },
+
     { title: "Price", dataIndex: "price", width: "10%" },
+    { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
     {
       title: "Book details",
       dataIndex: "BookDetails",
@@ -402,6 +411,13 @@ const Book: React.FC = () => {
             <Input autoComplete="off" />
           </Form.Item>
           <Form.Item
+            name="bookISBN"
+            label="ISBN"
+            rules={[{ required: true, message: "Please enter book ISBN" }]}
+          >
+            <Input autoComplete="off" />
+          </Form.Item>
+          <Form.Item
             name="bookPic"
             label="Book Cover Image URL"
             rules={[{ required: true, message: "Please input the image URL!" }]}
@@ -443,6 +459,13 @@ const Book: React.FC = () => {
             name="category"
             label="Category"
             rules={[{ required: true, message: "Please enter book category" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="bookISBN"
+            label="ISBN"
+            rules={[{ required: true, message: "Please enter book ISBN" }]}
           >
             <Input />
           </Form.Item>

@@ -156,9 +156,9 @@ const Dashboard: React.FC = () => {
         }}
       >
         <div className="mx-3 d-flex justify-content-between fs-6 ">
-          <h2 style={{ fontWeight: "600" }}>Top Choices</h2>
+          <h2 style={{ fontWeight: "700" }}>Top Choices</h2>
           <Link
-            to={"/books"}
+            to={"/book"}
             style={{
               textDecoration: "none",
               color: "#Fb3453",
