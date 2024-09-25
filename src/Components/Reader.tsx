@@ -1,15 +1,15 @@
 import "./Styles/st.css";
 import React, { useEffect, useState } from "react";
-import type { TableColumnsType } from "antd";
 import { Table } from "antd";
 import { Link } from "react-router-dom";
-import { PlusOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { ColumnsType } from "antd/es/table";
 
 interface TransactionType {
   transactionId: number;
-  userId: number;
-  bookId: number;
+  readerId: number;
+  readerName: string;
+  bookISBN: number;
+  bookName: string;
   date: Date;
   type: "borrow" | "return";
 }
@@ -30,8 +30,8 @@ const Reader: React.FC = () => {
     if (searchTerm.trim()) {
       const filtered = data.filter(
         (user) =>
-          user.userId.toString().includes(searchTerm) ||
-          user.bookId.toString().includes(searchTerm)
+          user.readerId.toString().includes(searchTerm) ||
+          user.bookISBN.toString().includes(searchTerm)
       );
       setFilteredData(filtered);
     } else {
@@ -48,8 +48,8 @@ const Reader: React.FC = () => {
     },
     {
       title: "User Id",
-      dataIndex: "userId",
-      key: "userId",
+      dataIndex: "readerId",
+      key: "readerId",
       width: "20%",
     },
     {
