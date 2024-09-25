@@ -2,7 +2,7 @@ import axios from "axios";
 import { apiBaseURL } from "./Index";
 import { TransactionType } from "../Book";
 
-export const GetReaderData = async () => {
+export const GetTransaction = async () => {
     const response = await axios.get(
       `${apiBaseURL}/LMS/Transactions/Get_All_Transaction`
     );

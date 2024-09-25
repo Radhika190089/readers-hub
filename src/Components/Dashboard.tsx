@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
         const data = await GetBookData();
         setBooks(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     })();
 

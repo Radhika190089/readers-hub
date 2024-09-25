@@ -4,50 +4,65 @@ import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
 import { TransactionType } from "./Book";
-
+import { GetTransaction } from "./Services/TransactionServices";
 
 const Transaction: React.FC = () => {
   const [filteredData, setFilteredData] = useState<TransactionType[]>([]);
-  const [data, setData] = useState<TransactionType[]>([]);
+  const [transaction, setTransaction] = useState<TransactionType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    const localTransaction = JSON.parse(
-      localStorage.getItem("transactions") || "[]"
-    );
-    setData(localTransaction);
+    (async () => {
+      try {
+        const transaction = await GetTransaction();
+        setTransaction(transaction);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+
+    // const localTransaction = JSON.parse(
+    //   localStorage.getItem("transactions") || "[]"
+    // );
+    // setTransaction(localTransaction);
   }, []);
 
   useEffect(() => {
     if (searchTerm.trim()) {
-      const filtered = data.filter(
-        (user) =>
-          user.readerId.toString().includes(searchTerm) ||
-          user.bookISBN.toString().includes(searchTerm)
+      const filtered = transaction.filter(
+        (reader) =>
+          reader.readerId.toString().includes(searchTerm) ||
+          reader.bookISBN.toString().includes(searchTerm)
       );
       setFilteredData(filtered);
     } else {
-      setFilteredData(data);
+      setFilteredData(transaction);
     }
-  }, [searchTerm, data]);
+  }, [searchTerm, transaction]);
 
   const columns: ColumnsType<TransactionType> = [
     {
-      title: "TransactionType Id",
-      dataIndex: "transactionId",
-      key: "transactionId",
+      title: "S. No.",
+      dataIndex: "key",
+      key: "key",
       width: "5%",
     },
     {
-      title: "User Id",
-      dataIndex: "readerId",
-      key: "readerId",
+      title: "Reader Name",
+      dataIndex: "readerName",
+      key: "readerName",
       width: "20%",
     },
     {
       title: "Book ISBN",
       dataIndex: "bookISBN",
       key: "bookISBN",
+      width: "20%",
+    },
+    {
+      title: "Book Name",
+      dataIndex: "bookName",
+      key: "bookName",
       width: "20%",
     },
     {
