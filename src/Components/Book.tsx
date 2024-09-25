@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Form, Input, Modal, notification, Select, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
+import { TransactionType } from "./Transaction";
 
 export interface BookType {
   id: number;
@@ -19,14 +20,6 @@ export interface BookType {
   bookCount: number;
   bookPic: string;
   price: number;
-}
-
-export interface TransactionType {
-  transactionId: number;
-  readerId: number;
-  bookId: number;
-  date: Date;
-  type: "borrow" | "return";
 }
 
 const User: React.FC = () => {
@@ -268,9 +261,15 @@ const User: React.FC = () => {
   const columns = [
     { title: "BookID", dataIndex: "id", width: "4%" },
     {
-      title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
+      title: "Book Title",
+      dataIndex: "title",
+      width: "25%",
+      render: (_: any, record: BookType) => (
         <div className="d-flex fs-7 gap-3">
-          <img src={record.bookPic} alt={record.title} height={"140px"} /><span className="d-flex justify-content-center align-items-center"><p className="m-0">{record.title}</p></span>
+          <img src={record.bookPic} alt={record.title} height={"140px"} />
+          <span className="d-flex justify-content-center align-items-center">
+            <p className="m-0">{record.title}</p>
+          </span>
         </div>
       ),
     },
@@ -302,9 +301,10 @@ const User: React.FC = () => {
       <div className="my-3">
         <div className="d-flex justify-content-between">
           <div className="mb-3 d-flex justify-content-between">
-            <Input className="search"
+            <Input
+              className="search"
               placeholder="Search by Booktitle or BookID"
-              prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
+              prefix={<SearchOutlined style={{ paddingRight: "6px" }} />}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{ width: 300, height: 40 }}

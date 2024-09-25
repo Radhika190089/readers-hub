@@ -17,11 +17,12 @@ import {
   Navigate,
 } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import Reader from "./Reader";
+import Reader from "./Transaction";
 import Profile from "./Profile";
 import { Avatar } from "evergreen-ui";
 import Book from "./Book";
 import ReaderManagement from "./ReaderManagement";
+import Transaction from "./Transaction";
 
 const { Header, Content, Sider } = Layout;
 
@@ -171,17 +172,17 @@ const AdminPortal: React.FC = () => {
             Books
           </Menu.Item>
           <Menu.Item
-            key="/reader"
+            key="/transaction"
             icon={
               <FormOutlined
                 style={{
-                  color: selectedNavItems === "/reader" ? "#fb3453" : "white",
+                  color: selectedNavItems === "/transaction" ? "#fb3453" : "white",
                   fontSize: "17px",
                 }}
               />
             }
             style={{
-              color: selectedNavItems === "/reader" ? "#fb3453" : "white",
+              color: selectedNavItems === "/transaction" ? "#fb3453" : "white",
               marginTop: "10px",
             }}
           >
@@ -301,7 +302,7 @@ const AdminPortal: React.FC = () => {
           >
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/reader" element={<Reader />} />
+              <Route path="/transaction" element={<Transaction/>} />
               {/* <Route path="/books" element={<Mana />} />   */}
               <Route path="/readerManagement" element={<ReaderManagement />} />
               <Route path="/profile" element={<Profile />} />

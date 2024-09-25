@@ -4,7 +4,7 @@ import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
 
-interface TransactionType {
+export interface TransactionType {
   transactionId: number;
   readerId: number;
   readerName: string;
@@ -14,7 +14,7 @@ interface TransactionType {
   type: "borrow" | "return";
 }
 
-const Reader: React.FC = () => {
+const Transaction: React.FC = () => {
   const [filteredData, setFilteredData] = useState<TransactionType[]>([]);
   const [data, setData] = useState<TransactionType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -170,4 +170,4 @@ const Reader: React.FC = () => {
   );
 };
 
-export default Reader;
+export default Transaction;
