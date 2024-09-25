@@ -15,6 +15,7 @@ export interface BookType {
   title: string;
   author: string;
   category: string;
+  bookISBN: string;
   bookCount: number;
   bookPic: string;
   price: number;
@@ -22,7 +23,7 @@ export interface BookType {
 
 export interface TransactionType {
   transactionId: number;
-  userId: number;
+  readerId: number;
   bookId: number;
   date: Date;
   type: "borrow" | "return";
@@ -72,7 +73,7 @@ const User: React.FC = () => {
             (new Date().getTime() - dueDate.getTime()) / (1000 * 3600 * 24)
           );
           const fine = overdueDays * finePerDay;
-          notifyAdmin(transaction.userId, fine);
+          notifyAdmin(transaction.readerId, fine);
         }
       }
     });
@@ -98,8 +99,8 @@ const User: React.FC = () => {
     }
   }, [searchTerm, data]);
 
-  const notifyAdmin = (userId: number, fine: number) => {
-    const user = users.find((x) => x.userId === userId);
+  const notifyAdmin = (readerId: number, fine: number) => {
+    const user = users.find((x) => x.readerId === readerId);
     notification.warning({
       message: "There is an overdue book.",
       description: `${user?.name} has an overdue fine of ₹${fine}`,
@@ -144,7 +145,7 @@ const User: React.FC = () => {
         const newTransaction: TransactionType = {
           transactionId: transactions.length + 1,
           bookId: bookID,
-          userId: userID,
+          readerId: userID,
           type: "borrow",
           date: new Date(),
         };
@@ -174,7 +175,7 @@ const User: React.FC = () => {
       const borrowedBook = transactions.find((transaction) => {
         return (
           transaction.bookId === bookID &&
-          transaction.userId === userID &&
+          transaction.readerId === userID &&
           transaction.type === "borrow"
         );
       });
@@ -190,7 +191,7 @@ const User: React.FC = () => {
           const newTransaction: TransactionType = {
             transactionId: transactions.length + 1,
             bookId: bookID,
-            userId: userID,
+            readerId: userID,
             type: "return",
             date: new Date(),
           };
@@ -228,8 +229,6 @@ const User: React.FC = () => {
     setViewReturnModal(false);
     returnBookForm.resetFields();
   };
-
-  const categories = Array.from(new Set(books.map((book) => book.category)));
 
   const handleViewDetails = (record: BookType) => {
     setSelectedBook(record);
@@ -492,7 +491,7 @@ const User: React.FC = () => {
               onChange={(value) => setSelectedUserId(value)}
             >
               {users.map((user) => (
-                <Select.Option key={user.userId} value={user.userId}>
+                <Select.Option key={user.readerId} value={user.readerId}>
                   {user.name}
                 </Select.Option>
               ))}
@@ -543,7 +542,7 @@ const User: React.FC = () => {
               onChange={(value) => setSelectedUserId(value)}
             >
               {users.map((user) => (
-                <Select.Option key={user.userId} value={user.userId}>
+                <Select.Option key={user.readerId} value={user.readerId}>
                   {user.name}
                 </Select.Option>
               ))}

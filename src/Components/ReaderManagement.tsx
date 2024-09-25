@@ -4,11 +4,13 @@ import { Button, Form, Input, InputNumber, Modal, Select, Table } from "antd";
 
 export interface ReaderType {
   key: string;
-  userId: number;
+  readerId: number;
   name: string;
-  gender: string;
   mail: string;
   phoneNo: number;
+  gender: string;
+  age: number;
+  status: "Active" | "Inactive";
 }
 
 const ReaderManagement: React.FC = () => {
@@ -16,7 +18,6 @@ const ReaderManagement: React.FC = () => {
   const [data, setData] = useState<ReaderType[]>([]);
   const [filteredData, setFilteredData] = useState<ReaderType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [editingKey, setEditingKey] = useState<React.Key | null>(null);
   const [viewAddUserModal, setViewAddUserModal] = useState(false);
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<ReaderType | null>(null);
@@ -32,7 +33,7 @@ const ReaderManagement: React.FC = () => {
       const filtered = data.filter(
         (user) =>
           user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.userId.toString().includes(searchTerm)
+          user.readerId.toString().includes(searchTerm)
       );
       setFilteredData(filtered);
     } else {
@@ -44,9 +45,9 @@ const ReaderManagement: React.FC = () => {
     setViewAddUserModal(true);
   };
 
-  const handleAddUser = (user: Omit<ReaderType, "userId">) => {
+  const handleAddUser = (user: Omit<ReaderType, "readerId">) => {
     const newUser = {
-      userId: Math.floor(1000 + Math.random() * 9000 + Date.now()),
+      readerId: Math.floor(1000 + Math.random() * 9000 + Date.now()),
       ...user,
     };
     const updatedUsers = [...data, newUser];
@@ -71,7 +72,9 @@ const ReaderManagement: React.FC = () => {
     form.validateFields().then((values) => {
       if (selectedUser) {
         const updatedData = data.map((item) =>
-          item.userId === selectedUser.userId ? { ...item, ...values } : item
+          item.readerId === selectedUser.readerId
+            ? { ...item, ...values }
+            : item
         );
         setData(updatedData);
         localStorage.setItem("users", JSON.stringify(updatedData));
@@ -85,7 +88,7 @@ const ReaderManagement: React.FC = () => {
   const handleDeleteUser = () => {
     if (selectedUser) {
       const updatedData = data.filter(
-        (item) => item.userId !== selectedUser.userId
+        (item) => item.readerId !== selectedUser.readerId
       );
       setData(updatedData);
       localStorage.setItem("users", JSON.stringify(updatedData));
@@ -95,7 +98,7 @@ const ReaderManagement: React.FC = () => {
   };
 
   const columns = [
-    { title: "User Id", dataIndex: "userId", width: "8%" },
+    { title: "User Id", dataIndex: "readerId", width: "8%" },
     { title: "Name", dataIndex: "name", width: "25%" },
     { title: "Gender", dataIndex: "gender", width: "20%" },
     { title: "Mail", dataIndex: "mail", width: "20%" },
@@ -151,7 +154,7 @@ const ReaderManagement: React.FC = () => {
         bordered
         dataSource={filteredData}
         columns={columns}
-        rowKey="userId"
+        rowKey="readerId"
         pagination={{ pageSize: 13 }}
       />
 

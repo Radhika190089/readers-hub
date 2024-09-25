@@ -19,7 +19,7 @@ export interface BookType {
 
 export interface TransactionType {
   transactionId: number;
-  userId: number;
+  readerId: number;
   bookId: number;
   date: Date;
   type: "borrow" | "return";
@@ -63,14 +63,14 @@ const Mana = () => {
             (new Date().getTime() - dueDate.getTime()) / (1000 * 3600 * 24)
           );
           const fine = overdueDays * finePerDay;
-          notifyAdmin(transaction.userId, fine);
+          notifyAdmin(transaction.readerId, fine);
         }
       }
     });
   }, []);
 
-  const notifyAdmin = (userId: number, fine: number) => {
-    const user = users.find((x) => x.userId === userId);
+  const notifyAdmin = (readerId: number, fine: number) => {
+    const user = users.find((x) => x.readerId === readerId);
     notification.warning({
       message: "There is an overdue book.",
       description: `${user?.name} has an overdue fine of ₹${fine}`,
@@ -115,7 +115,7 @@ const Mana = () => {
         const newTransaction: TransactionType = {
           transactionId: transactions.length + 1,
           bookId: bookID,
-          userId: userID,
+          readerId: userID,
           type: "borrow",
           date: new Date(),
         };
@@ -145,7 +145,7 @@ const Mana = () => {
       const borrowedBook = transactions.find((transaction) => {
         return (
           transaction.bookId === bookID &&
-          transaction.userId === userID &&
+          transaction.readerId === userID &&
           transaction.type === "borrow"
         );
       });
@@ -161,7 +161,7 @@ const Mana = () => {
           const newTransaction: TransactionType = {
             transactionId: transactions.length + 1,
             bookId: bookID,
-            userId: userID,
+            readerId: userID,
             type: "return",
             date: new Date(),
           };
@@ -367,7 +367,7 @@ const Mana = () => {
                 onChange={(value) => setSelectedUserId(value)}
               >
                 {users.map((user) => (
-                  <Select.Option key={user.userId} value={user.userId}>
+                  <Select.Option key={user.readerId} value={user.readerId}>
                     {user.name}
                   </Select.Option>
                 ))}
@@ -418,7 +418,7 @@ const Mana = () => {
                 onChange={(value) => setSelectedUserId(value)}
               >
                 {users.map((user) => (
-                  <Select.Option key={user.userId} value={user.userId}>
+                  <Select.Option key={user.readerId} value={user.readerId}>
                     {user.name}
                   </Select.Option>
                 ))}

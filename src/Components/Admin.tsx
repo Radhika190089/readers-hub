@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  UploadOutlined,
   UserOutlined,
   BookOutlined,
   HomeOutlined,
@@ -8,9 +7,8 @@ import {
   FormOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  FileTextOutlined
 } from "@ant-design/icons";
-import { Button, Layout, Menu, Space } from "antd";
+import { Button, Layout, Menu } from "antd";
 import {
   useNavigate,
   useLocation,
@@ -20,13 +18,22 @@ import {
 } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Reader from "./Reader";
-import Mana from "./Mana";
 import Profile from "./Profile";
 import { Avatar } from "evergreen-ui";
 import Book from "./Book";
 import ReaderManagement from "./ReaderManagement";
 
 const { Header, Content, Sider } = Layout;
+
+export interface AdminType {
+  adminId: number;
+  name: string;
+  mail: string;
+  password: string;
+  phoneNo: number;
+  gender: string;
+  pfp?: string;
+}
 
 const AdminPortal: React.FC = () => {
   const user = JSON.parse(localStorage.getItem("loggedUser") || "[]");
@@ -76,11 +83,31 @@ const AdminPortal: React.FC = () => {
               fontFamily: "poppins",
               fontSize: "15px",
               fontWeight: "800",
-              margin: '0px 10px'
+              margin: "0px 10px",
             }}
           >
-            {collapsed ? <img src="/LMS.png" alt="LMS" height={"85px"} width={"85px"} style={{ display: 'flex', justifyContent: 'center' }} />
-              : (<div className="d-flex"><img src="/LMS.png" alt="Library Management" height={"85px"} width={"85px"} /> <div className="mt-2 ms-2">LIBRARY <span className="fs-3"> MANAGEMENT </span> <br /> SYSTEM</div></div>)}
+            {collapsed ? (
+              <img
+                src="/LMS.png"
+                alt="LMS"
+                height={"85px"}
+                width={"85px"}
+                style={{ display: "flex", justifyContent: "center" }}
+              />
+            ) : (
+              <div className="d-flex">
+                <img
+                  src="/LMS.png"
+                  alt="Library Management"
+                  height={"85px"}
+                  width={"85px"}
+                />{" "}
+                <div className="mt-2 ms-2">
+                  LIBRARY <span className="fs-3"> MANAGEMENT </span> <br />{" "}
+                  SYSTEM
+                </div>
+              </div>
+            )}
           </h5>
         </div>
         <Menu
@@ -139,7 +166,6 @@ const AdminPortal: React.FC = () => {
             style={{
               color: selectedNavItems === "/book" ? "#fb3453" : "white",
               position: "relative",
-
             }}
           >
             Books
@@ -166,13 +192,17 @@ const AdminPortal: React.FC = () => {
             icon={
               <TeamOutlined
                 style={{
-                  color: selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
+                  color:
+                    selectedNavItems === "/readerManagement"
+                      ? "#fb3453"
+                      : "white",
                   fontSize: "17px",
                 }}
               />
             }
             style={{
-              color: selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
+              color:
+                selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
               marginTop: "10px",
             }}
           >
@@ -209,12 +239,22 @@ const AdminPortal: React.FC = () => {
             height: "74px",
           }}
         >
-          <Button onClick={toggleCollapsed} style={{ marginBottom: 16, backgroundColor: '#fb3453', color: 'white', height: '40px', border: 'none', margin: '10px', width: '60px' }}>
+          <Button
+            onClick={toggleCollapsed}
+            style={{
+              marginBottom: 16,
+              backgroundColor: "#fb3453",
+              color: "white",
+              height: "40px",
+              border: "none",
+              margin: "10px",
+              width: "60px",
+            }}
+          >
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </Button>
           <div className="d-flex align-items-center ms-auto">
             <div className="d-flex align-items-center ms-auto">
-
               <div className="mt-4">
                 <Avatar
                   onClick={() => navigate("/profile")}
@@ -240,7 +280,6 @@ const AdminPortal: React.FC = () => {
                   Admin
                 </p>
               </div>
-
             </div>
           </div>
         </Header>
