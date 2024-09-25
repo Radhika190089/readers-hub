@@ -110,7 +110,7 @@ const ReaderManagement: React.FC = () => {
           className="mx-2 px-3"
           style={{
             boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-            borderRadius: "10px", backgroundColor: '#fb3453', padding: '20px 0px'
+            borderRadius: "10px", backgroundColor: '#fb3453', padding: '20px 0px',fontFamily:'poppins'
           }}
           type="primary"
           onClick={() => handleViewDetails(record)}
@@ -127,10 +127,10 @@ const ReaderManagement: React.FC = () => {
         <Input
           className="search"
           placeholder="Search by Name or Reader ID"
-          prefix={<SearchOutlined style={{ paddingRight: '5px' }} />}
+          prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: 300, height: 30, marginTop: '20px' }}
+          style={{ width: 300, height: 40 }}
         />
         <Button
           icon={<PlusOutlined />}

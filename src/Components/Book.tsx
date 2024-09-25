@@ -300,31 +300,31 @@ const User: React.FC = () => {
 
   return (
     <div className="mt-2">
-      <div className="mb-3 d-flex justify-content-between">
-        <Input className="search"
-          placeholder="Search by Booktitle or BookID"
-          prefix={<SearchOutlined />}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ marginBottom: 16, width: 300 }}
-        />
-      </div>
-      <div className="my-4">
+      <div className="my-3">
         <div className="d-flex justify-content-between">
-          <Button
-            icon={<PlusOutlined />}
-            className="mx-2 p-4"
-            style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-              borderRadius: "15px",
-              backgroundColor: "#fb3453",
-            }}
-            type="primary"
-            onClick={showAddModal}
-          >
-            Add Book
-          </Button>
+          <div className="mb-3 d-flex justify-content-between">
+            <Input className="search"
+              placeholder="Search by Booktitle or BookID"
+              prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ width: 300, height: 40 }}
+            />
+          </div>
           <div>
+            <Button
+              icon={<PlusOutlined />}
+              className="mx-2 p-4"
+              style={{
+                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+                borderRadius: "15px",
+                backgroundColor: "#fb3453",
+              }}
+              type="primary"
+              onClick={showAddModal}
+            >
+              Add Book
+            </Button>
             <Button
               icon={<BookOutlined />}
               className="mx-2 p-4"
