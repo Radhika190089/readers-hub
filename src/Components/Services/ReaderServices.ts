@@ -9,7 +9,7 @@ export const GetReaderData = async () => {
     return response.data as ReaderType[]
 };
 
-export const AddNewReader = async (newReader : ReaderType) => {
+export const AddNewReader = async (newReader : ReaderType[]) => {
     try {    
        await axios.post(
         `${apiBaseURL}/LMS/Readers/Add_Reader`,
@@ -21,7 +21,7 @@ export const AddNewReader = async (newReader : ReaderType) => {
     }
 };
 
-export const UpdateReader = async (readerId : string , updateReader : ReaderType) => {
+export const UpdateReader = async (readerId : number , updateReader : ReaderType[]) => {
     try {    
       await axios.post(
         `${apiBaseURL}/LMS/Readers/Update_Reader/${readerId}` ,
@@ -33,10 +33,10 @@ export const UpdateReader = async (readerId : string , updateReader : ReaderType
     }
 };
 
-export const DeleteReader = async (readerId : string) => {
+export const DeleteReader = async (readerId : number) => {
     try {    
       await axios.post(
-        `${apiBaseURL}/LMS/Readers/Update_Reader/${readerId}`
+        `${apiBaseURL}/LMS/Readers/Delete_Reader/${readerId}`
       )
     } catch (error) {
       console.error(error)
