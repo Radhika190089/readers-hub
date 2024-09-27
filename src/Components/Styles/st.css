@@ -268,3 +268,8 @@ body,
 .search.ant-input-outlined {
     border: 1px solid #c7c7c7;
 }
+
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-spin .ant-spin-dot-holder {
+    color: #fb3453;
+}

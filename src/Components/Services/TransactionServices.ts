@@ -9,7 +9,7 @@ export const GetTransaction = async () => {
     return response.data as TransactionType[]
 };
 
-export const BorrowTransaction = async (bookISBN : string,readerId : string ) =>{
+export const BorrowTransaction = async (bookISBN : string,readerId : number ) =>{
     try {
         await axios.post(
             `${apiBaseURL}/LMS/Transactions/Borrow_Book/${bookISBN}&${readerId}`
@@ -20,7 +20,7 @@ export const BorrowTransaction = async (bookISBN : string,readerId : string ) =>
     }
 };
 
-export const ReturnTransaction = async (bookISBN : string,readerId : string ) =>{
+export const ReturnTransaction = async (bookISBN : string,readerId : number ) =>{
     try {
         await axios.post(
             `${apiBaseURL}/LMS/Transactions/Return_Book/${bookISBN}&${readerId}`

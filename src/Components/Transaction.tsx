@@ -3,8 +3,18 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
-import { TransactionType } from "./Book";
 import { GetTransaction } from "./Services/TransactionServices";
+
+export interface TransactionType {
+  key: number;
+  transactionId: number;
+  readerId: number;
+  readerName: string;
+  bookISBN: string;
+  bookName: string;
+  date: Date;
+  type: "borrow" | "return";
+}
 
 const Transaction: React.FC = () => {
   const [filteredData, setFilteredData] = useState<TransactionType[]>([]);
@@ -20,11 +30,6 @@ const Transaction: React.FC = () => {
         console.error(err);
       }
     })();
-
-    // const localTransaction = JSON.parse(
-    //   localStorage.getItem("transactions") || "[]"
-    // );
-    // setTransaction(localTransaction);
   }, []);
 
   useEffect(() => {
@@ -42,9 +47,9 @@ const Transaction: React.FC = () => {
 
   const columns: ColumnsType<TransactionType> = [
     {
-      title: "S. No.",
-      dataIndex: "key",
-      key: "key",
+      title: "S No.",
+      dataIndex: "sno",
+      render: (_: any, __: TransactionType, index: number) => index + 1,
       width: "5%",
     },
     {

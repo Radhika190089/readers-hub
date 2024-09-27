@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Form, Input, Modal, notification, Select, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
+import { TransactionType } from "./Transaction";
 
 export interface BookType {
   id: number;
@@ -19,17 +20,6 @@ export interface BookType {
   bookCount: number;
   bookPic: string;
   price: number;
-}
-
-export interface TransactionType {
-  key: number;
-  transactionId: number;
-  readerId: number;
-  readerName: string;
-  bookISBN: string;
-  bookName: string;
-  date: Date;
-  type: "borrow" | "return";
 }
 
 const Book: React.FC = () => {

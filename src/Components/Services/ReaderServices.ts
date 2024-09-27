@@ -9,7 +9,7 @@ export const GetReaderData = async () => {
     return response.data as ReaderType[]
 };
 
-export const AddNewReader = async (newReader : ReaderType[]) => {
+export const AddNewReader = async (newReader : ReaderType) => {
     try {    
        await axios.post(
         `${apiBaseURL}/LMS/Readers/Add_Reader`,
