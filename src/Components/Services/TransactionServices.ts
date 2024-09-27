@@ -1,6 +1,6 @@
 import axios from "axios";
 import { apiBaseURL } from "./Index";
-import { TransactionType } from "../Book";
+import { TransactionType } from "../Transaction";
 
 export const GetTransaction = async () => {
     const response = await axios.get(
