@@ -24,6 +24,8 @@ export interface BookType {
 
 const Book: React.FC = () => {
   const [form] = Form.useForm();
+  // const [filteredInfo, setFilteredInfo] = useState<Filters>({});
+  // const [sortedInfo, setSortedInfo] = useState<Sorts>({});
   const [data, setData] = useState<BookType[]>([]);
   const [filteredData, setFilteredData] = useState<BookType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -277,7 +279,11 @@ const Book: React.FC = () => {
     },
     { title: "Author", dataIndex: "author", width: "15%" },
     {
-      title: "Category", dataIndex: "category", width: "15%"
+      title: "Category", dataIndex: "category", width: "15%",
+      // filteredValue: filteredInfo.category || null,
+      // onFilter: (value: any, record: any) => record.category.includes(value as string),
+      // sortOrder: sortedInfo.columnKey === 'category' ? sortedInfo.order : null,
+      // ellipsis: true,
     },
 
     { title: "Price", dataIndex: "price", width: "10%" },
