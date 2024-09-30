@@ -11,17 +11,21 @@ import { Button, Form, Input, Modal, notification, Spin, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
 import BookForm from "./Book Comp/BookForm";
 import BRBook from "./Book Comp/BRBook";
-import { AddNewBook, DeleteBook, GetBookData, UpdateBook } from "./Services/BookServices";
-
+import {
+  AddNewBook,
+  DeleteBook,
+  GetBookData,
+  UpdateBook,
+} from "./Services/BookServices";
 
 export interface BookType {
-  id: number;
+  bookId: number;
   title: string;
   author: string;
   category: string;
   bookISBN: string;
   bookCount: number;
-  bookPic: string;
+  bookURL: string;
   price: number;
 }
 
@@ -68,15 +72,13 @@ const Book: React.FC = () => {
         const books = await GetBookData();
         setBook(books);
         setFilteredData(books);
-      }
-      catch (error) {
+      } catch (error) {
         console.error(error);
-      }
-      finally {
-        setLoading(false)
+      } finally {
+        setLoading(false);
       }
     })();
-  }, [refresh])
+  }, [refresh]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -84,14 +86,13 @@ const Book: React.FC = () => {
         (book) =>
           book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
           book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          book.id.toString().includes(searchTerm)
+          book.bookId.toString().includes(searchTerm)
       );
       setFilteredData(filtered);
     } else {
       setFilteredData(book);
     }
   }, [searchTerm, book]);
-
 
   const showAddModal = () => {
     setViewAddModal(true);
@@ -125,7 +126,7 @@ const Book: React.FC = () => {
           readerName: readers.find((x) => x.readerId == readerID)?.name || "",
           type: "borrow",
           date: new Date(),
-          key: 0
+          key: 0,
         };
         const updatedTransactions = [...transactions, newTransaction];
         localStorage.setItem(
@@ -174,7 +175,7 @@ const Book: React.FC = () => {
             readerName: readers.find((x) => x.readerId == readerID)?.name || "",
             type: "return",
             date: new Date(),
-            key: 0
+            key: 0,
           };
 
           const updatedTransactions = [...transactions, newTransaction];
@@ -210,17 +211,19 @@ const Book: React.FC = () => {
     setViewReturnModal(false);
     returnBookForm.resetFields();
   };
-  const handleAddBook = async (values: Omit<BookType, "id">) => {
-    const newBook = { id: Math.floor(1000 + Math.random() * 9000), ...values };
+  const handleAddBook = async (values: Omit<BookType, "bookId">) => {
+    const newBook = {
+      bookId: Math.floor(1000 + Math.random() * 9000),
+      ...values,
+    };
     setLoading(true);
     try {
       await AddNewBook(newBook);
       setRefresh(!refresh);
     } catch (error) {
       console.error(error);
-    }
-    finally {
-      setLoading(false)
+    } finally {
+      setLoading(false);
       setViewAddModal(false);
       addBookForm.resetFields();
     }
@@ -232,7 +235,7 @@ const Book: React.FC = () => {
       author: record.author,
       title: record.title,
       category: record.category,
-      bookPic: record.bookPic,
+      bookURL: record.bookURL,
       price: record.price,
     });
     setViewDetailsModal(true);
@@ -242,18 +245,15 @@ const Book: React.FC = () => {
     form.validateFields().then(async (values) => {
       if (selectedBook) {
         try {
-          await UpdateBook(selectedBook.id, selectedBook)
+          await UpdateBook(selectedBook.bookId, selectedBook);
           const UpdateData = book.map((item) =>
-            item.id === selectedBook.id ?
-              { ...item, ...values }
-              : item
+            item.bookId === selectedBook.bookId ? { ...item, ...values } : item
           );
           setRefresh(!refresh);
           setBook(UpdateData);
         } catch (error) {
           console.error(error);
-        }
-        finally {
+        } finally {
           setLoading(true);
           setSelectedBook(null);
           setViewDetailsModal(false);
@@ -264,52 +264,65 @@ const Book: React.FC = () => {
   };
 
   const handleDeleteBook = async (record: BookType) => {
-    const updatedData = book.filter((item) => item.id !== record.id);
+    const updatedData = book.filter((item) => item.bookId !== record.bookId);
     try {
-      await DeleteBook(record.id);
+      await DeleteBook(record.bookId);
       setLoading(true);
       setRefresh(!refresh);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
       setBook(updatedData);
       setSelectedBook(null);
       setViewDetailsModal(false);
     }
-  }
+  };
 
   const columns = [
-    { title: "BookID", dataIndex: "id", width: "6%" },
+    { title: "BookID", dataIndex: "bookId", width: "6%" },
     {
-      title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
+      title: "Book Title",
+      dataIndex: "title",
+      width: "25%",
+      render: (_: any, record: BookType) => (
         <div className="d-flex fs-7 gap-3">
-          <img src={record.bookPic} alt={record.title} height={"140px"} width={"100px"} /><span className="d-flex justify-content-center align-items-center"><p className="ms-4">{record.title}</p></span>
+          <img
+            src={record.bookURL}
+            alt={record.title}
+            height={"140px"}
+            width={"100px"}
+          />
+          <span className="d-flex justify-content-center align-items-center">
+            <p className="ms-4">{record.title}</p>
+          </span>
         </div>
       ),
       sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
-      defaultSortOrder: 'ascend' as const,
+      defaultSortOrder: "ascend" as const,
     },
     { title: "Author", dataIndex: "author", width: "15%" },
-    {
-      title: "Category", dataIndex: "category", width: "15%"
-    },
-
-    { title: "Price", dataIndex: "price", width: "10%" },
+    { title: "Category", dataIndex: "category", width: "15%" },
     { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
+    { title: "Price", dataIndex: "price", width: "10%" },
     {
       title: "Book details",
       dataIndex: "BookDetails",
       render: (_: any, record: BookType) => (
         <div className="d-flex gap-3">
-          <Button type="primary" onClick={() => handleViewDetails(record)}>
-            <EditOutlined />
+          <Button
+            icon={<EditOutlined />}
+            type="primary"
+            onClick={() => handleViewDetails(record)}
+          >
+            Edit
           </Button>
           <Button
             type="primary"
+            icon={<DeleteOutlined />}
             danger
             onClick={() => handleDeleteBook(record)}
           >
-            <DeleteOutlined />
+            Delete
           </Button>
         </div>
       ),
@@ -321,9 +334,10 @@ const Book: React.FC = () => {
       <div className="my-3">
         <div className="d-flex justify-content-between">
           <div className="mb-3 d-flex justify-content-between">
-            <Input className="search"
+            <Input
+              className="search"
               placeholder="Search by Booktitle or BookID"
-              prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
+              prefix={<SearchOutlined style={{ paddingRight: "6px" }} />}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{ width: 300, height: 40 }}
@@ -381,7 +395,7 @@ const Book: React.FC = () => {
           bordered
           dataSource={filteredData}
           columns={columns}
-          rowKey="id"
+          rowKey="bookId"
           pagination={{ pageSize: 10 }}
         />
       )}
@@ -402,22 +416,17 @@ const Book: React.FC = () => {
       </Modal>
       {/* Add Book Modal */}
       <Modal
-        visible={viewAddModal}
+        open={viewAddModal}
         title="Add Book"
         onCancel={handleCancelAddModal}
         footer={null}
       >
-        <BookForm
-          form={form}
-          onSubmit={handleAddBook}
-          submitText="Add Book"
-        />
-
+        <BookForm form={form} onSubmit={handleAddBook} submitText="Add Book" />
       </Modal>
 
       {/* Borrow Book Modal */}
       <Modal
-        visible={viewBorrowModal}
+        open={viewBorrowModal}
         title="Borrow Book"
         onCancel={handleCancelBorrowModal}
         footer={null}
@@ -435,11 +444,20 @@ const Book: React.FC = () => {
 
       {/* Return Book Modal */}
       <Modal
-        visible={viewReturnModal}
+        open={viewReturnModal}
         title="Return Book"
         onCancel={handleCancelReturnModal}
         footer={null}
       >
+        <BRBook
+          form={borrowBookForm}
+          onSubmit={handleReturnBook}
+          submitText="Borrow Book"
+          read={readers}
+          book={book}
+          setSelectedUserId={selectedUserId}
+          setSelectedBookId={selectedBookId}
+        />
       </Modal>
     </div>
   );
