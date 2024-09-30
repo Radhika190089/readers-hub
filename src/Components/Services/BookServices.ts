@@ -21,7 +21,7 @@ export const AddNewBook = async (newBook : BookType) => {
   }
 }
 
-export const UpdateBook = async (bookId : string , updateBook : BookType) => {
+export const UpdateBook = async (bookId : number , updateBook : BookType) => {
   try {    
     await axios.post(
       `${apiBaseURL}/LMS/Books/Update_Book/${bookId}` ,
@@ -33,7 +33,7 @@ export const UpdateBook = async (bookId : string , updateBook : BookType) => {
   }
 }
 
-export const DeleteBook = async (bookId : string) => {
+export const DeleteBook = async (bookId : number) => {
   try {    
     await axios.post(
       `${apiBaseURL}/LMS/Books/Remove_Book/${bookId}`

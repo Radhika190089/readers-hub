@@ -7,8 +7,12 @@ import {
   ArrowLeftOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Input, Modal, notification, Select, Table } from "antd";
+import { Button, Form, Input, Modal, notification, Spin, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
+import BookForm from "./Book Comp/BookForm";
+import BRBook from "./Book Comp/BRBook";
+import { AddNewBook, DeleteBook, GetBookData, UpdateBook } from "./Services/BookServices";
+
 
 export interface BookType {
   id: number;
@@ -34,7 +38,7 @@ export interface TransactionType {
 
 const Book: React.FC = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState<BookType[]>([]);
+  const [book, setBook] = useState<BookType[]>([]);
   const [filteredData, setFilteredData] = useState<BookType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
@@ -47,6 +51,8 @@ const Book: React.FC = () => {
   const [readers, setUsers] = useState<ReaderType[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [refresh, setRefresh] = React.useState<boolean>(false);
 
   const [addBookForm] = Form.useForm();
   const [borrowBookForm] = Form.useForm();
@@ -56,41 +62,25 @@ const Book: React.FC = () => {
   const finePerDay = 100;
 
   useEffect(() => {
-    const localBooks = JSON.parse(localStorage.getItem("books") || "[]");
-    const localUsers = JSON.parse(localStorage.getItem("readers") || "[]");
-    const localTransaction = JSON.parse(
-      localStorage.getItem("transactions") || "[]"
-    );
-
-    setBooks(localBooks);
-    setUsers(localUsers);
-    setTransactions(localTransaction);
-
-    localTransaction.forEach((transaction: TransactionType) => {
-      if (transaction.type === "borrow") {
-        const dueDate = new Date(transaction.date);
-        dueDate.setDate(dueDate.getDate() + overdueLimit);
-
-        if (new Date() > dueDate) {
-          const overdueDays = Math.floor(
-            (new Date().getTime() - dueDate.getTime()) / (1000 * 3600 * 24)
-          );
-          const fine = overdueDays * finePerDay;
-          notifyAdmin(transaction.readerId, fine);
-        }
+    (async () => {
+      setLoading(true);
+      try {
+        const books = await GetBookData();
+        setBook(books);
+        setFilteredData(books);
       }
-    });
-  }, []);
-
-  useEffect(() => {
-    const localBooks = JSON.parse(localStorage.getItem("books") || "[]");
-    setData(localBooks);
-    setFilteredData(localBooks);
-  }, []);
+      catch (error) {
+        console.error(error);
+      }
+      finally {
+        setLoading(false)
+      }
+    })();
+  }, [refresh])
 
   useEffect(() => {
     if (searchTerm) {
-      const filtered = data.filter(
+      const filtered = book.filter(
         (book) =>
           book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
           book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -98,17 +88,10 @@ const Book: React.FC = () => {
       );
       setFilteredData(filtered);
     } else {
-      setFilteredData(data);
+      setFilteredData(book);
     }
-  }, [searchTerm, data]);
+  }, [searchTerm, book]);
 
-  const notifyAdmin = (readerId: number, fine: number) => {
-    const reader = readers.find((x) => x.readerId === readerId);
-    notification.warning({
-      message: "There is an overdue book.",
-      description: `${reader?.name} has an overdue fine of ₹${fine}`,
-    });
-  };
 
   const showAddModal = () => {
     setViewAddModal(true);
@@ -120,17 +103,6 @@ const Book: React.FC = () => {
 
   const showReturnModal = () => {
     setViewReturnModal(true);
-  };
-
-  const handleAddBook = (values: Omit<BookType, "id">) => {
-    const newBook = { id: Math.floor(1000 + Math.random() * 9000), ...values };
-    const updatedBooks = [...books, newBook];
-
-    localStorage.setItem("books", JSON.stringify(updatedBooks));
-
-    setBooks(updatedBooks);
-    setViewAddModal(false);
-    addBookForm.resetFields();
   };
 
   const handleBorrowBook = () => {
@@ -238,6 +210,21 @@ const Book: React.FC = () => {
     setViewReturnModal(false);
     returnBookForm.resetFields();
   };
+  const handleAddBook = async (values: Omit<BookType, "id">) => {
+    const newBook = { id: Math.floor(1000 + Math.random() * 9000), ...values };
+    setLoading(true);
+    try {
+      await AddNewBook(newBook);
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error(error);
+    }
+    finally {
+      setLoading(false)
+      setViewAddModal(false);
+      addBookForm.resetFields();
+    }
+  };
 
   const handleViewDetails = (record: BookType) => {
     setSelectedBook(record);
@@ -252,122 +239,145 @@ const Book: React.FC = () => {
   };
 
   const handleSaveChanges = () => {
-    form.validateFields().then((values) => {
+    form.validateFields().then(async (values) => {
       if (selectedBook) {
-        const updatedData = data.map((item) =>
-          item.id === selectedBook.id ? { ...item, ...values } : item
-        );
-        setData(updatedData);
-        localStorage.setItem("books", JSON.stringify(updatedData));
-        setSelectedBook(null);
-        setViewDetailsModal(false);
-        form.resetFields();
+        try {
+          await UpdateBook(selectedBook.id, selectedBook)
+          const UpdateData = book.map((item) =>
+            item.id === selectedBook.id ?
+              { ...item, ...values }
+              : item
+          );
+          setRefresh(!refresh);
+          setBook(UpdateData);
+        } catch (error) {
+          console.error(error);
+        }
+        finally {
+          setLoading(true);
+          setSelectedBook(null);
+          setViewDetailsModal(false);
+          form.resetFields();
+        }
       }
     });
   };
 
-  const handleDeleteBook = (record: BookType) => {
-    const updatedData = data.filter((item) => item.id !== record.id);
-    setData(updatedData);
-    localStorage.setItem("books", JSON.stringify(updatedData));
-    setSelectedBook(null);
-    setViewDetailsModal(false);
-  };
+  const handleDeleteBook = async (record: BookType) => {
+    const updatedData = book.filter((item) => item.id !== record.id);
+    try {
+      await DeleteBook(record.id);
+      setLoading(true);
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setBook(updatedData);
+      setSelectedBook(null);
+      setViewDetailsModal(false);
+    }
+  }
+};
 
-  const columns = [
-    { title: "BookID", dataIndex: "id", width: "6%" },
-    {
-      title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
-        <div className="d-flex fs-7 gap-3">
-          <img src={record.bookPic} alt={record.title} height={"140px"} width={"100px"} /><span className="d-flex justify-content-center align-items-center"><p className="ms-4">{record.title}</p></span>
+const columns = [
+  { title: "BookID", dataIndex: "id", width: "6%" },
+  {
+    title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
+      <div className="d-flex fs-7 gap-3">
+        <img src={record.bookPic} alt={record.title} height={"140px"} width={"100px"} /><span className="d-flex justify-content-center align-items-center"><p className="ms-4">{record.title}</p></span>
+      </div>
+    ),
+    sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
+    defaultSortOrder: 'ascend' as const,
+  },
+  { title: "Author", dataIndex: "author", width: "15%" },
+  {
+    title: "Category", dataIndex: "category", width: "15%"
+  },
+
+  { title: "Price", dataIndex: "price", width: "10%" },
+  { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
+  {
+    title: "Book details",
+    dataIndex: "BookDetails",
+    render: (_: any, record: BookType) => (
+      <div className="d-flex gap-3">
+        <Button type="primary" onClick={() => handleViewDetails(record)}>
+          <EditOutlined />
+        </Button>
+        <Button
+          type="primary"
+          danger
+          onClick={() => handleDeleteBook(record)}
+        >
+          <DeleteOutlined />
+        </Button>
+      </div>
+    ),
+  },
+];
+
+return (
+  <div className="mt-2">
+    <div className="my-3">
+      <div className="d-flex justify-content-between">
+        <div className="mb-3 d-flex justify-content-between">
+          <Input className="search"
+            placeholder="Search by Booktitle or BookID"
+            prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ width: 300, height: 40 }}
+          />
         </div>
-      ),
-      sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
-      defaultSortOrder: 'ascend' as const,
-    },
-    { title: "Author", dataIndex: "author", width: "15%" },
-    {
-      title: "Category", dataIndex: "category", width: "15%"
-    },
-
-    { title: "Price", dataIndex: "price", width: "10%" },
-    { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
-    {
-      title: "Book details",
-      dataIndex: "BookDetails",
-      render: (_: any, record: BookType) => (
-        <div className="d-flex gap-3">
-          <Button type="primary" onClick={() => handleViewDetails(record)}>
-            <EditOutlined />
+        <div>
+          <Button
+            icon={<PlusOutlined />}
+            className="mx-2 p-4"
+            style={{
+              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+              borderRadius: "15px",
+              backgroundColor: "#fb3453",
+            }}
+            type="primary"
+            onClick={showAddModal}
+          >
+            Add Book
           </Button>
           <Button
+            icon={<BookOutlined />}
+            className="mx-2 p-4"
+            style={{
+              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+              borderRadius: "15px",
+              backgroundColor: "#fb3453",
+            }}
             type="primary"
-            danger
-            onClick={() => handleDeleteBook(record)}
+            onClick={showBorrowModal}
           >
-            <DeleteOutlined />
+            Borrow Book
+          </Button>
+          <Button
+            icon={<ArrowLeftOutlined />}
+            className="mx-2 p-4"
+            style={{
+              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+              borderRadius: "15px",
+              backgroundColor: "#fb3453",
+            }}
+            type="primary"
+            onClick={showReturnModal}
+          >
+            Return Book
           </Button>
         </div>
-      ),
-    },
-  ];
-
-  return (
-    <div className="mt-2">
-      <div className="my-3">
-        <div className="d-flex justify-content-between">
-          <div className="mb-3 d-flex justify-content-between">
-            <Input className="search"
-              placeholder="Search by Booktitle or BookID"
-              prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ width: 300, height: 40 }}
-            />
-          </div>
-          <div>
-            <Button
-              icon={<PlusOutlined />}
-              className="mx-2 p-4"
-              style={{
-                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "15px",
-                backgroundColor: "#fb3453",
-              }}
-              type="primary"
-              onClick={showAddModal}
-            >
-              Add Book
-            </Button>
-            <Button
-              icon={<BookOutlined />}
-              className="mx-2 p-4"
-              style={{
-                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "15px",
-                backgroundColor: "#fb3453",
-              }}
-              type="primary"
-              onClick={showBorrowModal}
-            >
-              Borrow Book
-            </Button>
-            <Button
-              icon={<ArrowLeftOutlined />}
-              className="mx-2 p-4"
-              style={{
-                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "15px",
-                backgroundColor: "#fb3453",
-              }}
-              type="primary"
-              onClick={showReturnModal}
-            >
-              Return Book
-            </Button>
-          </div>
-        </div>
       </div>
+    </div>
+    {loading ? (
+      <div className="d-flex justify-content-center align-items-center py-5">
+        <Spin tip="Loading..." size="large" />
+      </div>
+    ) : (
       <Table
         bordered
         dataSource={filteredData}
@@ -375,232 +385,65 @@ const Book: React.FC = () => {
         rowKey="id"
         pagination={{ pageSize: 10 }}
       />
-      <Modal
-        title="Book Details"
-        open={viewDetailsModal}
-        onCancel={() => {
-          setViewDetailsModal(false);
-          form.resetFields();
-        }}
-        footer={[
-          <Button key="save" type="primary" onClick={handleSaveChanges}>
-            Save Changes
-          </Button>,
-        ]}
-      >
-        <Form layout="vertical" form={form}>
-          <Form.Item
-            name="title"
-            label="Book Title"
-            rules={[{ required: true, message: "Please input the title!" }]}
-          >
-            <Input autoComplete="off" />
-          </Form.Item>
-          <Form.Item
-            name="author"
-            label="Author"
-            rules={[{ required: true, message: "Please input the author!" }]}
-          >
-            <Input autoComplete="off" />
-          </Form.Item>
-          <Form.Item
-            name="category"
-            label="Category"
-            rules={[{ required: true, message: "Please input the category!" }]}
-          >
-            <Input autoComplete="off" />
-          </Form.Item>
-          <Form.Item
-            name="bookISBN"
-            label="ISBN"
-            rules={[{ required: true, message: "Please enter book ISBN" }]}
-          >
-            <Input autoComplete="off" />
-          </Form.Item>
-          <Form.Item
-            name="bookPic"
-            label="Book Cover Image URL"
-            rules={[{ required: true, message: "Please input the image URL!" }]}
-          >
-            <Input type="string" autoComplete="off" />
-          </Form.Item>
-          <Form.Item
-            name="price"
-            label="Price"
-            rules={[{ required: true, message: "Please input the price!" }]}
-          >
-            <Input type="number" autoComplete="off" />
-          </Form.Item>
-        </Form>
-      </Modal>
-      {/* Add Book Modal */}
-      <Modal
-        visible={viewAddModal}
-        title="Add Book"
-        onCancel={handleCancelAddModal}
-        footer={null}
-      >
-        <Form form={addBookForm} onFinish={handleAddBook} layout="vertical">
-          <Form.Item
-            name="title"
-            label="Book Title"
-            rules={[{ required: true, message: "Please enter book title" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="author"
-            label="Author"
-            rules={[{ required: true, message: "Please enter author name" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="category"
-            label="Category"
-            rules={[{ required: true, message: "Please enter book category" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="bookISBN"
-            label="ISBN"
-            rules={[{ required: true, message: "Please enter book ISBN" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="bookCount"
-            label="Book Count"
-            rules={[{ required: true, message: "Please enter book count" }]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
-            name="bookPic"
-            label="Book Picture URL"
-            rules={[
-              { required: true, message: "Please enter book picture URL" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="price"
-            label="Price"
-            rules={[{ required: true, message: "Please enter book price" }]}
-          >
-            <Input type="number" />
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Add Book
-          </Button>
-        </Form>
-      </Modal>
+    )}
+    <Modal
+      title="Book Details"
+      open={viewDetailsModal}
+      onCancel={() => {
+        setViewDetailsModal(false);
+        form.resetFields();
+      }}
+      footer={null}
+    >
+      <BookForm
+        form={form}
+        onSubmit={handleSaveChanges}
+        submitText="Save Changes"
+      />
+    </Modal>
+    {/* Add Book Modal */}
+    <Modal
+      visible={viewAddModal}
+      title="Add Book"
+      onCancel={handleCancelAddModal}
+      footer={null}
+    >
+      <BookForm
+        form={form}
+        onSubmit={handleAddBook}
+        submitText="Add Book"
+      />
 
-      {/* Borrow Book Modal */}
-      <Modal
-        visible={viewBorrowModal}
-        title="Borrow Book"
-        onCancel={handleCancelBorrowModal}
-        footer={null}
-      >
-        <Form
-          form={borrowBookForm}
-          onFinish={handleBorrowBook}
-          layout="vertical"
-        >
-          <Form.Item
-            name="reader"
-            label="Select User"
-            rules={[{ required: true, message: "Please select a reader" }]}
-          >
-            <Select
-              placeholder="Select User"
-              onChange={(value) => setSelectedUserId(value)}
-            >
-              {readers.map((reader) => (
-                <Select.Option key={reader.readerId} value={reader.readerId}>
-                  {reader.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
+    </Modal>
 
-          <Form.Item
-            name="book"
-            label="Select Book"
-            rules={[{ required: true, message: "Please select a book" }]}
-          >
-            <Select
-              placeholder="Select Book"
-              onChange={(value) => setSelectedBookId(value)}
-            >
-              {books.map((book) => (
-                <Select.Option key={book.id} value={book.id}>
-                  {book.title}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Borrow Book
-          </Button>
-        </Form>
-      </Modal>
+    {/* Borrow Book Modal */}
+    <Modal
+      visible={viewBorrowModal}
+      title="Borrow Book"
+      onCancel={handleCancelBorrowModal}
+      footer={null}
+    >
+      <BRBook
+        form={borrowBookForm}
+        onSubmit={handleBorrowBook}
+        submitText="Borrow Book"
+        read={readers}
+        book={book}
+        setSelectedUserId={selectedUserId}
+        setSelectedBookId={selectedBookId}
+      />
+    </Modal>
 
-      {/* Return Book Modal */}
-      <Modal
-        visible={viewReturnModal}
-        title="Return Book"
-        onCancel={handleCancelReturnModal}
-        footer={null}
-      >
-        <Form
-          form={returnBookForm}
-          onFinish={handleReturnBook}
-          layout="vertical"
-        >
-          <Form.Item
-            name="reader"
-            label="Select User"
-            rules={[{ required: true, message: "Please select a reader" }]}
-          >
-            <Select
-              placeholder="Select User"
-              onChange={(value) => setSelectedUserId(value)}
-            >
-              {readers.map((reader) => (
-                <Select.Option key={reader.readerId} value={reader.readerId}>
-                  {reader.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="book"
-            label="Select Book"
-            rules={[{ required: true, message: "Please select a book" }]}
-          >
-            <Select
-              placeholder="Select Book"
-              onChange={(value) => setSelectedBookId(value)}
-            >
-              {books.map((book) => (
-                <Select.Option key={book.id} value={book.id}>
-                  {book.title}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Return Book
-          </Button>
-        </Form>
-      </Modal>
-    </div>
-  );
+    {/* Return Book Modal */}
+    <Modal
+      visible={viewReturnModal}
+      title="Return Book"
+      onCancel={handleCancelReturnModal}
+      footer={null}
+    >
+    </Modal>
+  </div>
+);
 };
 
 export default Book;

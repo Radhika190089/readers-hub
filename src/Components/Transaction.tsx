@@ -6,7 +6,7 @@ import { ColumnsType } from "antd/es/table";
 import { GetTransaction } from "./Services/TransactionServices";
 import { FormOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
 
 export interface TransactionType {
   transactionId: number;
