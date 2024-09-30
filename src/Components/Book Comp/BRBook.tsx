@@ -57,7 +57,7 @@ const BRBook: React.FC<BRProps> = ({
                             onChange={(value) => setSelectedBookId(value)}
                         >
                             {book.map((book) => (
-                                <Select.Option key={book.id} value={book.id}>
+                                <Select.Option key={book.bookId} value={book.bookId}>
                                     {book.title}
                                 </Select.Option>
                             ))}
