@@ -131,7 +131,7 @@ const Transaction: React.FC = () => {
                   />
                 </div>
               </div>
-              <h2>Overdue Books</h2>
+              <h2>Books Borrowed This Week</h2>
             </div>
           </div>
         </div>

@@ -81,7 +81,8 @@ const ReaderManagement: React.FC = () => {
     setViewAddUserModal(true);
   };
 
-  const handleAddReader = async (
+  const handleAddReader 
+  = async (
     newReaderData: Omit<ReaderType, "readerId">
   ) => {
     const newReader = {
