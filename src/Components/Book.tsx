@@ -277,173 +277,171 @@ const Book: React.FC = () => {
       setViewDetailsModal(false);
     }
   }
-};
 
-const columns = [
-  { title: "BookID", dataIndex: "id", width: "6%" },
-  {
-    title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
-      <div className="d-flex fs-7 gap-3">
-        <img src={record.bookPic} alt={record.title} height={"140px"} width={"100px"} /><span className="d-flex justify-content-center align-items-center"><p className="ms-4">{record.title}</p></span>
-      </div>
-    ),
-    sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
-    defaultSortOrder: 'ascend' as const,
-  },
-  { title: "Author", dataIndex: "author", width: "15%" },
-  {
-    title: "Category", dataIndex: "category", width: "15%"
-  },
-
-  { title: "Price", dataIndex: "price", width: "10%" },
-  { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
-  {
-    title: "Book details",
-    dataIndex: "BookDetails",
-    render: (_: any, record: BookType) => (
-      <div className="d-flex gap-3">
-        <Button type="primary" onClick={() => handleViewDetails(record)}>
-          <EditOutlined />
-        </Button>
-        <Button
-          type="primary"
-          danger
-          onClick={() => handleDeleteBook(record)}
-        >
-          <DeleteOutlined />
-        </Button>
-      </div>
-    ),
-  },
-];
-
-return (
-  <div className="mt-2">
-    <div className="my-3">
-      <div className="d-flex justify-content-between">
-        <div className="mb-3 d-flex justify-content-between">
-          <Input className="search"
-            placeholder="Search by Booktitle or BookID"
-            prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: 300, height: 40 }}
-          />
+  const columns = [
+    { title: "BookID", dataIndex: "id", width: "6%" },
+    {
+      title: "Book Title", dataIndex: "title", width: "25%", render: (_: any, record: BookType) => (
+        <div className="d-flex fs-7 gap-3">
+          <img src={record.bookPic} alt={record.title} height={"140px"} width={"100px"} /><span className="d-flex justify-content-center align-items-center"><p className="ms-4">{record.title}</p></span>
         </div>
-        <div>
-          <Button
-            icon={<PlusOutlined />}
-            className="mx-2 p-4"
-            style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-              borderRadius: "15px",
-              backgroundColor: "#fb3453",
-            }}
-            type="primary"
-            onClick={showAddModal}
-          >
-            Add Book
+      ),
+      sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
+      defaultSortOrder: 'ascend' as const,
+    },
+    { title: "Author", dataIndex: "author", width: "15%" },
+    {
+      title: "Category", dataIndex: "category", width: "15%"
+    },
+
+    { title: "Price", dataIndex: "price", width: "10%" },
+    { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
+    {
+      title: "Book details",
+      dataIndex: "BookDetails",
+      render: (_: any, record: BookType) => (
+        <div className="d-flex gap-3">
+          <Button type="primary" onClick={() => handleViewDetails(record)}>
+            <EditOutlined />
           </Button>
           <Button
-            icon={<BookOutlined />}
-            className="mx-2 p-4"
-            style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-              borderRadius: "15px",
-              backgroundColor: "#fb3453",
-            }}
             type="primary"
-            onClick={showBorrowModal}
+            danger
+            onClick={() => handleDeleteBook(record)}
           >
-            Borrow Book
-          </Button>
-          <Button
-            icon={<ArrowLeftOutlined />}
-            className="mx-2 p-4"
-            style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-              borderRadius: "15px",
-              backgroundColor: "#fb3453",
-            }}
-            type="primary"
-            onClick={showReturnModal}
-          >
-            Return Book
+            <DeleteOutlined />
           </Button>
         </div>
+      ),
+    },
+  ];
+
+  return (
+    <div className="mt-2">
+      <div className="my-3">
+        <div className="d-flex justify-content-between">
+          <div className="mb-3 d-flex justify-content-between">
+            <Input className="search"
+              placeholder="Search by Booktitle or BookID"
+              prefix={<SearchOutlined style={{ paddingRight: '6px' }} />}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ width: 300, height: 40 }}
+            />
+          </div>
+          <div>
+            <Button
+              icon={<PlusOutlined />}
+              className="mx-2 p-4"
+              style={{
+                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+                borderRadius: "15px",
+                backgroundColor: "#fb3453",
+              }}
+              type="primary"
+              onClick={showAddModal}
+            >
+              Add Book
+            </Button>
+            <Button
+              icon={<BookOutlined />}
+              className="mx-2 p-4"
+              style={{
+                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+                borderRadius: "15px",
+                backgroundColor: "#fb3453",
+              }}
+              type="primary"
+              onClick={showBorrowModal}
+            >
+              Borrow Book
+            </Button>
+            <Button
+              icon={<ArrowLeftOutlined />}
+              className="mx-2 p-4"
+              style={{
+                boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
+                borderRadius: "15px",
+                backgroundColor: "#fb3453",
+              }}
+              type="primary"
+              onClick={showReturnModal}
+            >
+              Return Book
+            </Button>
+          </div>
+        </div>
       </div>
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center py-5">
+          <Spin tip="Loading..." size="large" />
+        </div>
+      ) : (
+        <Table
+          bordered
+          dataSource={filteredData}
+          columns={columns}
+          rowKey="id"
+          pagination={{ pageSize: 10 }}
+        />
+      )}
+      <Modal
+        title="Book Details"
+        open={viewDetailsModal}
+        onCancel={() => {
+          setViewDetailsModal(false);
+          form.resetFields();
+        }}
+        footer={null}
+      >
+        <BookForm
+          form={form}
+          onSubmit={handleSaveChanges}
+          submitText="Save Changes"
+        />
+      </Modal>
+      {/* Add Book Modal */}
+      <Modal
+        visible={viewAddModal}
+        title="Add Book"
+        onCancel={handleCancelAddModal}
+        footer={null}
+      >
+        <BookForm
+          form={form}
+          onSubmit={handleAddBook}
+          submitText="Add Book"
+        />
+
+      </Modal>
+
+      {/* Borrow Book Modal */}
+      <Modal
+        visible={viewBorrowModal}
+        title="Borrow Book"
+        onCancel={handleCancelBorrowModal}
+        footer={null}
+      >
+        <BRBook
+          form={borrowBookForm}
+          onSubmit={handleBorrowBook}
+          submitText="Borrow Book"
+          read={readers}
+          book={book}
+          setSelectedUserId={selectedUserId}
+          setSelectedBookId={selectedBookId}
+        />
+      </Modal>
+
+      {/* Return Book Modal */}
+      <Modal
+        visible={viewReturnModal}
+        title="Return Book"
+        onCancel={handleCancelReturnModal}
+        footer={null}
+      >
+      </Modal>
     </div>
-    {loading ? (
-      <div className="d-flex justify-content-center align-items-center py-5">
-        <Spin tip="Loading..." size="large" />
-      </div>
-    ) : (
-      <Table
-        bordered
-        dataSource={filteredData}
-        columns={columns}
-        rowKey="id"
-        pagination={{ pageSize: 10 }}
-      />
-    )}
-    <Modal
-      title="Book Details"
-      open={viewDetailsModal}
-      onCancel={() => {
-        setViewDetailsModal(false);
-        form.resetFields();
-      }}
-      footer={null}
-    >
-      <BookForm
-        form={form}
-        onSubmit={handleSaveChanges}
-        submitText="Save Changes"
-      />
-    </Modal>
-    {/* Add Book Modal */}
-    <Modal
-      visible={viewAddModal}
-      title="Add Book"
-      onCancel={handleCancelAddModal}
-      footer={null}
-    >
-      <BookForm
-        form={form}
-        onSubmit={handleAddBook}
-        submitText="Add Book"
-      />
-
-    </Modal>
-
-    {/* Borrow Book Modal */}
-    <Modal
-      visible={viewBorrowModal}
-      title="Borrow Book"
-      onCancel={handleCancelBorrowModal}
-      footer={null}
-    >
-      <BRBook
-        form={borrowBookForm}
-        onSubmit={handleBorrowBook}
-        submitText="Borrow Book"
-        read={readers}
-        book={book}
-        setSelectedUserId={selectedUserId}
-        setSelectedBookId={selectedBookId}
-      />
-    </Modal>
-
-    {/* Return Book Modal */}
-    <Modal
-      visible={viewReturnModal}
-      title="Return Book"
-      onCancel={handleCancelReturnModal}
-      footer={null}
-    >
-    </Modal>
-  </div>
-);
+  );
 };
-
 export default Book;
