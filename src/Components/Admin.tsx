@@ -8,7 +8,7 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu } from "antd";
+import { Button, Dropdown, Layout, Menu, MenuProps, message, Popover } from "antd";
 import {
   useNavigate,
   useLocation,
@@ -35,6 +35,28 @@ export interface AdminType {
   gender: string;
   pfp?: string;
 }
+const handleMenuClick: MenuProps['onClick'] = (e) => {
+  message.info('Click on menu item.');
+  console.log('click', e);
+};
+
+const items: MenuProps['items'] = [
+  {
+    label: 'Profile',
+    key: '1',
+    icon: <UserOutlined />,
+  },
+  {
+    label: 'LogOut',
+    key: '2',
+    icon: <UserOutlined />,
+  },
+];
+
+const menuProps = {
+  items,
+  onClick: handleMenuClick,
+};
 
 const AdminPortal: React.FC = () => {
   const user = JSON.parse(localStorage.getItem("loggedUser") || "[]");
@@ -120,7 +142,7 @@ const AdminPortal: React.FC = () => {
             color: "white",
             backgroundColor: "#Fb3454",
             fontFamily: "Poppins",
-            fontSize: "17px",
+            fontSize: "18px",
           }}
         >
           <Menu.Item
@@ -129,11 +151,11 @@ const AdminPortal: React.FC = () => {
               <HomeOutlined
                 style={{
                   color: selectedNavItems === "/" ? "#fb3453" : "white",
-                  fontSize: "17px",
+                  fontSize: "20px",
                 }}
               />
             }
-            style={{ color: selectedNavItems === "/" ? "#fb3453" : "white" }}
+            style={{ color: selectedNavItems === "/" ? "#fb3453" : "white", marginTop: '5px' }}
           >
             Dashboard
           </Menu.Item>
@@ -143,13 +165,13 @@ const AdminPortal: React.FC = () => {
               <BookOutlined
                 style={{
                   color: selectedNavItems === "/book" ? "#fb3453" : "white",
-                  fontSize: "17px",
+                  fontSize: "20px",
                 }}
               />
             }
             style={{
               color: selectedNavItems === "/book" ? "#fb3453" : "white",
-              position: "relative",
+              position: "relative", marginTop: '5px'
             }}
           >
             Books
@@ -160,12 +182,13 @@ const AdminPortal: React.FC = () => {
               <FormOutlined
                 style={{
                   color: selectedNavItems === "/transaction" ? "#fb3453" : "white",
-                  fontSize: "17px",
+                  fontSize: "20px",
                 }}
               />
             }
             style={{
               color: selectedNavItems === "/transaction" ? "#fb3453" : "white",
+              marginTop: '5px'
             }}
           >
             Transactions
@@ -179,18 +202,19 @@ const AdminPortal: React.FC = () => {
                     selectedNavItems === "/readerManagement"
                       ? "#fb3453"
                       : "white",
-                  fontSize: "17px",
+                  fontSize: "20px",
                 }}
               />
             }
             style={{
               color:
                 selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
+              marginTop: '5px'
             }}
           >
             Reader Management
           </Menu.Item>
-          <Menu.Item
+          {/* <Menu.Item
             key="/profile"
             icon={
               <UserOutlined
@@ -207,7 +231,7 @@ const AdminPortal: React.FC = () => {
             }} // Adjusted to the same position
           >
             Profile
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout>
@@ -235,35 +259,35 @@ const AdminPortal: React.FC = () => {
           >
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </Button>
-          <div className="d-flex align-items-center ms-auto">
+          <Dropdown menu={menuProps}>
             <div className="d-flex align-items-center ms-auto">
-              <div className="mt-4">
-                <Avatar
-                  onClick={() => navigate("/profile")}
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-                  name={"Suresh"}
-                  size={50}
-                />
-              </div>
-              <div
-                className="linh text-end mx-3"
-                style={{ fontFamily: "poppins" }}
-              >
-                <h5
-                  onClick={() => navigate("/profile")}
-                  style={{ cursor: "pointer" }}
+              <div className="d-flex align-items-center ms-auto">
+                <div className="mt-4">
+                  <Avatar
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
+                    name={"Suresh"}
+                    size={50}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+                <div
+                  className="linh text-end mx-3"
+                  style={{ fontFamily: "poppins" }}
                 >
-                  Suresh
-                </h5>
-                <p
-                  onClick={() => navigate("/profile")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Admin
-                </p>
+                  <h5
+                    style={{ cursor: "pointer" }}
+                  >
+                    Suresh
+                  </h5>
+                  <p
+                    style={{ cursor: "pointer" }}
+                  >
+                    Admin
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </Dropdown>
         </Header>
         <Content
           style={{
@@ -283,7 +307,7 @@ const AdminPortal: React.FC = () => {
           >
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/transaction" element={<Transaction/>} />
+              <Route path="/transaction" element={<Transaction />} />
               <Route path="/readerManagement" element={<ReaderManagement />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/book" element={<Book />} />

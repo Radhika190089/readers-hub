@@ -174,11 +174,11 @@ const Dashboard: React.FC = () => {
             console.log("book", book);
             return (
               <div
-                key={book.id}
+                key={book.bookId}
                 style={{ margin: "20px", lineHeight: 0.5, cursor: "pointer" }}
                 className="card1"
               >
-                <img src={book.bookPic} alt={book.title} height={"250px"} />
+                <img src={book.bookURL} alt={book.title} height={"250px"} />
                 <h6 className="mt-2">{book.title}</h6>
                 <p style={{ color: "rgb(125,125,125)" }}>{book.author}</p>
                 <h6 style={{ color: "#Fb3453" }}>{book.category}</h6>
