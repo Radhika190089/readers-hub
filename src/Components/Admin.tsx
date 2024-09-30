@@ -137,23 +137,6 @@ const AdminPortal: React.FC = () => {
           >
             Dashboard
           </Menu.Item>
-          {/* <Menu.Item
-            key="/books"
-            icon={
-              <BookOutlined
-                style={{
-                  color: selectedNavItems === "/books" ? "#fb3453" : "white",
-                  fontSize: "17px",
-                }}
-              />
-            }
-            style={{
-              color: selectedNavItems === "/books" ? "#fb3453" : "white",
-              marginTop: "10px",
-            }}
-          >
-            Books Management
-          </Menu.Item> */}
           <Menu.Item
             key="/book"
             icon={
@@ -183,7 +166,6 @@ const AdminPortal: React.FC = () => {
             }
             style={{
               color: selectedNavItems === "/transaction" ? "#fb3453" : "white",
-              marginTop: "10px",
             }}
           >
             Transactions
@@ -204,7 +186,6 @@ const AdminPortal: React.FC = () => {
             style={{
               color:
                 selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
-              marginTop: "10px",
             }}
           >
             Reader Management
