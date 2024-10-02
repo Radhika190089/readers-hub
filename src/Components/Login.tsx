@@ -9,12 +9,12 @@ const Login = () => {
   const onFinish = (values: { email: string; password: string }) => {
     const users = JSON.parse(localStorage.getItem("admin") || "") || [];
     const user =
-      users?.filter(
+      users?.find(
         (user: { email: string; password: string }) =>
           user.email === values.email && user.password === values.password
       ) || [];
 
-    if (user.length !== 0) {
+    if (user) {
       message.success("Login successful!");
       localStorage.setItem("loggedUser", "true");
       navigate("/");
@@ -41,7 +41,7 @@ const Login = () => {
           </div>
           <div className="formdes2 p-3 rounded">
             <h2
-              className="mx-4 bg-white fw-bolder text-center"
+              className="bg-white fw-bolder text-center"
               style={{ color: "#fb3453" }}
             >
               Log In
@@ -62,8 +62,6 @@ const Login = () => {
               >
                 <Input
                   placeholder="Enter your Email"
-                  className="form-control"
-                  style={{ color: "#000", opacity: 0.5 }}
                 />
               </Form.Item>
 
@@ -74,10 +72,8 @@ const Login = () => {
                   { required: true, message: "Please enter your password" },
                 ]}
               >
-                <Input.Password
+                <Input
                   placeholder="Enter your Password"
-                  style={{ color: "#000", opacity: 0.9 }}
-                // className="form-control"
                 />
               </Form.Item>
 

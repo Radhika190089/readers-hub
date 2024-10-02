@@ -1,18 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
-import "antd/dist/reset.css"; // Import Ant Design CSS
-import bookImage from "./Styles/Rbooks.png";
+import "antd/dist/reset.css";
 import "./Styles/st.css";
 
 const Signup = () => {
   const navigate = useNavigate();
 
   const onFinish = (values: {
-    fullName: string;
-    username: string;
+    name: string;
     email: string;
+    gender: string;
     phoneNumber: string;
-    age: string;
     password: string;
     confirmPassword: string;
   }) => {
@@ -51,23 +49,13 @@ const Signup = () => {
               layout="vertical"
             >
               <Form.Item
-                label="Full Name"
-                name="fullName"
+                label="Name"
+                name="name"
                 rules={[
                   { required: true, message: "Please enter your full name" },
                 ]}
               >
                 <Input placeholder="Enter your Full Name" />
-              </Form.Item>
-
-              <Form.Item
-                label="Username"
-                name="username"
-                rules={[
-                  { required: true, message: "Please enter your username" },
-                ]}
-              >
-                <Input placeholder="Enter your Username" />
               </Form.Item>
 
               <Form.Item
@@ -93,11 +81,11 @@ const Signup = () => {
               </Form.Item>
 
               <Form.Item
-                label="Age"
-                name="age"
-                rules={[{ required: true, message: "Please enter your age" }]}
+                label="Gender"
+                name="gender"
+                rules={[{ required: true, message: "Please enter your Gender" }]}
               >
-                <Input placeholder="Enter your Age" />
+                <Input placeholder="Gender" />
               </Form.Item>
 
               <Form.Item
