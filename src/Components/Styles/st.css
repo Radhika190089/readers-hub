@@ -287,3 +287,6 @@ body,
 :where(.css-dev-only-do-not-override-qnu6hi).ant-spin .ant-spin-dot-holder {
     color: #fb3453;
 }
+:where(.css-dev-only-do-not-override-qnu6hi).ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >thead>tr>th{
+    text-align: center;
+}

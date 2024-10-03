@@ -63,16 +63,17 @@ const Transaction: React.FC = () => {
       key: "readerName",
       width: "20%",
     },
-    {
-      title: "Book ISBN",
-      dataIndex: "bookISBN",
-      key: "bookISBN",
-      width: "20%",
-    },
+
     {
       title: "Book Name",
       dataIndex: "bookName",
       key: "bookName",
+      width: "20%",
+    },
+    {
+      title: "Book ISBN",
+      dataIndex: "bookISBN",
+      key: "bookISBN",
       width: "20%",
     },
     {

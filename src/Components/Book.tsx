@@ -17,27 +17,24 @@ import {
   GetBookData,
   UpdateBook,
 } from "./Services/BookServices";
+import { GetReaderData } from "./Services/ReaderServices";
+import {
+  BorrowTransaction,
+  GetTransaction,
+  ReturnTransaction,
+} from "./Services/TransactionServices";
+import { TransactionType } from "./Transaction";
+import generateUniqueId from "generate-unique-id";
 
 export interface BookType {
-  bookId: number;
   title: string;
+  bookId: string;
   author: string;
   category: string;
   bookISBN: string;
   bookCount: number;
   bookURL: string;
   price: number;
-}
-
-export interface TransactionType {
-  key: number;
-  transactionId: number;
-  readerId: number;
-  readerName: string;
-  bookISBN: string;
-  bookName: string;
-  date: Date;
-  type: "borrow" | "return";
 }
 
 const Book: React.FC = () => {
@@ -50,11 +47,10 @@ const Book: React.FC = () => {
   const [viewAddModal, setViewAddModal] = useState(false);
   const [viewBorrowModal, setViewBorrowModal] = useState(false);
   const [viewReturnModal, setViewReturnModal] = useState(false);
-  const [books, setBooks] = useState<BookType[]>([]);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const [readers, setUsers] = useState<ReaderType[]>([]);
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+  const [readers, setReaders] = useState<ReaderType[]>([]);
+  const [selectedReaderId, setSelectedReaderId] = useState<number | null>(null);
+  const [selectedBookISBN, setSelectedBookISBN] = useState<string | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [refresh, setRefresh] = React.useState<boolean>(false);
 
@@ -62,16 +58,18 @@ const Book: React.FC = () => {
   const [borrowBookForm] = Form.useForm();
   const [returnBookForm] = Form.useForm();
 
-  const overdueLimit = 1;
-  const finePerDay = 100;
-
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
-        const books = await GetBookData();
-        setBook(books);
-        setFilteredData(books);
+        const book = await GetBookData();
+        const reader = await GetReaderData();
+        const transaction = await GetTransaction();
+
+        setBook(book);
+        setReaders(reader);
+        setTransactions(transaction);
+        setFilteredData(book);
       } catch (error) {
         console.error(error);
       } finally {
@@ -106,86 +104,71 @@ const Book: React.FC = () => {
     setViewReturnModal(true);
   };
 
-  const handleBorrowBook = () => {
-    if (selectedBookId && selectedUserId) {
-      const bookISBN = selectedBookId;
-      const readerID = Number(selectedUserId);
+  const handleBorrowBook = async () => {
+    if (selectedBookISBN && selectedReaderId) {
+      const bookISBN = selectedBookISBN;
+      const readerID = Number(selectedReaderId);
 
-      const bookIndex = books.findIndex((b) => b.bookISBN === bookISBN);
+      const bookIndex = book.findIndex((b) => b.bookISBN === bookISBN);
 
-      if (bookIndex !== -1 && books[bookIndex].bookCount > 0) {
-        const updatedBooks = [...books];
+      if (bookIndex !== -1 && book[bookIndex].bookCount > 0) {
+        const updatedBooks = [...book];
         updatedBooks[bookIndex].bookCount -= 1;
-        setBooks(updatedBooks);
-        localStorage.setItem("books", JSON.stringify(updatedBooks));
-        const newTransaction: TransactionType = {
-          transactionId: transactions.length + 1,
-          bookISBN: bookISBN,
-          bookName: books[bookIndex].title,
-          readerId: readerID,
-          readerName: readers.find((x) => x.readerId == readerID)?.name || "",
-          type: "borrow",
-          date: new Date(),
-          key: 0,
-        };
-        const updatedTransactions = [...transactions, newTransaction];
-        localStorage.setItem(
-          "transactions",
-          JSON.stringify(updatedTransactions)
-        );
-        setTransactions(updatedTransactions);
-        setViewBorrowModal(false);
-        borrowBookForm.resetFields();
+        setBook(updatedBooks);
 
-        alert("Book Borrowed Successfully.");
-      } else {
-        console.error("Book not found or out of stock");
+        try {
+          await BorrowTransaction(bookISBN, readerID);
+          setRefresh(!refresh);
+          notification.success({ message: "Book borrowed successfully!" });
+        } catch (error: any) {
+          notification.error({
+            message: "Failed to borrow book",
+            description: error.message,
+          });
+        } finally {
+          setViewBorrowModal(false);
+          borrowBookForm.resetFields();
+        }
       }
     } else {
-      alert("Please select a User and Book.");
+      notification.error({ message: "Please select a Reader and Book." });
     }
   };
 
-  const handleReturnBook = () => {
-    if (selectedBookId && selectedUserId) {
-      const bookISBN = selectedBookId;
-      const readerID = Number(selectedUserId);
+  const handleReturnBook = async () => {
+    if (selectedBookISBN && selectedReaderId) {
+      const bookISBN = selectedBookISBN;
+      const readerID = Number(selectedReaderId);
 
-      const borrowedBook = transactions.find((transaction) => {
-        return (
+      const borrowedBook = transactions.find(
+        (transaction) =>
           transaction.bookISBN === bookISBN &&
           transaction.readerId === readerID &&
-          transaction.type === "borrow"
-        );
-      });
+          transaction.type === "Borrow"
+      );
 
       if (borrowedBook) {
-        const bookIndex = books.findIndex((b) => b.bookISBN === bookISBN);
+        const bookIndex = book.findIndex((b) => b.bookISBN === bookISBN);
 
         if (bookIndex !== -1) {
-          const updatedBooks = [...books];
+          const updatedBooks = [...book];
           updatedBooks[bookIndex].bookCount += 1;
-          setBooks(updatedBooks);
-          localStorage.setItem("books", JSON.stringify(updatedBooks));
-          const newTransaction: TransactionType = {
-            transactionId: transactions.length + 1,
-            bookISBN: bookISBN,
-            bookName: books[bookIndex].title,
-            readerId: readerID,
-            readerName: readers.find((x) => x.readerId == readerID)?.name || "",
-            type: "return",
-            date: new Date(),
-            key: 0,
-          };
+          setBook(updatedBooks);
 
-          const updatedTransactions = [...transactions, newTransaction];
-          localStorage.setItem(
-            "transactions",
-            JSON.stringify(updatedTransactions)
-          );
-          setTransactions(updatedTransactions);
-          setViewReturnModal(false);
-          returnBookForm.resetFields();
+          try {
+            await ReturnTransaction(bookISBN, readerID);
+
+            setRefresh(!refresh);
+            notification.success({ message: "Book returned successfully!" });
+          } catch (error: any) {
+            notification.error({
+              message: "Failed to return book",
+              description: error.message,
+            });
+          } finally {
+            setViewReturnModal(false);
+            returnBookForm.resetFields();
+          }
         } else {
           console.error("Book not found");
         }
@@ -193,7 +176,7 @@ const Book: React.FC = () => {
         alert("No borrowed transaction found for this book by the reader.");
       }
     } else {
-      alert("Please select a User and Book.");
+      alert("Please select a Reader and Book.");
     }
   };
 
@@ -211,14 +194,11 @@ const Book: React.FC = () => {
     setViewReturnModal(false);
     returnBookForm.resetFields();
   };
-  const handleAddBook = async (values: Omit<BookType, "bookId">) => {
-    const newBook = {
-      bookId: Math.floor(1000 + Math.random() * 9000),
-      ...values,
-    };
+
+  const handleAddBook = async (values: BookType) => {
     setLoading(true);
     try {
-      await AddNewBook(newBook);
+      await AddNewBook(values);
       setRefresh(!refresh);
     } catch (error) {
       console.error(error);
@@ -231,19 +211,14 @@ const Book: React.FC = () => {
 
   const handleViewDetails = (record: BookType) => {
     setSelectedBook(record);
-    form.setFieldsValue({
-      author: record.author,
-      title: record.title,
-      category: record.category,
-      bookURL: record.bookURL,
-      price: record.price,
-    });
+    form.setFieldsValue(record);
     setViewDetailsModal(true);
   };
 
   const handleSaveChanges = () => {
     form.validateFields().then(async (values) => {
       if (selectedBook) {
+        const updatedBooks = { ...selectedBook, ...values };
         try {
           await UpdateBook(selectedBook.bookId, selectedBook);
           const UpdateData = book.map((item) =>
@@ -279,7 +254,12 @@ const Book: React.FC = () => {
   };
 
   const columns = [
-    { title: "BookID", dataIndex: "bookId", width: "6%" },
+    {
+      title: "S No.",
+      dataIndex: "sno",
+      render: (_: any, __: BookType, index: number) => index + 1,
+      width: "5%",
+    },
     {
       title: "Book Title",
       dataIndex: "title",
@@ -298,28 +278,58 @@ const Book: React.FC = () => {
         </div>
       ),
       sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
-      defaultSortOrder: "ascend" as const,
     },
-    { title: "Author", dataIndex: "author", width: "15%" },
-    { title: "Category", dataIndex: "category", width: "15%" },
-    { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
-    { title: "Price", dataIndex: "price", width: "10%" },
     {
-      title: "Book details",
-      dataIndex: "BookDetails",
+      title: "Author",
+      dataIndex: "author",
+      width: "15%",
+      sorter: (a: BookType, b: BookType) => a.author.localeCompare(b.author),
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      width: "10%",
+      sorter: (a: BookType, b: BookType) =>
+        a.category.localeCompare(b.category),
+    },
+    { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
+    {
+      title: "Price",
+      dataIndex: "price",
+      width: "8%",
+      sorter: (a: any, b: any) => a.price - b.price,
+    },
+    { title: "Book Count", dataIndex: "bookCount", width: "7%" },
+    {
+      title: "Action",
+      dataIndex: "action",
       render: (_: any, record: BookType) => (
         <div className="d-flex gap-3">
           <Button
             icon={<EditOutlined />}
             type="primary"
+            className="mx-2 px-3 "
+            style={{
+              boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
+              borderRadius: "10px",
+              padding: "20px 0px",
+              fontFamily: "poppins",
+            }}
             onClick={() => handleViewDetails(record)}
           >
             Edit
           </Button>
           <Button
             type="primary"
+            className="mx-2 px-3 "
             icon={<DeleteOutlined />}
-            danger
+            style={{
+              boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
+              borderRadius: "10px",
+              backgroundColor: "#fb3453",
+              padding: "20px 0px",
+              fontFamily: "poppins",
+            }}
             onClick={() => handleDeleteBook(record)}
           >
             Delete
@@ -402,6 +412,7 @@ const Book: React.FC = () => {
       <Modal
         title="Book Details"
         open={viewDetailsModal}
+        style={{ margin: 0, top: 0 }}
         onCancel={() => {
           setViewDetailsModal(false);
           form.resetFields();
@@ -437,8 +448,8 @@ const Book: React.FC = () => {
           submitText="Borrow Book"
           read={readers}
           book={book}
-          setSelectedUserId={selectedUserId}
-          setSelectedBookId={selectedBookId}
+          setSelectedReaderId={setSelectedReaderId}
+          setselectedBookISBN={setSelectedBookISBN}
         />
       </Modal>
 
@@ -452,11 +463,11 @@ const Book: React.FC = () => {
         <BRBook
           form={borrowBookForm}
           onSubmit={handleReturnBook}
-          submitText="Borrow Book"
+          submitText="Return Book"
           read={readers}
           book={book}
-          setSelectedUserId={selectedUserId}
-          setSelectedBookId={selectedBookId}
+          setSelectedReaderId={setSelectedReaderId}
+          setselectedBookISBN={setSelectedBookISBN}
         />
       </Modal>
     </div>

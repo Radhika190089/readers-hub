@@ -2,6 +2,8 @@ import axios from "axios";
 import { apiBaseURL } from "./Index";
 import { BookType } from "../Book";
 
+
+
 export const GetBookData = async () => {
     const response = await axios.get(
       `${apiBaseURL}/LMS/Books/Get_All_Books`
@@ -9,7 +11,7 @@ export const GetBookData = async () => {
     return response.data as BookType[]
 };
 
-export const AddNewBook = async (newBook : BookType) => {
+export const AddNewBook = async (newBook: BookType) => {
   try {    
      await axios.post(
       `${apiBaseURL}/LMS/Books/Add_Book`,
@@ -21,7 +23,7 @@ export const AddNewBook = async (newBook : BookType) => {
   }
 }
 
-export const UpdateBook = async (bookId : number , updateBook : BookType) => {
+export const UpdateBook = async (bookId : string , updateBook : BookType) => {
   try {    
     await axios.post(
       `${apiBaseURL}/LMS/Books/Update_Book/${bookId}` ,
@@ -33,7 +35,7 @@ export const UpdateBook = async (bookId : number , updateBook : BookType) => {
   }
 }
 
-export const DeleteBook = async (bookId : number) => {
+export const DeleteBook = async (bookId : string) => {
   try {    
     await axios.post(
       `${apiBaseURL}/LMS/Books/Remove_Book/${bookId}`
