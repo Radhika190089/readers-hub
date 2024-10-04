@@ -1,13 +1,17 @@
+
 import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import "./Styles/st.css";
 import { GetBookData } from "./Services/BookServices";
 import { BookType } from "./Book";
+import { PieChart } from '@mui/x-charts/PieChart';
+import { colors } from "@mui/material";
+
 
 const Dashboard: React.FC = () => {
   const [books, setBooks] = useState<BookType[]>([]);
-  const [randomBooks, setRandomBooks] = useState<BookType[]>([]);
+  // const [randomBooks, setRandomBooks] = useState<BookType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,43 +19,37 @@ const Dashboard: React.FC = () => {
       try {
         const data = await GetBookData();
         setBooks(data);
+        console.log(books)
       } catch (error) {
         console.error(error);
       }
     })();
 
-    const groupedBooks: { [key: string]: BookType[] } = books.reduce(
-      (acc: { [key: string]: BookType[] }, book: BookType) => {
-        acc[book.category] = acc[book.category] || [];
-        acc[book.category].push(book);
-        return acc;
-      },
-      {}
-    );
+    // const groupedBooks: { [key: string]: BookType[] } = books.reduce(
+    //   (acc: { [key: string]: BookType[] }, book: BookType) => {
+    //     acc[book.category] = acc[book.category] || [];
+    //     acc[book.category].push(book);
+    //     return acc;
+    //   },
+    //   {}
+    // );
 
-    const selectedBooks: BookType[] = Object.values(groupedBooks).map(
-      (categoryBooks) =>
-        categoryBooks[Math.floor(Math.random() * categoryBooks.length)]
-    );
+    // const selectedBooks: BookType[] = Object.values(groupedBooks).map(
+    //   (categoryBooks) =>
+    //     categoryBooks[Math.floor(Math.random() * categoryBooks.length)]
+    // );
 
-    setRandomBooks(selectedBooks);
+    // setRandomBooks(selectedBooks);
   }, []);
 
   return (
     <div style={{ fontFamily: "Poppins" }}>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ width: "49%", overflow: "hidden" }}>
+      <div className="row" >
+        <div className="col-xl-6 col-12" >
           <Carousel autoplay >
-            <div className="slidebar ">
+            <div className="slidebar-1">
               <div className="justify-content-spacebetween rounded-5">
-                <h1 style={{ fontSize: "75px" }}>Welcome Back!</h1>
+                <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Welcome Back!</h1>
                 <h4>Continue exploring the library.</h4>
               </div>
               <div>
@@ -65,9 +63,9 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div>
-              <div className="slidebar">
+              <div className="slidebar-2">
                 <div className="justify-content-spacebetween">
-                  <h1 style={{ fontSize: "75px" }}>Manage Readers</h1>
+                  <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Manage Readers</h1>
                   <h4>Add or update Readers information easily.</h4>
                 </div>
                 <span
@@ -80,9 +78,9 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div>
-              <div className="slidebar">
+              <div className="slidebar-3">
                 <div className="justify-content-spacebetween">
-                  <h1 style={{ fontSize: "75px" }}>Admin Profile</h1>
+                  <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Admin Profile</h1>
                   <h4>View and edit your profile details.</h4>
                 </div>
                 <div>
@@ -99,9 +97,24 @@ const Dashboard: React.FC = () => {
             </div>
           </Carousel>
         </div>
-        <div
+        
+        <PieChart
+      series={[
+        {
+          data: [
+            { id: 0, value: 10,color:'brown', label: 'Borrow' },
+            { id: 1, value: 15,color:'green', label: 'Transaction' },
+            { id: 2, value: 20,color:'red' ,label: 'Readers' },
+          ],
+        },
+      ]}
+      width={600}
+      height={400}
+    />
+   {/* 
+        <div className="recentBooks col-12 col-xl-6"
           style={{
-            width: "49%",
+            // width: "49%",
             padding: "20px",
             borderRadius: "10px",
             boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
@@ -111,19 +124,19 @@ const Dashboard: React.FC = () => {
           <table className="table table-hover">
             <thead>
               <tr>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "	#145250" }}>
                   Book Id
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Title
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Author
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Available
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Price
                 </th>
               </tr>
@@ -145,7 +158,7 @@ const Dashboard: React.FC = () => {
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
 
       <div
@@ -161,7 +174,7 @@ const Dashboard: React.FC = () => {
             to={"/book"}
             style={{
               textDecoration: "none",
-              color: "#Fb3453",
+              color: "#145250",
               fontWeight: "600",
               paddingTop: "8px",
             }}
@@ -170,18 +183,18 @@ const Dashboard: React.FC = () => {
           </Link>
         </div>
         <div className="d-flex flex-direction-column overflow-auto">
-          {randomBooks.map((book) => {
+          {books.map((book) => {
             console.log("book", book);
             return (
               <div
                 key={book.bookId}
-                style={{ margin: "20px", lineHeight: 0.5, cursor: "pointer" }}
-                className="card1"
+                style={{ margin: "20px", lineHeight: 0.4, cursor: "pointer" }}
+                className="card1 shadow border p-5"
               >
                 <img src={book.bookURL} alt={book.title} height={"250px"} />
                 <h6 className="mt-2">{book.title}</h6>
-                <p style={{ color: "rgb(125,125,125)" }}>{book.author}</p>
-                <h6 style={{ color: "#Fb3453" }}>{book.category}</h6>
+                <p style={{ color: "#145250" }}>{book.author}</p>
+                <h6 style={{ color: "#145250" }}>{book.category}</h6>
               </div>
             );
           })}

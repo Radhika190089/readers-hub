@@ -4,6 +4,12 @@
     height: 100vh;
 }
 
+.twobox {
+    display: "flex";
+    flex-direction: "row";
+    justify-content: "space-between"
+}
+
 .background-video {
     position: absolute;
     top: 50%;
@@ -51,7 +57,7 @@ body,
 }
 
 .clr {
-    color: #fb3453;
+    color: #145250;
 }
 
 .linh {
@@ -60,27 +66,66 @@ body,
 }
 
 .custom-s2earch .ant-input:hover {
-    border-color: #fb3453 !important;
+    border-color: #145250 !important;
 }
 
 .custom-search .ant-btn {
-    background-color: #fb3453;
-    border-color: #fb3453;
+    background-color: #145250;
+    border-color: #145250;
 }
 
 .custom-search .ant-btn:hover {
     background-color: white !important;
-    color: #fb3453 !important;
-    border-color: #fb3453 !important;
+    color: #145250 !important;
+    border-color: #145250 !important;
 }
 
-.slidebar {
+.slidebar-1 {
     height: 370px;
     color: white;
     display: flex;
     flex-direction: row;
     padding: 20px;
-    background-color: #fb3453;
+    background-image: url("https://th.bing.com/th/id/OIP.S4kfyvj45mft6mgfrB0xkQHaD-?w=340&h=182&c=7&r=0&o=5&dpr=1.4&pid=1.7");
+    background-repeat: no-repeat;
+    background-position: center;
+
+
+    background-size: cover;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    justify-content: space-between;
+    font-family: 'poppins';
+}
+
+.slidebar-2 {
+    height: 370px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    background-image: url("https://png.pngtree.com/background/20230602/original/pngtree-blur-abstract-background-of-corner-book-on-bookshelves-in-bookstore-blurry-picture-image_2845930.jpg");
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+    justify-content: space-between;
+    font-family: 'poppins';
+}
+
+.slidebar-3 {
+    height: 370px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    background-image: url("https://th.bing.com/th?id=OIP.W_Ws6-LXasydZYegGmRCnQHaE7&w=306&h=204&c=8&rs=1&qlt=90&o=6&dpr=1.4&pid=3.1&rm=2");
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+    background-size: cover;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -105,7 +150,7 @@ body,
 }
 
 .TR2 {
-    background-color: #fb3453;
+    background-color: #f3f3f3;
     color: white;
     padding: 15px;
     width: 50%;
@@ -113,8 +158,9 @@ body,
     border-radius: 10px;
 }
 
+
 .pin2 {
-    background-color: #fb3453;
+    background-color: #f3f3f3;
     color: white;
     width: 80px;
     height: 45px;
@@ -142,7 +188,7 @@ body,
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fb3453;
+    background-color: #145250;
     color: white;
     width: 55px;
     height: 50px;
@@ -175,7 +221,7 @@ body,
 }
 
 .bt {
-    background-color: #fb3453;
+    background-color: #145250;
     border-radius: 5px;
     color: white;
     border: none;
@@ -215,7 +261,7 @@ body,
 }
 
 .profileTitle {
-    color: #fb3453;
+    color: #145250;
     font-size: 5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -232,7 +278,7 @@ body,
 
 .profileLabelIcon {
     margin-right: 0.75rem;
-    color: #fb3453;
+    color: #145250;
     font-size: 1.5rem;
 }
 
@@ -249,7 +295,7 @@ body,
 }
 
 .avatar {
-    border: 2px solid #fb3453;
+    border: 2px solid #145250;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -259,7 +305,7 @@ body,
     right: 20px;
     padding: 1rem 1.5rem;
     margin: 0px 40px;
-    background-color: #fb3453;
+    background-color: #145250;
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -272,11 +318,11 @@ body,
 }
 
 .logoutButton:hover {
-    background-color: #d12f45;
+    background-color: #145250;
 }
 
 .search.ant-input-outlined:hover {
-    border: 1px solid #fb3453;
+    border: 1px solid #145250;
 }
 
 .search.ant-input-outlined {
@@ -287,6 +333,14 @@ body,
 :where(.css-dev-only-do-not-override-qnu6hi).ant-spin .ant-spin-dot-holder {
     color: #fb3453;
 }
-:where(.css-dev-only-do-not-override-qnu6hi).ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >thead>tr>th{
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-table-wrapper .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th {
     text-align: center;
+    color: #145250;
+}
+
+@media (min-width: 600px)and (max-width:900px) {
+    .twobox {
+        flex-direction: column;
+    }
 }

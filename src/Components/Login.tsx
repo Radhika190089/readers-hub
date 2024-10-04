@@ -31,7 +31,7 @@ const Login = () => {
             <h1
               className="custom m-3 fw-bolder"
               style={{
-                color: "#fb3453",
+                color: "#145250",
                 fontSize: "70px",
                 textAlign: "center",
               }}
@@ -42,7 +42,7 @@ const Login = () => {
           <div className="formdes2 p-3 rounded">
             <h2
               className="bg-white fw-bolder text-center"
-              style={{ color: "#fb3453" }}
+              style={{ color: "#145250" }}
             >
               Log In
             </h2>
@@ -81,7 +81,7 @@ const Login = () => {
                 type="primary"
                 htmlType="submit"
                 className="btn w-100 mb-4"
-                style={{ backgroundColor: "#fb3453", color: "white" }}
+                style={{ backgroundColor: "#145250", color: "white" }}
               >
                 Log In
               </Button>
@@ -91,7 +91,7 @@ const Login = () => {
                 <span
                   className="span"
                   onClick={() => navigate("/signup")}
-                  style={{ color: "#fb3453", cursor: "pointer" }}
+                  style={{ color: "#145250", cursor: "pointer" }}
                 >
                   Sign Up
                 </span>

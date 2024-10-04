@@ -30,7 +30,7 @@ const Signup = () => {
           <div className="d-flex justify-content-center">
             <h1
               className="custom m-3 fw-bolder"
-              style={{ color: "#fb3453", fontSize: "70px" }}
+              style={{ color: "#145250", fontSize: "70px" }}
             >
               LIBRARY <br /> MANAGEMENT
             </h1>
@@ -38,7 +38,7 @@ const Signup = () => {
           <div className="formdesign p-4 bg-white rounded">
             <h2
               className="mx-4 my-3 fw-bolder text-center"
-              style={{ color: "#fb3453" }}
+              style={{ color: "#145250" }}
             >
               Sign Up
             </h2>
@@ -124,7 +124,7 @@ const Signup = () => {
                   type="primary"
                   htmlType="submit"
                   style={{
-                    backgroundColor: "#fb3453",
+                    backgroundColor: "#145250",
                     color: "white",
                     width: "100%",
                   }}
@@ -141,7 +141,7 @@ const Signup = () => {
                 onClick={() => {
                   navigate("/login");
                 }}
-                style={{ color: "#fb3453", cursor: "pointer" }}
+                style={{ color: "#145250", cursor: "pointer" }}
               >
                 Log In
               </span>

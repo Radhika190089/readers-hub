@@ -53,6 +53,7 @@ const Profile: React.FC = () => {
         <div className="avatarContainer" style={{ marginRight: '50px', marginTop: '1px' }}>
           <Avatar
             src="https://i.pinimg.com/474x/33/b7/45/33b7457105d6c4c0e108ae368c2f37ff.jpg"
+            
             name={"Suresh"}
             size={220}
             className="avatar"

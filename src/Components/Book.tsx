@@ -360,7 +360,7 @@ const Book: React.FC = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "15px",
-                backgroundColor: "#fb3453",
+                backgroundColor: "#145250",
               }}
               type="primary"
               onClick={showAddModal}
@@ -373,7 +373,7 @@ const Book: React.FC = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "15px",
-                backgroundColor: "#fb3453",
+                backgroundColor: "#145250",
               }}
               type="primary"
               onClick={showBorrowModal}
@@ -386,7 +386,7 @@ const Book: React.FC = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "15px",
-                backgroundColor: "#fb3453",
+                backgroundColor: "#145250",
               }}
               type="primary"
               onClick={showReturnModal}
