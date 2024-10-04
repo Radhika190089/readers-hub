@@ -5,10 +5,11 @@ import {
   HomeOutlined,
   TeamOutlined,
   FormOutlined,
+  MenuOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
-import { Button, Dropdown, Layout, Menu, MenuProps, message, Popover } from "antd";
+import { Button, Drawer, Dropdown, Layout, Menu, MenuProps, message } from "antd";
 import {
   useNavigate,
   useLocation,
@@ -66,6 +67,18 @@ const AdminPortal: React.FC = () => {
   const [selectedNavItems, setSelectedNavItems] = useState<string>(
     location.pathname
   );
+  const [open, setOpen] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     setSelectedNavItems(location.pathname);
@@ -80,141 +93,138 @@ const AdminPortal: React.FC = () => {
     setSelectedNavItems(menuItems.key);
   };
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   return (
     <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
-      <Sider
-        width={350}
-        style={{ backgroundColor: "#145250" }}
-        breakpoint="lg"
-        collapsed={collapsed}
-        collapsedWidth="95"
-      >
-        <div
-          style={{
-            height: "64px",
-            display: "flex",
-            justifyContent: "center",
-          }}
+      <div className="mobileHidden">
+        <Sider
+          width={350}
+          style={{ backgroundColor: "#fb3453" }}
+          breakpoint="lg"
+          collapsed={collapsed}
+          collapsedWidth="95"
         >
-          <h5
+          <div
             style={{
-              color: "white",
-              fontFamily: "poppins",
-              fontSize: "15px",
-              fontWeight: "800",
-              margin: "0px 10px",
+              height: "64px",
+              display: "flex",
+              justifyContent: "center",
             }}
           >
-            {collapsed ? (
-              <img
-                src="/LMS.png"
-                alt="LMS"
-                height={"85px"}
-                width={"85px"}
-                style={{ display: "flex", justifyContent: "center" }}
-              />
-            ) : (
-              <div className="d-flex">
+            <h5
+              style={{
+                color: "white",
+                fontFamily: "poppins",
+                fontSize: "15px",
+                fontWeight: "800",
+                margin: "0px 10px",
+              }}
+            >
+              {collapsed ? (
                 <img
                   src="/LMS.png"
-                  alt="Library Management"
+                  alt="LMS"
                   height={"85px"}
                   width={"85px"}
-                />{" "}
-                <div className="mt-2 ms-2">
-                  LIBRARY <span className="fs-3"> MANAGEMENT </span> <br />{" "}
-                  SYSTEM
+                  style={{ display: "flex", justifyContent: "center" }}
+                />
+              ) : (
+                <div className="d-flex">
+                  <img
+                    src="/LMS.png"
+                    alt="Library Management"
+                    height={"85px"}
+                    width={"85px"}
+                  />{" "}
+                  <div className="mt-2 ms-2">
+                    LIBRARY <span className="fs-3"> MANAGEMENT </span> <br />{" "}
+                    SYSTEM
+                  </div>
                 </div>
-              </div>
-            )}
-          </h5>
-        </div>
-        <Menu
-          mode="inline"
-          selectedKeys={[selectedNavItems]}
-          onClick={handleNavClick}
-          style={{
-            marginTop: "35px",
-            color: "white",
-            backgroundColor: "#145250",
-            fontFamily: "Poppins",
-            fontSize: "18px",
-          }}
-        >
-          <Menu.Item
-            key="/"
-            icon={
-              <HomeOutlined
-                style={{
-                  color: selectedNavItems === "/" ? "	#145250" : "white",
-                  fontSize: "20px",
-                }}
-              />
-            }
-            style={{ color: selectedNavItems === "/" ? "#145250" : "white", marginTop: '5px' }}
-          >
-            Dashboard
-          </Menu.Item>
-          <Menu.Item
-            key="/book"
-            icon={
-              <BookOutlined
-                style={{
-                  color: selectedNavItems === "/book" ? "#145250" : "white",
-                  fontSize: "20px",
-                }}
-              />
-            }
+              )}
+            </h5>
+          </div>
+          <Menu
+            mode="inline"
+            selectedKeys={[selectedNavItems]}
+            onClick={handleNavClick}
             style={{
-              color: selectedNavItems === "/book" ? "#145250" : "white",
-              position: "relative", marginTop: '5px'
+              marginTop: "35px",
+              color: "white",
+              backgroundColor: "#fb3453",
+              fontFamily: "Poppins",
+              fontSize: "18px",
             }}
           >
-            Books
-          </Menu.Item>
-          <Menu.Item
-            key="/transaction"
-            icon={
-              <FormOutlined
-                style={{
-                  color: selectedNavItems === "/transaction" ? "#145250" : "white",
-                  fontSize: "20px",
-                }}
-              />
-            }
-            style={{
-              color: selectedNavItems === "/transaction" ? "	#145250" : "white",
-              marginTop: '5px'
-            }}
-          >
-            Transactions
-          </Menu.Item>
-          <Menu.Item
-            key="/readerManagement"
-            icon={
-              <TeamOutlined
-                style={{
-                  color:
-                    selectedNavItems === "/readerManagement"
-                      ? "#145250"
-                      : "white",
-                  fontSize: "20px",
-                }}
-              />
-            }
-            style={{
-              color:
-                selectedNavItems === "/readerManagement" ? "#145250" : "white",
-              marginTop: '5px'
-            }}
-          >
-            Reader Management
-          </Menu.Item>
-          {/* <Menu.Item
+            <Menu.Item
+              key="/"
+              icon={
+                <HomeOutlined
+                  style={{
+                    color: selectedNavItems === "/" ? "	#fb3453" : "white",
+                    fontSize: "20px",
+                  }}
+                />
+              }
+              style={{ color: selectedNavItems === "/" ? "#fb3453" : "white", marginTop: '5px' }}
+            >
+              Dashboard
+            </Menu.Item>
+            <Menu.Item
+              key="/book"
+              icon={
+                <BookOutlined
+                  style={{
+                    color: selectedNavItems === "/book" ? "#fb3453" : "white",
+                    fontSize: "20px",
+                  }}
+                />
+              }
+              style={{
+                color: selectedNavItems === "/book" ? "#fb3453" : "white",
+                position: "relative", marginTop: '5px'
+              }}
+            >
+              Books
+            </Menu.Item>
+            <Menu.Item
+              key="/transaction"
+              icon={
+                <FormOutlined
+                  style={{
+                    color: selectedNavItems === "/transaction" ? "#fb3453" : "white",
+                    fontSize: "20px",
+                  }}
+                />
+              }
+              style={{
+                color: selectedNavItems === "/transaction" ? "	#fb3453" : "white",
+                marginTop: '5px'
+              }}
+            >
+              Transactions
+            </Menu.Item>
+            <Menu.Item
+              key="/readerManagement"
+              icon={
+                <TeamOutlined
+                  style={{
+                    color:
+                      selectedNavItems === "/readerManagement"
+                        ? "#fb3453"
+                        : "white",
+                    fontSize: "20px",
+                  }}
+                />
+              }
+              style={{
+                color:
+                  selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
+                marginTop: '5px'
+              }}
+            >
+              Reader Management
+            </Menu.Item>
+            {/* <Menu.Item
             key="/profile"
             icon={
               <UserOutlined
@@ -232,8 +242,10 @@ const AdminPortal: React.FC = () => {
           >
             Profile
           </Menu.Item> */}
-        </Menu>
-      </Sider>
+          </Menu>
+
+        </Sider>
+      </div>
       <Layout>
         <Header
           style={{
@@ -245,49 +257,69 @@ const AdminPortal: React.FC = () => {
             height: "74px",
           }}
         >
-          <Button
-            onClick={toggleCollapsed}
-            style={{
-              marginBottom: 16,
-              backgroundColor: "#145250",
-              color: "white",
-              height: "40px",
-              border: "none",
-              margin: "10px",
-              width: "60px",
-            }}
-          >
-            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          </Button>
-          <Dropdown menu={menuProps}>
-            <div className="d-flex align-items-center ms-auto">
+          <div className="menumobaHidden" style={{width:'100%'}}>
+            <Button
+              onClick={toggleCollapsed}
+              style={{
+                marginBottom: 16,
+                backgroundColor: "#fb3453",
+                color: "white",
+                height: "40px",
+                border: "none",
+                margin: "10px",
+                width: "60px",
+              }}
+            >
+              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            </Button>
+            <Dropdown menu={menuProps}>
               <div className="d-flex align-items-center ms-auto">
-                <div className="mt-4">
-                  <Avatar
-                    src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-                    name={"Suresh"}
-                    size={50}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-                <div
-                  className="linh text-end mx-3"
-                  style={{ fontFamily: "poppins" }}
-                >
-                  <h5
-                    style={{ cursor: "pointer" }}
+                <div className="d-flex align-items-center ms-auto">
+                  <div className="mt-4">
+                    <Avatar
+                      src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
+                      name={"Suresh"}
+                      size={50}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </div>
+                  <div
+                    className="linh text-end mx-3"
+                    style={{ fontFamily: "poppins" }}
                   >
-                    Suresh
-                  </h5>
-                  <p
-                    style={{ cursor: "pointer" }}
-                  >
-                    Admin
-                  </p>
+                    <h5
+                      style={{ cursor: "pointer" }}
+                    >
+                      Suresh
+                    </h5>
+                    <p
+                      style={{ cursor: "pointer" }}
+                    >
+                      Admin
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Dropdown>
+            </Dropdown>
+          </div>
+          <div className="d-flex justify-content-between" style={{ backgroundColor: '#fb3453', width: '100%' }}>
+            <img
+              src="/LMS.png"
+              height={"85px"}
+              width={"85px"}
+              className="moblogo"
+              style={{ margin: '0px 10px' }}
+            />
+            <Button type="primary" onClick={showDrawer} className="mobdraw m-4" style={{ backgroundColor: 'white' }}>
+              <MenuOutlined style={{ color: '#fb3453' }} />
+            </Button>
+            <Drawer title="LIBRARY MANAGEMENT SYSTEM"
+              onClose={onClose} open={open} width={"300px"}>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Drawer>
+          </div>
         </Header>
         <Content
           style={{
@@ -315,7 +347,7 @@ const AdminPortal: React.FC = () => {
           </div>
         </Content>
       </Layout>
-    </Layout>
+    </Layout >
   );
 };
 

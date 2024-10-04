@@ -97,21 +97,21 @@ const Dashboard: React.FC = () => {
             </div>
           </Carousel>
         </div>
-        
+
         <PieChart
-      series={[
-        {
-          data: [
-            { id: 0, value: 10,color:'brown', label: 'Borrow' },
-            { id: 1, value: 15,color:'green', label: 'Transaction' },
-            { id: 2, value: 20,color:'red' ,label: 'Readers' },
-          ],
-        },
-      ]}
-      width={600}
-      height={400}
-    />
-   {/* 
+          series={[
+            {
+              data: [
+                { id: 0, value: 10, color: 'brown', label: 'Borrow' },
+                { id: 1, value: 15, color: 'green', label: 'Transaction' },
+                { id: 2, value: 20, color: 'red', label: 'Readers' },
+              ],
+            },
+          ]}
+          width={600}
+          height={400}
+        />
+        {/* 
         <div className="recentBooks col-12 col-xl-6"
           style={{
             // width: "49%",
@@ -124,19 +124,19 @@ const Dashboard: React.FC = () => {
           <table className="table table-hover">
             <thead>
               <tr>
-                <th scope="col" style={{ color: "	#145250" }}>
+                <th scope="col" style={{ color: "	#fb3453" }}>
                   Book Id
                 </th>
-                <th scope="col" style={{ color: "#145250" }}>
+                <th scope="col" style={{ color: "#fb3453" }}>
                   Title
                 </th>
-                <th scope="col" style={{ color: "#145250" }}>
+                <th scope="col" style={{ color: "#fb3453" }}>
                   Author
                 </th>
-                <th scope="col" style={{ color: "#145250" }}>
+                <th scope="col" style={{ color: "#fb3453" }}>
                   Available
                 </th>
-                <th scope="col" style={{ color: "#145250" }}>
+                <th scope="col" style={{ color: "#fb3453" }}>
                   Price
                 </th>
               </tr>
@@ -174,7 +174,7 @@ const Dashboard: React.FC = () => {
             to={"/book"}
             style={{
               textDecoration: "none",
-              color: "#145250",
+              color: "#fb3453",
               fontWeight: "600",
               paddingTop: "8px",
             }}
@@ -193,8 +193,8 @@ const Dashboard: React.FC = () => {
               >
                 <img src={book.bookURL} alt={book.title} height={"250px"} />
                 <h6 className="mt-2">{book.title}</h6>
-                <p style={{ color: "#145250" }}>{book.author}</p>
-                <h6 style={{ color: "#145250" }}>{book.category}</h6>
+                <p style={{ color: "#fb3453" }}>{book.author}</p>
+                <h6 style={{ color: "#fb3453" }}>{book.category}</h6>
               </div>
             );
           })}
