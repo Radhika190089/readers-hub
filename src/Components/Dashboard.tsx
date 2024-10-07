@@ -5,8 +5,17 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Styles/st.css";
 import { GetBookData } from "./Services/BookServices";
 import { BookType } from "./Book";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Slider from '@mui/material/Slider';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { colors } from "@mui/material";
+import { mobileAndDesktopOS, valueFormatter } from './webUsageStats';
+
+
+
+
 
 
 const Dashboard: React.FC = () => {
@@ -24,6 +33,12 @@ const Dashboard: React.FC = () => {
         console.error(error);
       }
     })();
+
+
+
+
+
+
 
     // const groupedBooks: { [key: string]: BookType[] } = books.reduce(
     //   (acc: { [key: string]: BookType[] }, book: BookType) => {
@@ -97,20 +112,27 @@ const Dashboard: React.FC = () => {
             </div>
           </Carousel>
         </div>
+        <div className="col-xl-6 col-12 flex align-items-center justify-content-center">
+          <div>
+            <Box sx={{ width: '100%' }}>
+              <PieChart
+                height={300}
+                series={[
+                  {
+                    data: mobileAndDesktopOS.slice(0, 4),
+                    innerRadius: 70,
+                    arcLabel: (params) => params.label ?? '',
+                    arcLabelMinAngle: 20,
+                    valueFormatter,
+                  },
+                ]}
+                skipAnimation={false}
+              />
+            </Box>
+          </div>
+        </div>
 
-        <PieChart
-          series={[
-            {
-              data: [
-                { id: 0, value: 10, color: 'brown', label: 'Borrow' },
-                { id: 1, value: 15, color: 'green', label: 'Transaction' },
-                { id: 2, value: 20, color: 'red', label: 'Readers' },
-              ],
-            },
-          ]}
-          width={600}
-          height={400}
-        />
+
         {/* 
         <div className="recentBooks col-12 col-xl-6"
           style={{
@@ -124,19 +146,19 @@ const Dashboard: React.FC = () => {
           <table className="table table-hover">
             <thead>
               <tr>
-                <th scope="col" style={{ color: "	#fb3453" }}>
+                <th scope="col" style={{ color: "	#145250" }}>
                   Book Id
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Title
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Author
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Available
                 </th>
-                <th scope="col" style={{ color: "#fb3453" }}>
+                <th scope="col" style={{ color: "#145250" }}>
                   Price
                 </th>
               </tr>
@@ -174,7 +196,7 @@ const Dashboard: React.FC = () => {
             to={"/book"}
             style={{
               textDecoration: "none",
-              color: "#fb3453",
+              color: "#145250",
               fontWeight: "600",
               paddingTop: "8px",
             }}
@@ -193,8 +215,8 @@ const Dashboard: React.FC = () => {
               >
                 <img src={book.bookURL} alt={book.title} height={"250px"} />
                 <h6 className="mt-2">{book.title}</h6>
-                <p style={{ color: "#fb3453" }}>{book.author}</p>
-                <h6 style={{ color: "#fb3453" }}>{book.category}</h6>
+                <p style={{ color: "#145250" }}>{book.author}</p>
+                <h6 style={{ color: "#145250" }}>{book.category}</h6>
               </div>
             );
           })}

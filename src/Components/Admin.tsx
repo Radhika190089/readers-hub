@@ -98,7 +98,7 @@ const AdminPortal: React.FC = () => {
       <div className="mobileHidden">
         <Sider
           width={350}
-          style={{ backgroundColor: "#fb3453" }}
+          style={{ backgroundColor: "#145250" }}
           breakpoint="lg"
           collapsed={collapsed}
           collapsedWidth="95"
@@ -150,7 +150,7 @@ const AdminPortal: React.FC = () => {
             style={{
               marginTop: "35px",
               color: "white",
-              backgroundColor: "#fb3453",
+              backgroundColor: "#145250",
               fontFamily: "Poppins",
               fontSize: "18px",
             }}
@@ -160,12 +160,12 @@ const AdminPortal: React.FC = () => {
               icon={
                 <HomeOutlined
                   style={{
-                    color: selectedNavItems === "/" ? "	#fb3453" : "white",
+                    color: selectedNavItems === "/" ? "	#145250" : "white",
                     fontSize: "20px",
                   }}
                 />
               }
-              style={{ color: selectedNavItems === "/" ? "#fb3453" : "white", marginTop: '5px' }}
+              style={{ color: selectedNavItems === "/" ? "#145250" : "white", marginTop: '5px' }}
             >
               Dashboard
             </Menu.Item>
@@ -174,13 +174,13 @@ const AdminPortal: React.FC = () => {
               icon={
                 <BookOutlined
                   style={{
-                    color: selectedNavItems === "/book" ? "#fb3453" : "white",
+                    color: selectedNavItems === "/book" ? "#145250" : "white",
                     fontSize: "20px",
                   }}
                 />
               }
               style={{
-                color: selectedNavItems === "/book" ? "#fb3453" : "white",
+                color: selectedNavItems === "/book" ? "#145250" : "white",
                 position: "relative", marginTop: '5px'
               }}
             >
@@ -191,13 +191,13 @@ const AdminPortal: React.FC = () => {
               icon={
                 <FormOutlined
                   style={{
-                    color: selectedNavItems === "/transaction" ? "#fb3453" : "white",
+                    color: selectedNavItems === "/transaction" ? "#145250" : "white",
                     fontSize: "20px",
                   }}
                 />
               }
               style={{
-                color: selectedNavItems === "/transaction" ? "	#fb3453" : "white",
+                color: selectedNavItems === "/transaction" ? "	#145250" : "white",
                 marginTop: '5px'
               }}
             >
@@ -210,7 +210,7 @@ const AdminPortal: React.FC = () => {
                   style={{
                     color:
                       selectedNavItems === "/readerManagement"
-                        ? "#fb3453"
+                        ? "#145250"
                         : "white",
                     fontSize: "20px",
                   }}
@@ -218,7 +218,7 @@ const AdminPortal: React.FC = () => {
               }
               style={{
                 color:
-                  selectedNavItems === "/readerManagement" ? "#fb3453" : "white",
+                  selectedNavItems === "/readerManagement" ? "#145250" : "white",
                 marginTop: '5px'
               }}
             >
@@ -229,13 +229,13 @@ const AdminPortal: React.FC = () => {
             icon={
               <UserOutlined
                 style={{
-                  color: selectedNavItems === "/profile" ? "#fb3453" : "white",
+                  color: selectedNavItems === "/profile" ? "#145250" : "white",
                   fontSize: "20px",
                 }}
               />
             }
             style={{
-              color: selectedNavItems === "/profile" ? "#fb3453" : "white",
+              color: selectedNavItems === "/profile" ? "#145250" : "white",
               position: "relative",
               top: 600,
             }} // Adjusted to the same position
@@ -257,12 +257,12 @@ const AdminPortal: React.FC = () => {
             height: "74px",
           }}
         >
-          <div className="menumobaHidden" style={{width:'100%'}}>
+          <div className="menumobaHidden" style={{ width: '100%' }}>
             <Button
               onClick={toggleCollapsed}
               style={{
                 marginBottom: 16,
-                backgroundColor: "#fb3453",
+                backgroundColor: "#145250",
                 color: "white",
                 height: "40px",
                 border: "none",
@@ -302,7 +302,7 @@ const AdminPortal: React.FC = () => {
               </div>
             </Dropdown>
           </div>
-          <div className="d-flex justify-content-between" style={{ backgroundColor: '#fb3453', width: '100%' }}>
+          <div className="d-flex justify-content-between" style={{ backgroundColor: '#145250', width: '100%' }}>
             <img
               src="/LMS.png"
               height={"85px"}
@@ -311,7 +311,7 @@ const AdminPortal: React.FC = () => {
               style={{ margin: '0px 10px' }}
             />
             <Button type="primary" onClick={showDrawer} className="mobdraw m-4" style={{ backgroundColor: 'white' }}>
-              <MenuOutlined style={{ color: '#fb3453' }} />
+              <MenuOutlined style={{ color: '#145250' }} />
             </Button>
             <Drawer title="LIBRARY MANAGEMENT SYSTEM"
               onClose={onClose} open={open} width={"300px"}>
