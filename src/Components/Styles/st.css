@@ -385,28 +385,37 @@ body,
     }
 
     .menu-icon {
-        color: #fb3453;
+        color: #145250;
         display: flex;
         align-items: center;
         font-size: 20px;
     }
 
     .drawer-title {
-        color: #fb3453;
+        color: white;
         font-weight: bold;
+        font-size: 15px;
     }
 
     .drawer-link {
+        width: 260px;
         display: block;
         padding: 10px 20px;
-        color: #333;
+        color: white;
+        margin: 3px;
+        border-radius: 10px;
         text-decoration: none;
         font-weight: 500;
         transition: color 0.3s;
     }
 
     .drawer-link:hover {
-        color: #fb3453;
+        color: #145250;
+    }
+
+    .ant-drawer-header {
+        background-color: #145250;
+        color: whitex;
     }
 
     .ant-drawer-body {
@@ -414,5 +423,10 @@ body,
         flex-direction: column;
         font-family: "Poppins";
         font-size: "18px";
+        padding: 0px;
+    }
+
+    .ant-drawer .ant-drawer-body {
+        background-color: #145250;
     }
 }

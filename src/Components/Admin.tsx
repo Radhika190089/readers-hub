@@ -29,13 +29,9 @@ import Transaction from "./Transaction";
 const { Header, Content, Sider } = Layout;
 
 export interface AdminType {
-  adminId: number;
-  name: string;
-  mail: string;
+  userName: string;
+  email: string;
   password: string;
-  phoneNo: number;
-  gender: string;
-  pfp?: string;
 }
 const handleMenuClick: MenuProps['onClick'] = (e) => {
   message.info('Click on menu item.');
@@ -309,13 +305,14 @@ const AdminPortal: React.FC = () => {
               style={{ margin: '0px 5px' }}
             />
             <Button type="primary" onClick={showDrawer} className="mobdraw m-4" style={{ backgroundColor: 'white' }}>
-              <MenuOutlined style={{ color: '#145250' }} />
+              <MenuOutlined style={{ color: '#145250', display: 'flex', alignItems: 'center' }} />
             </Button>
-            <Drawer title="LIBRARY MANAGEMENT SYSTEM"
+            <Drawer title={<span className="drawer-title">LIBRARY MANAGEMENT SYSTEM</span>}
               onClose={onClose} open={open} width={"260px"}>
               <Link to='/' className="drawer-link">Dashboard</Link>
               <Link to='/book' className="drawer-link">Books</Link>
               <Link to='/transaction' className="drawer-link">Transactions</Link>
+              <Link to='/readerManagement' className="drawer-link">Reader Management</Link>
               <Link to='/readerManagement' className="drawer-link">Reader Management</Link>
             </Drawer>
           </div>
