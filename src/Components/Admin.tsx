@@ -16,6 +16,7 @@ import {
   Routes,
   Route,
   Navigate,
+  Link,
 } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Reader from "./Transaction";
@@ -251,9 +252,6 @@ const AdminPortal: React.FC = () => {
           style={{
             padding: 0,
             background: "#fff",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
             height: "74px",
           }}
         >
@@ -308,16 +306,17 @@ const AdminPortal: React.FC = () => {
               height={"85px"}
               width={"85px"}
               className="moblogo"
-              style={{ margin: '0px 10px' }}
+              style={{ margin: '0px 5px' }}
             />
             <Button type="primary" onClick={showDrawer} className="mobdraw m-4" style={{ backgroundColor: 'white' }}>
               <MenuOutlined style={{ color: '#145250' }} />
             </Button>
             <Drawer title="LIBRARY MANAGEMENT SYSTEM"
-              onClose={onClose} open={open} width={"300px"}>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
+              onClose={onClose} open={open} width={"260px"}>
+              <Link to='/' className="drawer-link">Dashboard</Link>
+              <Link to='/book' className="drawer-link">Books</Link>
+              <Link to='/transaction' className="drawer-link">Transactions</Link>
+              <Link to='/readerManagement' className="drawer-link">Reader Management</Link>
             </Drawer>
           </div>
         </Header>
