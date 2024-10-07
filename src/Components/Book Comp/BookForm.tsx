@@ -57,11 +57,7 @@ const BookForm: React.FC<BookProps> = ({
       >
         <Input autoComplete="off" />
       </Form.Item>
-      <Form.Item
-        name="bookURL"
-        label="Book Cover Image URL"
-        rules={[{ required: true, message: "Please input the image URL!" }]}
-      >
+      <Form.Item name="bookURL" label="Book Cover Image URL">
         <Input type="string" autoComplete="off" />
       </Form.Item>
       <Form.Item

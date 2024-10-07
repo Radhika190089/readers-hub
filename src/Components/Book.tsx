@@ -84,7 +84,7 @@ const Book: React.FC = () => {
         (book) =>
           book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
           book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          book.bookId.toString().includes(searchTerm)
+          book.bookISBN.toString().includes(searchTerm)
       );
       setFilteredData(filtered);
     } else {
@@ -215,41 +215,57 @@ const Book: React.FC = () => {
     setViewDetailsModal(true);
   };
 
-  const handleSaveChanges = () => {
-    form.validateFields().then(async (values) => {
+  const handleSaveChanges = async () => {
+    try {
+      const updatedValues = await form.validateFields(); // Get updated form values
       if (selectedBook) {
-        const updatedBooks = { ...selectedBook, ...values };
-        try {
-          await UpdateBook(selectedBook.bookId, selectedBook);
-          const UpdateData = book.map((item) =>
-            item.bookId === selectedBook.bookId ? { ...item, ...values } : item
-          );
-          setRefresh(!refresh);
-          setBook(UpdateData);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(true);
-          setSelectedBook(null);
-          setViewDetailsModal(false);
-          form.resetFields();
-        }
+        const updatedBook = { ...selectedBook, ...updatedValues };
+        await UpdateBook(selectedBook.bookId, updatedBook);
+        setBook((prevBooks) =>
+          prevBooks.map((book) =>
+            book.bookId === selectedBook.bookId ? updatedBook : book
+          )
+        );
+
+        notification.success({
+          message: "Book updated successfully!",
+        });
+        setRefresh(!refresh);
       }
-    });
+    } catch (error: any) {
+      notification.error({
+        message: "Failed to update book",
+        description: error.message,
+      });
+    } finally {
+      setViewDetailsModal(false);
+      form.resetFields();
+      setSelectedBook(null);
+    }
   };
 
   const handleDeleteBook = async (record: BookType) => {
-    const updatedData = book.filter((item) => item.bookId !== record.bookId);
-    try {
-      await DeleteBook(record.bookId);
-      setLoading(true);
-      setRefresh(!refresh);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setBook(updatedData);
-      setSelectedBook(null);
-      setViewDetailsModal(false);
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete the book titled: "${record.title}"?`
+    );
+
+    if (isConfirmed) {
+      try {
+        await DeleteBook(record.bookId);
+        const updatedData = book.filter(
+          (item) => item.bookId !== record.bookId
+        );
+        setBook(updatedData);
+        notification.success({ message: "Book deleted successfully!" });
+      } catch (error: any) {
+        console.error(error);
+        notification.error({
+          message: "Failed to delete book",
+          description: error.message,
+        });
+      }
+    } else {
+      console.log("Deletion canceled");
     }
   };
 
@@ -346,7 +362,7 @@ const Book: React.FC = () => {
           <div className="mb-3 d-flex justify-content-between">
             <Input
               className="search"
-              placeholder="Search by Booktitle or BookID"
+              placeholder="Search by Book Title or BookISBN"
               prefix={<SearchOutlined style={{ paddingRight: "6px" }} />}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

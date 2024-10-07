@@ -4,7 +4,11 @@ import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
 import { GetTransaction } from "./Services/TransactionServices";
-import { FormOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import {
+  FormOutlined,
+  ClockCircleOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,9 +26,55 @@ const Transaction: React.FC = () => {
   const [filteredData, setFilteredData] = useState<TransactionType[]>([]);
   const [transaction, setTransaction] = useState<TransactionType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+
   const borrowedBooksCount = transaction.filter(
     (r) => r.type === "Borrow"
   ).length;
+
+  const getCurrentWeekRange = () => {
+    const now = new Date();
+    const firstDayOfWeek = new Date(
+      now.setDate(now.getDate() - now.getDay() + 1)
+    );
+    const lastDayOfWeek = new Date(now.setDate(now.getDate() + 6));
+    firstDayOfWeek.setHours(0, 0, 0, 0);
+    lastDayOfWeek.setHours(23, 59, 59, 999);
+    return { firstDayOfWeek, lastDayOfWeek };
+  };
+
+  const booksBorrowedThisWeek = transaction.filter((t) => {
+    const { firstDayOfWeek, lastDayOfWeek } = getCurrentWeekRange();
+    const transactionDate = new Date(t.date);
+    return (
+      t.type === "Borrow" &&
+      transactionDate >= firstDayOfWeek &&
+      transactionDate <= lastDayOfWeek
+    );
+  }).length;
+
+  const calculateOverdues = () => {
+    const today = new Date();
+
+    const borrowingPeriod = 2;
+
+    const overdueBooks = transaction.filter((t) => {
+      if (t.type === "Borrow") {
+        const borrowDate = new Date(t.date);
+        const dueDate = new Date(borrowDate);
+        dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
+
+        return (
+          today > dueDate &&
+          !transaction.some(
+            (tr) => tr.bookISBN === t.bookISBN && tr.type === "Return"
+          )
+        );
+      }
+      return false;
+    });
+
+    return overdueBooks.length;
+  };
 
   useEffect(() => {
     (async () => {
@@ -125,14 +175,27 @@ const Transaction: React.FC = () => {
           <div className="TR1">
             <div className="p0">
               <div className="p1">
-                <h2>{transaction.length}</h2>
+                <h2>{booksBorrowedThisWeek}</h2>
+                <div className="p2">
+                  <CalendarOutlined
+                    style={{ fontSize: "35px", color: "#ffffff" }}
+                  />
+                </div>
+              </div>
+              <h2>Books Borrowed This Week</h2>
+            </div>
+          </div>
+          <div className="TR1">
+            <div className="p0">
+              <div className="p1">
+                <h2>{calculateOverdues()}</h2>
                 <div className="p2">
                   <ClockCircleOutlined
                     style={{ fontSize: "35px", color: "#ffffff" }}
                   />
                 </div>
               </div>
-              <h2>Books Borrowed This Week</h2>
+              <h2>Over Dues Books</h2>
             </div>
           </div>
         </div>

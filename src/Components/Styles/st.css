@@ -1,7 +1,10 @@
 .fds {
-    position: relative;
-    overflow: scroll;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 100vh;
+    max-width: 1000px;
 }
 
 .twobox {
@@ -34,7 +37,7 @@
 
 .formdesign {
     box-shadow: 3px 4px 12px 10px rgba(151, 150, 150, 0.1);
-    width: 800px;
+    width: 45% ;
 }
 
 body,
@@ -145,18 +148,15 @@ body,
     background-color: #f3f3f3;
     padding: 15px;
     height: 180px;
-    width: 32%;
+    width: 24%;
     border-radius: 10px;
 }
 
-.TR2 {
-    background-color: #f3f3f3;
-    color: white;
-    padding: 15px;
-    width: 50%;
-    height: 230px;
-    border-radius: 10px;
+
+.highlight-row {
+    background-color: rgba(255, 0, 0, 0.2);
 }
+
 
 
 .pin2 {

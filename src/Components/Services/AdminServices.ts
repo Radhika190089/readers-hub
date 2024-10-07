@@ -9,7 +9,7 @@ export const GetAdminData = async () => {
     return response.data as AdminType[]
 };
 
-export const AddNewAdmin = async (newAdmin : AdminType) => {
+export const RegisterAdmin = async (newAdmin : AdminType) => {
     try {    
        await axios.post(
         `${apiBaseURL}/LMS/Admins/Add_Admin`,
