@@ -1,41 +1,23 @@
 export const desktopOS = [
     {
-        label: 'Windows',
-        value: 72.72,
+        label: 'Transactions',
+        value: 1,
     },
-    {
-        label: 'OS X',
-        value: 16.38,
-    },
-    {
-        label: 'Linux',
-        value: 3.83,
-    },
-    {
-        label: 'Chrome OS',
-        value: 2.42,
-    },
-    {
-        label: 'Other',
-        value: 4.65,
-    },
+
 ];
 
 export const mobileOS = [
     {
-        label: 'Android',
-        value: 70.48,
+        label: 'Borrow',
+        value: 2,
     },
     {
-        label: 'iOS',
-        value: 28.8,
+        label: 'Readers',
+        value: 2,
     },
-    {
-        label: 'Other',
-        value: 0.71,
-    },
-];
 
+
+];
 export const platforms = [
     {
         label: 'Mobile',

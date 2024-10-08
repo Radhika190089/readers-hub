@@ -6,15 +6,8 @@ import "./Styles/st.css";
 import { GetBookData } from "./Services/BookServices";
 import { BookType } from "./Book";
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { mobileAndDesktopOS, valueFormatter } from './webUsageStats';
-
-
-
 
 
 
@@ -33,7 +26,6 @@ const Dashboard: React.FC = () => {
         console.error(error);
       }
     })();
-
     // const groupedBooks: { [key: string]: BookType[] } = books.reduce(
     //   (acc: { [key: string]: BookType[] }, book: BookType) => {
     //     acc[book.category] = acc[book.category] || [];
@@ -54,7 +46,7 @@ const Dashboard: React.FC = () => {
   return (
     <div style={{ fontFamily: "Poppins" }}>
       <div className="row" >
-        <div className="core" >
+        <div className="core col-xl-6 col-12" >
           <Carousel autoplay >
             <div className="slidebar-1">
               <div className="justify-content-spacebetween rounded-5">
@@ -125,56 +117,6 @@ const Dashboard: React.FC = () => {
             </Box>
           </div>
         </div>
-
-
-        {/* 
-        <div className="recentBooks col-12 col-xl-6"
-          style={{
-            // width: "49%",
-            padding: "20px",
-            borderRadius: "10px",
-            boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
-          }}
-        >
-          <h4 className="px-2"> Recent Books</h4>
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col" style={{ color: "	#145250" }}>
-                  Book Id
-                </th>
-                <th scope="col" style={{ color: "#145250" }}>
-                  Title
-                </th>
-                <th scope="col" style={{ color: "#145250" }}>
-                  Author
-                </th>
-                <th scope="col" style={{ color: "#145250" }}>
-                  Available
-                </th>
-                <th scope="col" style={{ color: "#145250" }}>
-                  Price
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="fw-medium">12432</td>
-                <td>Aot</td>
-                <td>Eren</td>
-                <td>9</td>
-                <td>1900</td>
-              </tr>
-              <tr>
-                <td className="fw-medium">22432</td>
-                <td>Naruto</td>
-                <td>Kisimoto</td>
-                <td>7</td>
-                <td>2500</td>
-              </tr>
-            </tbody>
-          </table>
-        </div> */}
       </div>
 
       <div
