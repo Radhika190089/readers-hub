@@ -152,6 +152,15 @@ body,
     border-radius: 10px;
 }
 
+.TR2 {
+    display: flex;
+    background-color: #f3f3f3;
+    padding: 15px;
+    height: 180px;
+    width: 32%;
+    border-radius: 10px;
+}
+
 
 .highlight-row {
     background-color: rgba(255, 0, 0, 0.2);

@@ -219,7 +219,7 @@ const ReaderManagement: React.FC = () => {
           className="cardz d-flex justify-content-between"
           style={{ width: "100%" }}
         >
-          <div className="TR1">
+          <div className="TR2">
             <div className="p0">
               <div className="p1">
                 <h2>{reader.length}</h2>
@@ -232,7 +232,7 @@ const ReaderManagement: React.FC = () => {
               <h2>Total Readers</h2>
             </div>
           </div>
-          <div className="TR1">
+          <div className="TR2">
             <div className="p0">
               <div className="p1">
                 <h2>{activeReadersCount}</h2>
@@ -245,7 +245,7 @@ const ReaderManagement: React.FC = () => {
               <h2>Active Readers</h2>
             </div>
           </div>
-          <div className="TR1">
+          <div className="TR2">
             <div className="p0">
               <div className="p1">
                 <h2>6</h2>

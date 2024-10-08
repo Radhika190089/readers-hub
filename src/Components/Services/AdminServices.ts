@@ -2,21 +2,13 @@ import axios from "axios";
 import { apiBaseURL } from "./Index";
 import { AdminType } from "../Admin";
 
-export const GetAdminData = async () => {
+export const LoginAdmin = async (login : AdminType) => {
     const response = await axios.get(
-      `${apiBaseURL}/LMS/Admins/Get_All_Admin`
+      `${apiBaseURL}/LMS/Admins/Login`
     );
     return response.data as AdminType[]
 };
 
-export const RegisterAdmin = async (newAdmin : AdminType) => {
-    try {    
-       await axios.post(
-        `${apiBaseURL}/LMS/Admins/Add_Admin`,
-        newAdmin
-      )
-    } catch (error) {
-      console.error(error)
-      throw error;
-    }
+export const RegisterAdmin = async (newAdmin: AdminType) => {
+    await axios.post(`${apiBaseURL}/LMS/Admins/Register`, newAdmin);
 };

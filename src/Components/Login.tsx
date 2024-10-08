@@ -7,6 +7,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onFinish = (values: { email: string; password: string }) => {
+
+    
     const users = JSON.parse(localStorage.getItem("admin") || "") || [];
     const user =
       users?.find(
@@ -60,9 +62,7 @@ const Login = () => {
                   { type: "email", message: "The input is not valid E-mail!" },
                 ]}
               >
-                <Input
-                  placeholder="Enter your Email"
-                />
+                <Input placeholder="Enter your Email" />
               </Form.Item>
 
               <Form.Item
@@ -72,9 +72,7 @@ const Login = () => {
                   { required: true, message: "Please enter your password" },
                 ]}
               >
-                <Input
-                  placeholder="Enter your Password"
-                />
+                <Input placeholder="Enter your Password" />
               </Form.Item>
 
               <Button

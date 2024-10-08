@@ -2,25 +2,27 @@ import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import "antd/dist/reset.css";
 import "./Styles/st.css";
+import { AdminType } from "./Admin";
+import { RegisterAdmin } from "./Services/AdminServices";
 
 const Signup = () => {
   const navigate = useNavigate();
 
-  const onFinish = (values: {
-    name: string;
-    email: string;
-    gender: string;
-    phoneNumber: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
-    console.log("Signup values:", values);
+  const onFinish = async (values: AdminType) => {
+    try {
+      await RegisterAdmin(values);
+      message.success("Signup successful!");
+      navigate("/");
+    } catch (error) {
+      message.error("Signup failed. Admin may already exist.");
+      console.error("Error during signup:", error);
+    }
 
-    const users = JSON.parse(localStorage.getItem("admin") || "[]");
-    users.push(values);
-    localStorage.setItem("admin", JSON.stringify(users));
-    message.success("Signup successful!");
-    navigate("/login");
+    // const users = JSON.parse(localStorage.getItem("admin") || "[]");
+    // users.push(values);
+    // localStorage.setItem("admin", JSON.stringify(users));
+    // message.success("Signup successful!");
+    // navigate("/login");
   };
 
   return (

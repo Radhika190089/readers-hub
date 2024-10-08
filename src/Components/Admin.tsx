@@ -9,7 +9,15 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
-import { Button, Drawer, Dropdown, Layout, Menu, MenuProps, message } from "antd";
+import {
+  Button,
+  Drawer,
+  Dropdown,
+  Layout,
+  Menu,
+  MenuProps,
+  message,
+} from "antd";
 import {
   useNavigate,
   useLocation,
@@ -29,24 +37,25 @@ import Transaction from "./Transaction";
 const { Header, Content, Sider } = Layout;
 
 export interface AdminType {
+  _id: string;
   userName: string;
   email: string;
   password: string;
 }
-const handleMenuClick: MenuProps['onClick'] = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
+const handleMenuClick: MenuProps["onClick"] = (e) => {
+  message.info("Click on menu item.");
+  console.log("click", e);
 };
 
-const items: MenuProps['items'] = [
+const items: MenuProps["items"] = [
   {
-    label: 'Profile',
-    key: '1',
+    label: "Profile",
+    key: "1",
     icon: <UserOutlined />,
   },
   {
-    label: 'LogOut',
-    key: '2',
+    label: "LogOut",
+    key: "2",
     icon: <UserOutlined />,
   },
 ];
@@ -162,7 +171,10 @@ const AdminPortal: React.FC = () => {
                   }}
                 />
               }
-              style={{ color: selectedNavItems === "/" ? "#145250" : "white", marginTop: '5px' }}
+              style={{
+                color: selectedNavItems === "/" ? "#145250" : "white",
+                marginTop: "5px",
+              }}
             >
               Dashboard
             </Menu.Item>
@@ -178,7 +190,8 @@ const AdminPortal: React.FC = () => {
               }
               style={{
                 color: selectedNavItems === "/book" ? "#145250" : "white",
-                position: "relative", marginTop: '5px'
+                position: "relative",
+                marginTop: "5px",
               }}
             >
               Books
@@ -188,14 +201,16 @@ const AdminPortal: React.FC = () => {
               icon={
                 <FormOutlined
                   style={{
-                    color: selectedNavItems === "/transaction" ? "#145250" : "white",
+                    color:
+                      selectedNavItems === "/transaction" ? "#145250" : "white",
                     fontSize: "20px",
                   }}
                 />
               }
               style={{
-                color: selectedNavItems === "/transaction" ? "	#145250" : "white",
-                marginTop: '5px'
+                color:
+                  selectedNavItems === "/transaction" ? "	#145250" : "white",
+                marginTop: "5px",
               }}
             >
               Transactions
@@ -215,8 +230,10 @@ const AdminPortal: React.FC = () => {
               }
               style={{
                 color:
-                  selectedNavItems === "/readerManagement" ? "#145250" : "white",
-                marginTop: '5px'
+                  selectedNavItems === "/readerManagement"
+                    ? "#145250"
+                    : "white",
+                marginTop: "5px",
               }}
             >
               Reader Management
@@ -240,7 +257,6 @@ const AdminPortal: React.FC = () => {
             Profile
           </Menu.Item> */}
           </Menu>
-
         </Sider>
       </div>
       <Layout>
@@ -251,7 +267,7 @@ const AdminPortal: React.FC = () => {
             height: "74px",
           }}
         >
-          <div className="menumobaHidden" style={{ width: '100%' }}>
+          <div className="menumobaHidden" style={{ width: "100%" }}>
             <Button
               onClick={toggleCollapsed}
               style={{
@@ -281,132 +297,61 @@ const AdminPortal: React.FC = () => {
                     className="linh text-end mx-3"
                     style={{ fontFamily: "poppins" }}
                   >
-                    <h5
-                      style={{ cursor: "pointer" }}
-                    >
-                      Suresh
-                    </h5>
-                    <p
-                      style={{ cursor: "pointer" }}
-                    >
-                      Admin
-                    </p>
+                    <h5 style={{ cursor: "pointer" }}>Suresh</h5>
+                    <p style={{ cursor: "pointer" }}>Admin</p>
                   </div>
                 </div>
               </div>
             </Dropdown>
           </div>
-          <div className="d-flex justify-content-between" style={{ backgroundColor: '#145250', width: '100%' }}>
+          <div
+            className="d-flex justify-content-between"
+            style={{ backgroundColor: "#145250", width: "100%" }}
+          >
             <img
               src="/LMS.png"
               height={"85px"}
               width={"85px"}
               className="moblogo"
-              style={{ margin: '0px 5px' }}
+              style={{ margin: "0px 5px" }}
             />
-            <Button type="primary" onClick={showDrawer} className="mobdraw m-4" style={{ backgroundColor: 'white' }}>
-              <MenuOutlined style={{ color: '#145250', display: 'flex', alignItems: 'center' }} />
-            </Button>
-            <Drawer title={<>LIBRARY <span style={{ fontSize: '18px' }}> MANAGEMENT </span> SYSTEM</>}
-              onClose={onClose} open={open} width={"260px"}>
-              <Menu
-                mode="inline"
-                selectedKeys={[selectedNavItems]}
-                onClick={handleNavClick}
+            <Button
+              type="primary"
+              onClick={showDrawer}
+              className="mobdraw m-4"
+              style={{ backgroundColor: "white" }}
+            >
+              <MenuOutlined
                 style={{
-                  color: "white",
-                  backgroundColor: "#145250",
-                  fontFamily: "Poppins",
-                  fontSize: "15px",
+                  color: "#145250",
+                  display: "flex",
+                  alignItems: "center",
                 }}
-              >
-                <Menu.Item
-                  key="/"
-                  icon={
-                    <HomeOutlined
-                      style={{
-                        color: selectedNavItems === "/" ? "	#145250" : "white",
-                        fontSize: "15px",
-                      }}
-                    />
-                  }
-                  style={{ color: selectedNavItems === "/" ? "#145250" : "white", marginTop: '5px' }}
-                >
-                  Dashboard
-                </Menu.Item>
-                <Menu.Item
-                  key="/book"
-                  icon={
-                    <BookOutlined
-                      style={{
-                        color: selectedNavItems === "/book" ? "#145250" : "white",
-                        fontSize: "15px",
-                      }}
-                    />
-                  }
-                  style={{
-                    color: selectedNavItems === "/book" ? "#145250" : "white",
-                    position: "relative", marginTop: '5px'
-                  }}
-                >
-                  Books
-                </Menu.Item>
-                <Menu.Item
-                  key="/transaction"
-                  icon={
-                    <FormOutlined
-                      style={{
-                        color: selectedNavItems === "/transaction" ? "#145250" : "white",
-                        fontSize: "15px",
-                      }}
-                    />
-                  }
-                  style={{
-                    color: selectedNavItems === "/transaction" ? "	#145250" : "white",
-                    marginTop: '5px'
-                  }}
-                >
-                  Transactions
-                </Menu.Item>
-                <Menu.Item
-                  key="/readerManagement"
-                  icon={
-                    <TeamOutlined
-                      style={{
-                        color:
-                          selectedNavItems === "/readerManagement"
-                            ? "#145250"
-                            : "white",
-                        fontSize: "15px",
-                      }}
-                    />
-                  }
-                  style={{
-                    color:
-                      selectedNavItems === "/readerManagement" ? "#145250" : "white",
-                    marginTop: '5px'
-                  }}
-                >
-                  Reader Management
-                </Menu.Item>
-                <Menu.Item
-                  key="/profile"
-                  icon={
-                    <UserOutlined
-                      style={{
-                        color: selectedNavItems === "/profile" ? "#145250" : "white",
-                        fontSize: "15px",
-                      }}
-                    />
-                  }
-                  style={{
-                    color: selectedNavItems === "/profile" ? "#145250" : "white",
-
-                  }}
-                >
-                  Profile
-                </Menu.Item>
-              </Menu>
+              />
+            </Button>
+            <Drawer
+              title={
+                <span className="drawer-title">LIBRARY MANAGEMENT SYSTEM</span>
+              }
+              onClose={onClose}
+              open={open}
+              width={"260px"}
+            >
+              <Link to="/" className="drawer-link">
+                Dashboard
+              </Link>
+              <Link to="/book" className="drawer-link">
+                Books
+              </Link>
+              <Link to="/transaction" className="drawer-link">
+                Transactions
+              </Link>
+              <Link to="/readerManagement" className="drawer-link">
+                Reader Management
+              </Link>
+              <Link to="/readerManagement" className="drawer-link">
+                Reader Management
+              </Link>
             </Drawer>
           </div>
         </Header>
@@ -436,7 +381,7 @@ const AdminPortal: React.FC = () => {
           </div>
         </Content>
       </Layout>
-    </Layout >
+    </Layout>
   );
 };
 
