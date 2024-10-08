@@ -37,7 +37,7 @@
 
 .formdesign {
     box-shadow: 3px 4px 12px 10px rgba(151, 150, 150, 0.1);
-    width: 45% ;
+    width: 45%;
 }
 
 body,
@@ -391,12 +391,6 @@ body,
         font-size: 20px;
     }
 
-    .drawer-title {
-        color: white;
-        font-weight: bold;
-        font-size: 15px;
-    }
-
     .drawer-link {
         width: 260px;
         display: block;
@@ -407,6 +401,7 @@ body,
         text-decoration: none;
         font-weight: 500;
         transition: color 0.3s;
+        line-height: 0.5;
     }
 
     .drawer-link:hover {
@@ -415,7 +410,25 @@ body,
 
     .ant-drawer-header {
         background-color: #145250;
-        color: whitex;
+        color: white;
+    }
+
+    .ant-drawer .ant-drawer-header {
+        padding: 5px 20px;
+    }
+
+    .ant-drawer .ant-drawer-header-title {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 20px;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        padding-left: 13px;
+    }
+
+    .ant-drawer .ant-drawer-close {
+        color: white;
     }
 
     .ant-drawer-body {
@@ -427,6 +440,7 @@ body,
     }
 
     .ant-drawer .ant-drawer-body {
+        padding: 5px;
         background-color: #145250;
     }
 }

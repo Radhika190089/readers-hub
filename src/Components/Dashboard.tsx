@@ -34,12 +34,6 @@ const Dashboard: React.FC = () => {
       }
     })();
 
-
-
-
-
-
-
     // const groupedBooks: { [key: string]: BookType[] } = books.reduce(
     //   (acc: { [key: string]: BookType[] }, book: BookType) => {
     //     acc[book.category] = acc[book.category] || [];
@@ -60,7 +54,7 @@ const Dashboard: React.FC = () => {
   return (
     <div style={{ fontFamily: "Poppins" }}>
       <div className="row" >
-        <div className="col-xl-6 col-12" >
+        <div className="core" >
           <Carousel autoplay >
             <div className="slidebar-1">
               <div className="justify-content-spacebetween rounded-5">
