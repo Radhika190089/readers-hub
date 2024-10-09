@@ -197,7 +197,7 @@ const ReaderManagement: React.FC = () => {
             style={{
               boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
               borderRadius: "10px",
-              backgroundColor: "#6E6E6E",
+              backgroundColor: "#145250",
               padding: "20px 0px",
               fontFamily: "poppins",
             }}
@@ -285,7 +285,7 @@ const ReaderManagement: React.FC = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
                 borderRadius: "10px",
-                backgroundColor: "#6E6E6E",
+                backgroundColor: "#145250",
               }}
               type="primary"
               onClick={showUserModal}

@@ -47,10 +47,10 @@ const Dashboard: React.FC = () => {
     <div style={{ fontFamily: "Poppins" }}>
       <div className="row" >
         <div className="core col-xl-6 col-12" >
-          <Carousel autoplay >
+          <Carousel>
             <div className="slidebar-1">
               <div className="justify-content-spacebetween rounded-5">
-                <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Welcome Back!</h1>
+                <h1>Welcome Back!</h1>
                 <h4>Continue exploring the library.</h4>
               </div>
               <div>
@@ -66,7 +66,7 @@ const Dashboard: React.FC = () => {
             <div>
               <div className="slidebar-2">
                 <div className="justify-content-spacebetween">
-                  <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Manage Readers</h1>
+                  <h1>Manage Readers</h1>
                   <h4>Add or update Readers information easily.</h4>
                 </div>
                 <span
@@ -81,7 +81,7 @@ const Dashboard: React.FC = () => {
             <div>
               <div className="slidebar-3">
                 <div className="justify-content-spacebetween">
-                  <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Admin Profile</h1>
+                  <h1>Admin Profile</h1>
                   <h4>View and edit your profile details.</h4>
                 </div>
                 <div>
@@ -132,7 +132,7 @@ const Dashboard: React.FC = () => {
             to={"/book"}
             style={{
               textDecoration: "none",
-              color: "#6E6E6E",
+              color: "#145250",
               fontWeight: "600",
               paddingTop: "8px",
             }}
@@ -147,12 +147,14 @@ const Dashboard: React.FC = () => {
               <div
                 key={book.bookId}
                 style={{ margin: "20px", lineHeight: 0.4, cursor: "pointer" }}
-                className="card1 shadow border p-5"
+                className="card1 shadow border"
               >
-                <img src={book.bookURL} alt={book.title} height={"250px"} />
-                <h6 className="mt-2">{book.title}</h6>
-                <p style={{ color: "#6E6E6E" }}>{book.author}</p>
-                <h6 style={{ color: "#6E6E6E" }}>{book.category}</h6>
+                <img src={book.bookURL} alt={book.title} height={"230px"} width={"160px"} />
+                <div className="px-2">
+                  <h6 className="mt-2">{book.title}</h6>
+                  <p style={{ color: "#145250" }}>{book.author}</p>
+                  <h6 style={{ color: "#145250" }}>{book.category}</h6>
+                </div>
               </div>
             );
           })}

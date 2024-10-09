@@ -100,11 +100,11 @@ const AdminPortal: React.FC = () => {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh", overflow: "hidden" }}>
+    <Layout style={{ minHeight: "100vh", overflow: "hidden", fontFamily:'Poppins' }}>
       <div className="mobileHidden">
         <Sider
           width={350}
-          style={{ backgroundColor: "#6E6E6E" }}
+          style={{ backgroundColor: "#145250" }}
           breakpoint="lg"
           collapsed={collapsed}
           collapsedWidth="95"
@@ -156,7 +156,7 @@ const AdminPortal: React.FC = () => {
             style={{
               marginTop: "35px",
               color: "white",
-              backgroundColor: "#6E6E6E",
+              backgroundColor: "#145250",
               fontFamily: "Poppins",
               fontSize: "18px",
             }}
@@ -166,7 +166,7 @@ const AdminPortal: React.FC = () => {
               icon={
                 <HomeOutlined
                   style={{
-                    color: selectedNavItems === "/" ? "	#6E6E6E" : "white",
+                    color: selectedNavItems === "/" ? "	#145250" : "white",
                     fontSize: "20px",
                   }}
                 />
@@ -180,7 +180,7 @@ const AdminPortal: React.FC = () => {
               icon={
                 <BookOutlined
                   style={{
-                    color: selectedNavItems === "/book" ? "#6E6E6E" : "white",
+                    color: selectedNavItems === "/book" ? "#145250" : "white",
                     fontSize: "20px",
                   }}
                 />
@@ -191,6 +191,27 @@ const AdminPortal: React.FC = () => {
               }}
             >
               Books
+            </Menu.Item>
+            <Menu.Item
+              key="/readerManagement"
+              icon={
+                <TeamOutlined
+                  style={{
+                    color:
+                      selectedNavItems === "/readerManagement"
+                        ? "#145250"
+                        : "white",
+                    fontSize: "20px",
+                  }}
+                />
+              }
+              style={{
+                color:
+                  selectedNavItems === "/readerManagement" ? "#145250" : "white",
+                marginTop: '5px'
+              }}
+            >
+              Reader
             </Menu.Item>
             <Menu.Item
               key="/transaction"
@@ -209,39 +230,18 @@ const AdminPortal: React.FC = () => {
             >
               Transactions
             </Menu.Item>
-            <Menu.Item
-              key="/readerManagement"
-              icon={
-                <TeamOutlined
-                  style={{
-                    color:
-                      selectedNavItems === "/readerManagement"
-                        ? "#6E6E6E"
-                        : "white",
-                    fontSize: "20px",
-                  }}
-                />
-              }
-              style={{
-                color:
-                  selectedNavItems === "/readerManagement" ? "#145250" : "white",
-                marginTop: '5px'
-              }}
-            >
-              Reader Management
-            </Menu.Item>
             {/* <Menu.Item
             key="/profile"
             icon={
               <UserOutlined
                 style={{
-                  color: selectedNavItems === "/profile" ? "#6E6E6E" : "white",
+                  color: selectedNavItems === "/profile" ? "#145250" : "white",
                   fontSize: "20px",
                 }}
               />
             }
             style={{
-              color: selectedNavItems === "/profile" ? "#6E6E6E" : "white",
+              color: selectedNavItems === "/profile" ? "#145250" : "white",
               position: "relative",
               top: 600,
             }} // Adjusted to the same position
@@ -264,7 +264,7 @@ const AdminPortal: React.FC = () => {
               onClick={toggleCollapsed}
               style={{
                 marginBottom: 16,
-                backgroundColor: "#6E6E6E",
+                backgroundColor: "#145250",
                 color: "white",
                 height: "40px",
                 border: "none",
@@ -352,23 +352,6 @@ const AdminPortal: React.FC = () => {
                   Books
                 </Menu.Item>
                 <Menu.Item
-                  key="/transaction"
-                  icon={
-                    <FormOutlined
-                      style={{
-                        color: selectedNavItems === "/transaction" ? "#145250" : "white",
-                        fontSize: "15px",
-                      }}
-                    />
-                  }
-                  style={{
-                    color: selectedNavItems === "/transaction" ? "	#145250" : "white",
-                    marginTop: '5px'
-                  }}
-                >
-                  Transactions
-                </Menu.Item>
-                <Menu.Item
                   key="/readerManagement"
                   icon={
                     <TeamOutlined
@@ -387,7 +370,24 @@ const AdminPortal: React.FC = () => {
                     marginTop: '5px'
                   }}
                 >
-                  Reader Management
+                  Reader
+                </Menu.Item>
+                <Menu.Item
+                  key="/transaction"
+                  icon={
+                    <FormOutlined
+                      style={{
+                        color: selectedNavItems === "/transaction" ? "#145250" : "white",
+                        fontSize: "15px",
+                      }}
+                    />
+                  }
+                  style={{
+                    color: selectedNavItems === "/transaction" ? "	#145250" : "white",
+                    marginTop: '5px'
+                  }}
+                >
+                  Transactions
                 </Menu.Item>
                 <Menu.Item
                   key="/profile"
