@@ -132,7 +132,7 @@ const Dashboard: React.FC = () => {
             to={"/book"}
             style={{
               textDecoration: "none",
-              color: "#145250",
+              color: "#6E6E6E",
               fontWeight: "600",
               paddingTop: "8px",
             }}
@@ -151,8 +151,8 @@ const Dashboard: React.FC = () => {
               >
                 <img src={book.bookURL} alt={book.title} height={"250px"} />
                 <h6 className="mt-2">{book.title}</h6>
-                <p style={{ color: "#145250" }}>{book.author}</p>
-                <h6 style={{ color: "#145250" }}>{book.category}</h6>
+                <p style={{ color: "#6E6E6E" }}>{book.author}</p>
+                <h6 style={{ color: "#6E6E6E" }}>{book.category}</h6>
               </div>
             );
           })}

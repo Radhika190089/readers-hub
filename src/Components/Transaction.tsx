@@ -211,7 +211,7 @@ const Transaction: React.FC = () => {
           <h3>Recent TransactionType</h3>
           <div className="d-flex gap-2">
             <Link to={"/readerManagement"} style={{ textDecoration: "none" }}>
-              <h6 style={{ color: "#145250", paddingTop: "10px" }}>
+              <h6 style={{ color: "#6E6E6E", paddingTop: "10px" }}>
                 View Readers
               </h6>
             </Link>

@@ -342,7 +342,7 @@ const Book: React.FC = () => {
             style={{
               boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
               borderRadius: "10px",
-              backgroundColor: "#145250",
+              backgroundColor: "#6E6E6E",
               padding: "20px 0px",
               fontFamily: "poppins",
             }}
@@ -376,7 +376,7 @@ const Book: React.FC = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "15px",
-                backgroundColor: "#145250",
+                backgroundColor: "#6E6E6E",
               }}
               type="primary"
               onClick={showAddModal}
@@ -389,7 +389,7 @@ const Book: React.FC = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "15px",
-                backgroundColor: "#145250",
+                backgroundColor: "#6E6E6E",
               }}
               type="primary"
               onClick={showBorrowModal}
@@ -402,7 +402,7 @@ const Book: React.FC = () => {
               style={{
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "15px",
-                backgroundColor: "#145250",
+                backgroundColor: "#6E6E6E",
               }}
               type="primary"
               onClick={showReturnModal}

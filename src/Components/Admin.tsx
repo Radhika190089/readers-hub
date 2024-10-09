@@ -104,7 +104,7 @@ const AdminPortal: React.FC = () => {
       <div className="mobileHidden">
         <Sider
           width={350}
-          style={{ backgroundColor: "#145250" }}
+          style={{ backgroundColor: "#6E6E6E" }}
           breakpoint="lg"
           collapsed={collapsed}
           collapsedWidth="95"
@@ -156,7 +156,7 @@ const AdminPortal: React.FC = () => {
             style={{
               marginTop: "35px",
               color: "white",
-              backgroundColor: "#145250",
+              backgroundColor: "#6E6E6E",
               fontFamily: "Poppins",
               fontSize: "18px",
             }}
@@ -166,15 +166,12 @@ const AdminPortal: React.FC = () => {
               icon={
                 <HomeOutlined
                   style={{
-                    color: selectedNavItems === "/" ? "	#145250" : "white",
+                    color: selectedNavItems === "/" ? "	#6E6E6E" : "white",
                     fontSize: "20px",
                   }}
                 />
               }
-              style={{
-                color: selectedNavItems === "/" ? "#145250" : "white",
-                marginTop: "5px",
-              }}
+              style={{ color: selectedNavItems === "/" ? "#145250" : "white", marginTop: '5px' }}
             >
               Dashboard
             </Menu.Item>
@@ -183,15 +180,14 @@ const AdminPortal: React.FC = () => {
               icon={
                 <BookOutlined
                   style={{
-                    color: selectedNavItems === "/book" ? "#145250" : "white",
+                    color: selectedNavItems === "/book" ? "#6E6E6E" : "white",
                     fontSize: "20px",
                   }}
                 />
               }
               style={{
                 color: selectedNavItems === "/book" ? "#145250" : "white",
-                position: "relative",
-                marginTop: "5px",
+                position: "relative", marginTop: '5px'
               }}
             >
               Books
@@ -201,16 +197,14 @@ const AdminPortal: React.FC = () => {
               icon={
                 <FormOutlined
                   style={{
-                    color:
-                      selectedNavItems === "/transaction" ? "#145250" : "white",
+                    color: selectedNavItems === "/transaction" ? "#145250" : "white",
                     fontSize: "20px",
                   }}
                 />
               }
               style={{
-                color:
-                  selectedNavItems === "/transaction" ? "	#145250" : "white",
-                marginTop: "5px",
+                color: selectedNavItems === "/transaction" ? "	#145250" : "white",
+                marginTop: '5px'
               }}
             >
               Transactions
@@ -222,7 +216,7 @@ const AdminPortal: React.FC = () => {
                   style={{
                     color:
                       selectedNavItems === "/readerManagement"
-                        ? "#145250"
+                        ? "#6E6E6E"
                         : "white",
                     fontSize: "20px",
                   }}
@@ -230,10 +224,8 @@ const AdminPortal: React.FC = () => {
               }
               style={{
                 color:
-                  selectedNavItems === "/readerManagement"
-                    ? "#145250"
-                    : "white",
-                marginTop: "5px",
+                  selectedNavItems === "/readerManagement" ? "#145250" : "white",
+                marginTop: '5px'
               }}
             >
               Reader Management
@@ -243,13 +235,13 @@ const AdminPortal: React.FC = () => {
             icon={
               <UserOutlined
                 style={{
-                  color: selectedNavItems === "/profile" ? "#145250" : "white",
+                  color: selectedNavItems === "/profile" ? "#6E6E6E" : "white",
                   fontSize: "20px",
                 }}
               />
             }
             style={{
-              color: selectedNavItems === "/profile" ? "#145250" : "white",
+              color: selectedNavItems === "/profile" ? "#6E6E6E" : "white",
               position: "relative",
               top: 600,
             }} // Adjusted to the same position
@@ -272,7 +264,7 @@ const AdminPortal: React.FC = () => {
               onClick={toggleCollapsed}
               style={{
                 marginBottom: 16,
-                backgroundColor: "#145250",
+                backgroundColor: "#6E6E6E",
                 color: "white",
                 height: "40px",
                 border: "none",
@@ -304,10 +296,7 @@ const AdminPortal: React.FC = () => {
               </div>
             </Dropdown>
           </div>
-          <div
-            className="d-flex justify-content-between"
-            style={{ backgroundColor: "#145250", width: "100%" }}
-          >
+          <div className="d-flex justify-content-between" style={{ backgroundColor: '#145250', width: '100%' }}>
             <img
               src="/LMS.png"
               height={"85px"}
@@ -315,43 +304,109 @@ const AdminPortal: React.FC = () => {
               className="moblogo"
               style={{ margin: "0px 5px" }}
             />
-            <Button
-              type="primary"
-              onClick={showDrawer}
-              className="mobdraw m-4"
-              style={{ backgroundColor: "white" }}
-            >
-              <MenuOutlined
-                style={{
-                  color: "#145250",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              />
+            <Button type="primary" onClick={showDrawer} className="mobdraw m-4" style={{ backgroundColor: 'white' }}>
+              <MenuOutlined style={{ color: '#145250', display: 'flex', alignItems: 'center' }} />
             </Button>
-            <Drawer
-              title={
-                <span className="drawer-title">LIBRARY MANAGEMENT SYSTEM</span>
-              }
-              onClose={onClose}
-              open={open}
-              width={"260px"}
-            >
-              <Link to="/" className="drawer-link">
-                Dashboard
-              </Link>
-              <Link to="/book" className="drawer-link">
-                Books
-              </Link>
-              <Link to="/transaction" className="drawer-link">
-                Transactions
-              </Link>
-              <Link to="/readerManagement" className="drawer-link">
-                Reader Management
-              </Link>
-              <Link to="/readerManagement" className="drawer-link">
-                Reader Management
-              </Link>
+            <Drawer title={<>LIBRARY <span style={{ fontSize: '18px' }}> MANAGEMENT </span> SYSTEM</>}
+              onClose={onClose} open={open} width={"260px"}>
+              <Menu
+                mode="inline"
+                selectedKeys={[selectedNavItems]}
+                onClick={handleNavClick}
+                style={{
+                  color: "white",
+                  backgroundColor: "#145250",
+                  fontFamily: "Poppins",
+                  fontSize: "15px",
+                }}
+              >
+                <Menu.Item
+                  key="/"
+                  icon={
+                    <HomeOutlined
+                      style={{
+                        color: selectedNavItems === "/" ? "	#145250" : "white",
+                        fontSize: "15px",
+                      }}
+                    />
+                  }
+                  style={{ color: selectedNavItems === "/" ? "#145250" : "white", marginTop: '5px' }}
+                >
+                  Dashboard
+                </Menu.Item>
+                <Menu.Item
+                  key="/book"
+                  icon={
+                    <BookOutlined
+                      style={{
+                        color: selectedNavItems === "/book" ? "#145250" : "white",
+                        fontSize: "15px",
+                      }}
+                    />
+                  }
+                  style={{
+                    color: selectedNavItems === "/book" ? "#145250" : "white",
+                    position: "relative", marginTop: '5px'
+                  }}
+                >
+                  Books
+                </Menu.Item>
+                <Menu.Item
+                  key="/transaction"
+                  icon={
+                    <FormOutlined
+                      style={{
+                        color: selectedNavItems === "/transaction" ? "#145250" : "white",
+                        fontSize: "15px",
+                      }}
+                    />
+                  }
+                  style={{
+                    color: selectedNavItems === "/transaction" ? "	#145250" : "white",
+                    marginTop: '5px'
+                  }}
+                >
+                  Transactions
+                </Menu.Item>
+                <Menu.Item
+                  key="/readerManagement"
+                  icon={
+                    <TeamOutlined
+                      style={{
+                        color:
+                          selectedNavItems === "/readerManagement"
+                            ? "#145250"
+                            : "white",
+                        fontSize: "15px",
+                      }}
+                    />
+                  }
+                  style={{
+                    color:
+                      selectedNavItems === "/readerManagement" ? "#145250" : "white",
+                    marginTop: '5px'
+                  }}
+                >
+                  Reader Management
+                </Menu.Item>
+                <Menu.Item
+                  key="/profile"
+                  icon={
+                    <UserOutlined
+                      style={{
+                        color: selectedNavItems === "/profile" ? "#145250" : "white",
+                        fontSize: "15px",
+                      }}
+                    />
+                  }
+                  style={{
+                    color: selectedNavItems === "/profile" ? "#145250" : "white",
+
+                  }}
+                >
+                  Profile
+                </Menu.Item>
+              </Menu>
             </Drawer>
           </div>
         </Header>

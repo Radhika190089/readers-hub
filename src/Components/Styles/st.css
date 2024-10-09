@@ -60,7 +60,7 @@ body,
 }
 
 .clr {
-    color: #145250;
+    color: #6E6E6E;
 }
 
 .linh {
@@ -69,18 +69,18 @@ body,
 }
 
 .custom-s2earch .ant-input:hover {
-    border-color: #145250 !important;
+    border-color: #6E6E6E !important;
 }
 
 .custom-search .ant-btn {
-    background-color: #145250;
-    border-color: #145250;
+    background-color: #6E6E6E;
+    border-color: #6E6E6E;
 }
 
 .custom-search .ant-btn:hover {
     background-color: white !important;
-    color: #145250 !important;
-    border-color: #145250 !important;
+    color: #6E6E6E !important;
+    border-color: #6E6E6E !important;
 }
 
 .slidebar-1 {
@@ -197,7 +197,7 @@ body,
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #145250;
+    background-color: #6E6E6E;
     color: white;
     width: 55px;
     height: 50px;
@@ -230,7 +230,7 @@ body,
 }
 
 .bt {
-    background-color: #145250;
+    background-color: #6E6E6E;
     border-radius: 5px;
     color: white;
     border: none;
@@ -270,7 +270,7 @@ body,
 }
 
 .profileTitle {
-    color: #145250;
+    color: #6E6E6E;
     font-size: 5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -287,7 +287,7 @@ body,
 
 .profileLabelIcon {
     margin-right: 0.75rem;
-    color: #145250;
+    color: #6E6E6E;
     font-size: 1.5rem;
 }
 
@@ -304,7 +304,7 @@ body,
 }
 
 .avatar {
-    border: 2px solid #145250;
+    border: 2px solid #6E6E6E;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -314,7 +314,7 @@ body,
     right: 20px;
     padding: 1rem 1.5rem;
     margin: 0px 40px;
-    background-color: #145250;
+    background-color: #6E6E6E;
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -327,11 +327,11 @@ body,
 }
 
 .logoutButton:hover {
-    background-color: #145250;
+    background-color: #6E6E6E;
 }
 
 .search.ant-input-outlined:hover {
-    border: 1px solid #145250;
+    border: 1px solid #6E6E6E;
 }
 
 .search.ant-input-outlined {
@@ -340,17 +340,17 @@ body,
 
 
 :where(.css-dev-only-do-not-override-qnu6hi).ant-spin .ant-spin-dot-holder {
-    color: #145250;
+    color: #6E6E6E;
 }
 
 :where(.css-dev-only-do-not-override-qnu6hi).ant-table-wrapper .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th {
     text-align: center;
-    color: #145250;
+    color: #6E6E6E;
 }
 
 .mobileHidden {
     height: 100vh;
-    background-color: #145250;
+    background-color: #6E6E6E;
 }
 
 .mobdraw {
@@ -394,7 +394,7 @@ body,
     }
 
     .menu-icon {
-        color: #145250;
+        color: #6E6E6E;
         display: flex;
         align-items: center;
         font-size: 20px;
@@ -414,11 +414,11 @@ body,
     }
 
     .drawer-link:hover {
-        color: #145250;
+        color: #6E6E6E;
     }
 
     .ant-drawer-header {
-        background-color: #145250;
+        background-color: #6E6E6E;
         color: white;
     }
 
@@ -450,6 +450,6 @@ body,
 
     .ant-drawer .ant-drawer-body {
         padding: 5px;
-        background-color: #145250;
+        background-color: #6E6E6E;
     }
 }
