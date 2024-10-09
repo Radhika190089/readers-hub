@@ -1,15 +1,12 @@
-
 import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import "./Styles/st.css";
 import { GetBookData } from "./Services/BookServices";
 import { BookType } from "./Book";
-import Box from '@mui/material/Box';
-import { PieChart } from '@mui/x-charts/PieChart';
-import { mobileAndDesktopOS, valueFormatter } from './webUsageStats';
-
-
+import Box from "@mui/material/Box";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { mobileAndDesktopOS, valueFormatter } from "./webUsageStats";
 
 const Dashboard: React.FC = () => {
   const [books, setBooks] = useState<BookType[]>([]);
@@ -21,7 +18,7 @@ const Dashboard: React.FC = () => {
       try {
         const data = await GetBookData();
         setBooks(data);
-        console.log(books)
+        console.log(books);
       } catch (error) {
         console.error(error);
       }
@@ -47,10 +44,10 @@ const Dashboard: React.FC = () => {
     <div style={{ fontFamily: "Poppins" }}>
       <div className="row" >
         <div className="core col-xl-6 col-12" >
-          <Carousel>
+          <Carousel autoplay >
             <div className="slidebar-1">
               <div className="justify-content-spacebetween rounded-5">
-                <h1>Welcome Back!</h1>
+                <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Welcome Back!</h1>
                 <h4>Continue exploring the library.</h4>
               </div>
               <div>
@@ -66,7 +63,7 @@ const Dashboard: React.FC = () => {
             <div>
               <div className="slidebar-2">
                 <div className="justify-content-spacebetween">
-                  <h1>Manage Readers</h1>
+                  <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Manage Readers</h1>
                   <h4>Add or update Readers information easily.</h4>
                 </div>
                 <span
@@ -81,7 +78,7 @@ const Dashboard: React.FC = () => {
             <div>
               <div className="slidebar-3">
                 <div className="justify-content-spacebetween">
-                  <h1>Admin Profile</h1>
+                  <h1 style={{ fontSize: "75px", fontWeight: 'bolder' }}>Admin Profile</h1>
                   <h4>View and edit your profile details.</h4>
                 </div>
                 <div>
@@ -100,14 +97,14 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="col-xl-6 col-12 flex align-items-center justify-content-center">
           <div>
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: "100%" }}>
               <PieChart
                 height={300}
                 series={[
                   {
                     data: mobileAndDesktopOS.slice(0, 4),
                     innerRadius: 70,
-                    arcLabel: (params) => params.label ?? '',
+                    arcLabel: (params) => params.label ?? "",
                     arcLabelMinAngle: 20,
                     valueFormatter,
                   },
