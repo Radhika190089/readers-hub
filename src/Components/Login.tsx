@@ -7,8 +7,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onFinish = (values: { email: string; password: string }) => {
-
-    
     const users = JSON.parse(localStorage.getItem("admin") || "") || [];
     const user =
       users?.find(
@@ -27,24 +25,29 @@ const Login = () => {
 
   return (
     <div className="fds">
-      <div className="formdes d-flex justify-content-center">
-        <div>
-          <div className="d-flex justify-content-center">
-            <h1
-              className="custom m-3 fw-bolder"
-              style={{
-                color: "#fb3453",
-                fontSize: "70px",
-                textAlign: "center",
-              }}
+      <div className="fds1">
+        <div className="fds2">
+          <div>
+            <img
+              src="/LMS.png"
+              alt="Library Management"
+              height={"150px"}
+              width={"150px"}
+            />
+            <div
+              style={{ fontSize: "60px", fontWeight: "bold", color: "white" }}
             >
-              LIBRARY <br /> MANAGEMENT
-            </h1>
+              LIBRARY
+              <br />
+              MANAGEMENT
+              <br />
+              SYSTEM
+            </div>
           </div>
-          <div className="formdes2 p-3 rounded">
+          <div className="formdesign bg-white rounded">
             <h2
-              className="bg-white fw-bolder text-center"
-              style={{ color: "#fb3453" }}
+              className="mx-4 mt-3 fw-bolder text-center"
+              style={{ color: "rgb(57 118 116)" }}
             >
               Log In
             </h2>
@@ -72,29 +75,32 @@ const Login = () => {
                   { required: true, message: "Please enter your password" },
                 ]}
               >
-                <Input placeholder="Enter your Password" />
+                <Input.Password placeholder="Enter your Password" />
               </Form.Item>
-
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="btn w-100 mb-4"
-                style={{ backgroundColor: "#fb3453", color: "white" }}
-              >
-                Log In
-              </Button>
-
-              <p>
-                Don't have an account?{" "}
-                <span
-                  className="span"
-                  onClick={() => navigate("/signup")}
-                  style={{ color: "#fb3453", cursor: "pointer" }}
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    backgroundColor: "#145250",
+                    color: "white",
+                    width: "100%",
+                  }}
                 >
-                  Sign Up
-                </span>
-              </p>
+                  Login
+                </Button>
+              </Form.Item>
             </Form>
+            <p className="text-center">
+              Don't have an account?{" "}
+              <span
+                className="span"
+                onClick={() => navigate("/signup")}
+                style={{ color: "rgb(0 181 175)  ", cursor: "pointer" }}
+              >
+                Sign Up
+              </span>
+            </p>
           </div>
         </div>
       </div>
