@@ -356,8 +356,8 @@ const Book: React.FC = () => {
   ];
 
   return (
-    <div className="mt-2">
-      <div className="my-3">
+    <div>
+      <div className="my-1">
         <div className="d-flex justify-content-between">
           <div className="mb-3 d-flex justify-content-between">
             <Input
@@ -372,10 +372,12 @@ const Book: React.FC = () => {
           <div>
             <Button
               icon={<PlusOutlined />}
-              className="mx-2 p-4"
               style={{
+                padding: '22px 12px',
+                margin: '0px 5px',
+                fontSize: '1rem',
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "15px",
+                borderRadius: "10px",
                 backgroundColor: "#145250",
               }}
               type="primary"
@@ -385,10 +387,12 @@ const Book: React.FC = () => {
             </Button>
             <Button
               icon={<BookOutlined />}
-              className="mx-2 p-4"
               style={{
+                padding: '22px 12px',
+                margin: '0px 5px',
+                fontSize: '1rem',
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "15px",
+                borderRadius: "10px",
                 backgroundColor: "#145250",
               }}
               type="primary"
@@ -398,10 +402,12 @@ const Book: React.FC = () => {
             </Button>
             <Button
               icon={<ArrowLeftOutlined />}
-              className="mx-2 p-4"
               style={{
+                padding: '22px 12px',
+                margin: '0px 5px 20px 5px',
+                fontSize: '1rem',
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "15px",
+                borderRadius: "10px",
                 backgroundColor: "#145250",
               }}
               type="primary"

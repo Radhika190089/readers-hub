@@ -230,7 +230,7 @@ const ReaderManagement: React.FC = () => {
                   />
                 </div>
               </div>
-              <h2>Total Readers</h2>
+              <h3>Total Readers</h3>
             </div>
           </div>
           <div className="TR2">
@@ -243,7 +243,7 @@ const ReaderManagement: React.FC = () => {
                   />
                 </div>
               </div>
-              <h2>Active Readers</h2>
+              <h3>Active Readers</h3>
             </div>
           </div>
           <div className="TR2">
@@ -256,16 +256,16 @@ const ReaderManagement: React.FC = () => {
                   />
                 </div>
               </div>
-              <h2>Readers This Week</h2>
+              <h3>Readers This Week</h3>
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-5" style={{ fontFamily: "sans-serif" }}>
+      <div className="mt-4" style={{ fontFamily: "sans-serif" }}>
         <div
-          className="my-5 p-3 "
+          className="p-3"
           style={{
-            boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
+            boxShadow: "3px 4px 8px 6px rgba(151, 150, 150, .1)",
             borderRadius: "10px",
             display: "flex",
             flexDirection: "column",
@@ -283,9 +283,8 @@ const ReaderManagement: React.FC = () => {
             <Button
               icon={<PlusOutlined />}
               style={{
-                padding: '22px 10px',
+                padding: '22px 12px',
                 fontSize: '1rem',
-                height: '38px',
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
                 borderRadius: "10px",
                 backgroundColor: "#145250",

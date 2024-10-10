@@ -459,7 +459,8 @@ const AdminPortal: React.FC = () => {
         </Header>
         <Content
           style={{
-            margin: "10px",
+            margin: "15px",
+            borderRadius:"10px",
             backgroundColor: "white",
             height: "calc(100vh - 124px)",
             overflowY: "auto",
@@ -467,7 +468,7 @@ const AdminPortal: React.FC = () => {
         >
           <div
             style={{
-              padding: 24,
+              padding: 15,
               height: "100%",
               boxSizing: "border-box",
             }}
