@@ -1,7 +1,13 @@
 import "./Styles/st.css";
 import React, { useEffect, useState } from "react";
-import { Table, Tabs, } from "antd";
-import { BookOutlined, FileTextOutlined, ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Table, Tabs } from "antd";
+import {
+  BookOutlined,
+  ClockCircleOutlined,
+  FileTextOutlined,
+  ExclamationCircleOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
 import { ColumnsType } from "antd/es/table";
 import { GetTransaction } from "./Services/TransactionServices";
 
@@ -98,7 +104,7 @@ const Transaction: React.FC = () => {
       title: "S No.",
       dataIndex: "sno",
       render: (_: any, __: TransactionType, index: number) => index + 1,
-      width: "5%",
+      width: "8%",
     },
     {
       title: "Reader Name",
@@ -124,11 +130,13 @@ const Transaction: React.FC = () => {
       dataIndex: "date",
       key: "date",
       render: (date: any) => new Date(date).toLocaleDateString(),
+      width: "13%",
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
+      width: "13%",
     },
   ];
 
@@ -172,7 +180,24 @@ const Transaction: React.FC = () => {
       children: (
         <Table
           columns={columns}
-          dataSource={transaction.filter((t) => t.type === "Return")}
+          dataSource={transaction.filter((t) => {
+            const today = new Date();
+            const borrowingPeriod = 1;
+
+            if (t.type === "Borrow") {
+              const borrowDate = new Date(t.date);
+              const dueDate = new Date(borrowDate);
+              dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
+
+              return (
+                today > dueDate &&
+                !transaction.some(
+                  (tr) => tr.bookISBN === t.bookISBN && tr.type === "Return"
+                )
+              );
+            }
+            return false;
+          })}
           pagination={false}
         />
       ),
@@ -181,7 +206,11 @@ const Transaction: React.FC = () => {
 
   return (
     <div style={{ fontFamily: "Poppins", width: "100%" }}>
-      <Tabs defaultActiveKey="1" items={tabItems} style={{ fontFamily: "Poppins" }} />
+      <Tabs
+        defaultActiveKey="1"
+        items={tabItems}
+        style={{ fontFamily: "Poppins" }}
+      />
     </div>
   );
 };
