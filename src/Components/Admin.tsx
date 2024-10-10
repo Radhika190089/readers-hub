@@ -141,7 +141,7 @@ const AdminPortal: React.FC = () => {
                     width={"85px"}
                   />{" "}
                   <div className="mt-2 ms-2">
-                    LIBRARY <span className="fs-3"> MANAGEMENT </span> <br />{" "}
+                    LIBRARY <span className="fs-3"> MANAGEMENT </span> <br />
                     SYSTEM
                   </div>
                 </div>

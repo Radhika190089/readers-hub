@@ -14,94 +14,101 @@ const Signup = () => {
       message.success("Signup successful!");
       navigate("/");
     } catch (error) {
-      message.error("Signup failed. Admin may already exist.");
+      message.error("Signup failed.");
       console.error("Error during signup:", error);
     }
-
-    // const users = JSON.parse(localStorage.getItem("admin") || "[]");
-    // users.push(values);
-    // localStorage.setItem("admin", JSON.stringify(users));
-    // message.success("Signup successful!");
-    // navigate("/login");
   };
 
   return (
     <div className="fds">
-      <div className="formdes d-flex justify-content-center">
-        <h1
-          className="custom m-3 fw-bolder"
-          style={{ color: "#fb3453", fontSize: "65px" }}
-        >
-          LIBRARY <br /> MANAGEMENT
-        </h1>
-      </div>
-      <div className="formdesign p-4 bg-white rounded">
-        <h2
-          className="mx-4 my-3 fw-bolder text-center"
-          style={{ color: "#fb3453" }}
-        >
-          Sign Up
-        </h2>
-        <Form
-          name="signup"
-          onFinish={onFinish}
-          autoComplete="off"
-          layout="vertical"
-        >
-          <Form.Item
-            label="User Name"
-            name="userName"
-            rules={[{ required: true, message: "Please enter user name" }]}
-          >
-            <Input placeholder="Enter your User Name" />
-          </Form.Item>
-
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              { required: true, message: "Please enter your email" },
-              { type: "email", message: "The input is not valid E-mail!" },
-            ]}
-          >
-            <Input placeholder="Enter your Email" />
-          </Form.Item>
-
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Please enter your password" }]}
-          >
-            <Input.Password placeholder="Enter your Password" />
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{
-                backgroundColor: "#fb3453",
-                color: "white",
-                width: "100%",
-              }}
+      <div className="fds1">
+        <div className="fds2">
+          <div>
+            <img
+              src="/LMS.png"
+              alt="Library Management"
+              height={"150px"}
+              width={"150px"}
+            />
+            <div style={{ fontSize: "60px", fontWeight: "bold", color: "white" }}>
+              LIBRARY
+              <br />
+              MANAGEMENT
+              <br />
+              SYSTEM
+            </div>
+          </div>
+          <div className="formdesign p-4 bg-white rounded">
+            <h2
+              className="mx-4 my-3 fw-bolder text-center"
+              style={{ color: "#145250" }}
             >
               Sign Up
-            </Button>
-          </Form.Item>
-        </Form>
+            </h2>
+            <Form
+              name="signup"
+              onFinish={onFinish}
+              autoComplete="off"
+              layout="vertical"
+            >
+              <Form.Item
+                label="User Name"
+                name="userName"
+                rules={[{ required: true, message: "Please enter user name" }]}
+              >
+                <Input placeholder="Enter your User Name" />
+              </Form.Item>
 
-        <p className="text-center">
-          Already have an account?{" "}
-          <span
-            className="span"
-            onClick={() => {
-              navigate("/login");
-            }}
-            style={{ color: "#fb3453", cursor: "pointer" }}
-          >
-            Log In
-          </span>
-        </p>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please enter your email" },
+                  { type: "email", message: "The input is not valid E-mail!" },
+                ]}
+              >
+                <Input placeholder="Enter your Email" />
+              </Form.Item>
+
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter your password" },
+                ]}
+              >
+                <Input.Password placeholder="Enter your Password" />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    backgroundColor: "#145250",
+                    color: "white",
+                    width: "100%",
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Form.Item>
+            </Form>
+
+            <p className="text-center">
+              Already have an account?{" "}
+              <span
+                className="span"
+                onClick={() => {
+                  navigate("/login");
+                }}
+                style={{ color: "#145250", cursor: "pointer" }}
+              >
+                Log In
+              </span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
