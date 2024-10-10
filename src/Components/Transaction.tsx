@@ -1,16 +1,9 @@
 import "./Styles/st.css";
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
-import { Link } from "react-router-dom";
+import { Table, Tabs, } from "antd";
+import { BookOutlined, FileTextOutlined, ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { ColumnsType } from "antd/es/table";
 import { GetTransaction } from "./Services/TransactionServices";
-import {
-  FormOutlined,
-  ClockCircleOutlined,
-  CalendarOutlined,
-} from "@ant-design/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook } from "@fortawesome/free-solid-svg-icons";
 
 export interface TransactionType {
   transactionId: number;
@@ -138,93 +131,57 @@ const Transaction: React.FC = () => {
       key: "type",
     },
   ];
+
+  const tabItems = [
+    {
+      label: "All Transactions",
+      key: "1",
+      icon: <FileTextOutlined />,
+      children: (
+        <Table columns={columns} dataSource={filteredData} pagination={false} />
+      ),
+    },
+    {
+      label: "Borrowed Books",
+      key: "2",
+      icon: <BookOutlined />,
+      children: (
+        <Table
+          columns={columns}
+          dataSource={transaction.filter((t) => t.type === "Borrow")}
+          pagination={false}
+        />
+      ),
+    },
+    {
+      label: "Returned Books",
+      key: "3",
+      icon: <CheckCircleOutlined />,
+      children: (
+        <Table
+          columns={columns}
+          dataSource={transaction.filter((t) => t.type === "Return")}
+          pagination={false}
+        />
+      ),
+    },
+    {
+      label: "Overdue Books",
+      key: "4",
+      icon: <ExclamationCircleOutlined />,
+      children: (
+        <Table
+          columns={columns}
+          dataSource={transaction.filter((t) => t.type === "Return")}
+          pagination={false}
+        />
+      ),
+    },
+  ];
+
   return (
     <div style={{ fontFamily: "Poppins", width: "100%" }}>
-      <div className="d-flex justify-content-between">
-        <div
-          className="cardz d-flex justify-content-between"
-          style={{ width: "100%" }}
-        >
-          <div className="TR1">
-            <div className="p0">
-              <div className="p1">
-                <h2>{transaction.length}</h2>
-                <div className="p2">
-                  <FormOutlined
-                    style={{ fontSize: "35px", color: "#ffffff" }}
-                  />
-                </div>
-              </div>
-              <h2>Total Transactions</h2>
-            </div>
-          </div>
-          <div className="TR1">
-            <div className="p0">
-              <div className="p1">
-                <h2>{borrowedBooksCount}</h2>
-                <div className="p2">
-                  <FontAwesomeIcon
-                    icon={faBook}
-                    style={{ fontSize: "35px", color: "#ffffff" }}
-                  />
-                </div>
-              </div>
-              <h2>Borrowed Books</h2>
-            </div>
-          </div>
-          <div className="TR1">
-            <div className="p0">
-              <div className="p1">
-                <h2>{booksBorrowedThisWeek}</h2>
-                <div className="p2">
-                  <CalendarOutlined
-                    style={{ fontSize: "35px", color: "#ffffff" }}
-                  />
-                </div>
-              </div>
-              <h2>Books Borrowed This Week</h2>
-            </div>
-          </div>
-          <div className="TR1">
-            <div className="p0">
-              <div className="p1">
-                <h2>{calculateOverdues()}</h2>
-                <div className="p2">
-                  <ClockCircleOutlined
-                    style={{ fontSize: "35px", color: "#ffffff" }}
-                  />
-                </div>
-              </div>
-              <h2>Over Dues Books</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="mt-5 p-3"
-        style={{
-          boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
-          borderRadius: "10px",
-        }}
-      >
-        <div className="mx-1 mt-2 d-flex justify-content-between">
-          <h3>Recent TransactionType</h3>
-          <div className="d-flex gap-2">
-            <Link to={"/readerManagement"} style={{ textDecoration: "none" }}>
-              <h6 style={{ color: "#145250", paddingTop: "10px" }}>
-                View Readers
-              </h6>
-            </Link>
-          </div>
-        </div>
-        <div className="mt-3">
-          <Table
-            columns={columns}
-            dataSource={filteredData}
-            pagination={false}
-          />
-        </div>
-      </div>
+      <Tabs defaultActiveKey="1" items={tabItems} style={{ fontFamily: "Poppins" }} />
     </div>
   );
 };

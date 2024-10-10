@@ -27,7 +27,6 @@ import {
   Link,
 } from "react-router-dom";
 import Dashboard from "./Dashboard";
-import Reader from "./Transaction";
 import Profile from "./Profile";
 import { Avatar } from "evergreen-ui";
 import Book from "./Book";
@@ -412,9 +411,8 @@ const AdminPortal: React.FC = () => {
         </Header>
         <Content
           style={{
-            margin: "15px 15px 10px",
+            margin: "10px",
             backgroundColor: "white",
-            borderRadius: "20px",
             height: "calc(100vh - 124px)",
             overflowY: "auto",
           }}
