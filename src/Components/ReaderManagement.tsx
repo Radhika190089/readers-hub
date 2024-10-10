@@ -26,6 +26,7 @@ import {
 } from "./Services/ReaderServices";
 import "./Styles/st.css";
 import ReaderForm from "./Reader Comp/ReaderForm";
+import { Color } from "antd/es/color-picker";
 
 export interface ReaderType {
   readerId: number;
@@ -281,8 +282,10 @@ const ReaderManagement: React.FC = () => {
             />
             <Button
               icon={<PlusOutlined />}
-              className="mx-1 p-4"
               style={{
+                padding: '22px 10px',
+                fontSize: '1rem',
+                height: '38px',
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
                 borderRadius: "10px",
                 backgroundColor: "#145250",
@@ -307,7 +310,6 @@ const ReaderManagement: React.FC = () => {
             />
           )}
         </div>
-
         <Modal
           title="Add New Reader"
           open={viewAddUserModal}

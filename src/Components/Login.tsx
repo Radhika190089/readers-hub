@@ -44,13 +44,13 @@ const Login = () => {
               SYSTEM
             </div>
           </div>
-          <div className="formdesign bg-white rounded">
-            <h2
+          <div className="formdesign bg-white rounded pt-5">
+            <h1
               className="mx-4 mt-3 fw-bolder text-center"
               style={{ color: "rgb(57 118 116)" }}
             >
               Log In
-            </h2>
+            </h1>
             <Form
               name="login"
               onFinish={onFinish}
