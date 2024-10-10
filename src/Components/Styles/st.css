@@ -15,8 +15,9 @@
 .fds1 {
     border-radius: 10px;
     padding: 60px;
-    background-color: #145250;
+    background-color: #2A8C8A;
     width: 95%;
+    height: 95;
 }
 
 .fds2 {
@@ -33,6 +34,14 @@
     display: "flex";
     flex-direction: "row";
     justify-content: "space-between"
+}
+
+.ant-layout-sider .ant-layout-sider-trigger {
+    background-color: #145250;
+}
+
+.ant-layout-sider .ant-layout-sider-trigger:hover {
+    background-color: #1c706d;
 }
 
 .background-video {
