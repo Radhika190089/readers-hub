@@ -26,55 +26,6 @@ const Transaction: React.FC = () => {
   const [transaction, setTransaction] = useState<TransactionType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const borrowedBooksCount = transaction.filter(
-    (r) => r.type === "Borrow"
-  ).length;
-
-  const getCurrentWeekRange = () => {
-    const now = new Date();
-    const firstDayOfWeek = new Date(
-      now.setDate(now.getDate() - now.getDay() + 1)
-    );
-    const lastDayOfWeek = new Date(now.setDate(now.getDate() + 6));
-    firstDayOfWeek.setHours(0, 0, 0, 0);
-    lastDayOfWeek.setHours(23, 59, 59, 999);
-    return { firstDayOfWeek, lastDayOfWeek };
-  };
-
-  const booksBorrowedThisWeek = transaction.filter((t) => {
-    const { firstDayOfWeek, lastDayOfWeek } = getCurrentWeekRange();
-    const transactionDate = new Date(t.date);
-    return (
-      t.type === "Borrow" &&
-      transactionDate >= firstDayOfWeek &&
-      transactionDate <= lastDayOfWeek
-    );
-  }).length;
-
-  const calculateOverdues = () => {
-    const today = new Date();
-
-    const borrowingPeriod = 2;
-
-    const overdueBooks = transaction.filter((t) => {
-      if (t.type === "Borrow") {
-        const borrowDate = new Date(t.date);
-        const dueDate = new Date(borrowDate);
-        dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
-
-        return (
-          today > dueDate &&
-          !transaction.some(
-            (tr) => tr.bookISBN === t.bookISBN && tr.type === "Return"
-          )
-        );
-      }
-      return false;
-    });
-
-    return overdueBooks.length;
-  };
-
   useEffect(() => {
     (async () => {
       try {

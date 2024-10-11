@@ -4,9 +4,6 @@ import {
   SearchOutlined,
   EditOutlined,
   DeleteOutlined,
-  UserOutlined,
-  TeamOutlined,
-  CalendarOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -48,7 +45,6 @@ const ReaderManagement: React.FC = () => {
   const [selectedReader, setSelectedReader] = useState<ReaderType | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [refresh, setRefresh] = React.useState<boolean>(false);
-  const activeReadersCount = reader.filter((r) => r.status === "Active").length;
 
   useEffect(() => {
     (async () => {
@@ -215,52 +211,6 @@ const ReaderManagement: React.FC = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between">
-        <div
-          className="cardz d-flex justify-content-between"
-          style={{ width: "100%" }}
-        >
-          <div className="TR2">
-            <div className="p0">
-              <div className="p1">
-                <h2>{reader.length}</h2>
-                <div className="p2">
-                  <TeamOutlined
-                    style={{ fontSize: "35px", color: "#ffffff" }}
-                  />
-                </div>
-              </div>
-              <h3>Total Readers</h3>
-            </div>
-          </div>
-          <div className="TR2">
-            <div className="p0">
-              <div className="p1">
-                <h2>{activeReadersCount}</h2>
-                <div className="p2">
-                  <UserOutlined
-                    style={{ fontSize: "35px", color: "#ffffff" }}
-                  />
-                </div>
-              </div>
-              <h3>Active Readers</h3>
-            </div>
-          </div>
-          <div className="TR2">
-            <div className="p0">
-              <div className="p1">
-                <h2>6</h2>
-                <div className="p2">
-                  <CalendarOutlined
-                    style={{ fontSize: "35px", color: "#ffffff" }}
-                  />
-                </div>
-              </div>
-              <h3>Readers This Week</h3>
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="mt-4" style={{ fontFamily: "sans-serif" }}>
         <div
           className="p-3"

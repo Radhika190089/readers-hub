@@ -1,176 +1,147 @@
-
-// import React, { useEffect, useState } from "react";
-// import { Carousel } from "antd";
-// import { Link, useNavigate } from "react-router-dom";
-// import "./Styles/st.css";
-// import { GetBookData } from "./Services/BookServices";
-// import { BookType } from "./Book";
-// import Box from '@mui/material/Box';
-// import { PieChart } from '@mui/x-charts/PieChart';
-// import { mobileAndDesktopOS, valueFormatter } from './webUsageStats';
-
-
-
-// const Dashboard: React.FC = () => {
-//   const [books, setBooks] = useState<BookType[]>([]);
-//   // const [randomBooks, setRandomBooks] = useState<BookType[]>([]);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     (async () => {
-//       try {
-//         const data = await GetBookData();
-//         setBooks(data);
-//         console.log(books)
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     })();
-//     // const groupedBooks: { [key: string]: BookType[] } = books.reduce(
-//     //   (acc: { [key: string]: BookType[] }, book: BookType) => {
-//     //     acc[book.category] = acc[book.category] || [];
-//     //     acc[book.category].push(book);
-//     //     return acc;
-//     //   },
-//     //   {}
-//     // );
-
-//     // const selectedBooks: BookType[] = Object.values(groupedBooks).map(
-//     //   (categoryBooks) =>
-//     //     categoryBooks[Math.floor(Math.random() * categoryBooks.length)]
-//     // );
-
-//     // setRandomBooks(selectedBooks);
-//   }, []);
-
-//   return (
-//     <div style={{ fontFamily: "Poppins" }}>
-//       <div className="row" >
-//         <div className="core col-xl-6 col-12" >
-//           <Carousel>
-//             <div className="slidebar-1">
-//               <div className="justify-content-spacebetween rounded-5">
-//                 <h1>Welcome Back!</h1>
-//                 <h4>Continue exploring the library.</h4>
-//               </div>
-//               <div>
-//                 <span
-//                   className="bottom-left"
-//                   onClick={() => navigate("/books")}
-//                   style={{ cursor: "pointer" }}
-//                 >
-//                   <h6>Add New Books →</h6>
-//                 </span>
-//               </div>
-//             </div>
-//             <div>
-//               <div className="slidebar-2">
-//                 <div className="justify-content-spacebetween">
-//                   <h1>Manage Readers</h1>
-//                   <h4>Add or update Readers information easily.</h4>
-//                 </div>
-//                 <span
-//                   className="bottom-left"
-//                   onClick={() => navigate("/readerManagement")}
-//                   style={{ cursor: "pointer" }}
-//                 >
-//                   <h6>Manage Readers →</h6>
-//                 </span>
-//               </div>
-//             </div>
-//             <div>
-//               <div className="slidebar-3">
-//                 <div className="justify-content-spacebetween">
-//                   <h1>Admin Profile</h1>
-//                   <h4>View and edit your profile details.</h4>
-//                 </div>
-//                 <div>
-//                   {/* <img src="\Images\profile.png" alt="Admin Profile" className="bottom" height={'180px'} /> */}
-//                 </div>
-//                 <span
-//                   className="bottom-left"
-//                   onClick={() => navigate("/profile")}
-//                   style={{ cursor: "pointer" }}
-//                 >
-//                   <h6>View Profile →</h6>
-//                 </span>
-//               </div>
-//             </div>
-//           </Carousel>
-//         </div>
-//         <div className="col-xl-6 col-12 flex align-items-center justify-content-center">
-//           <div>
-//             <Box sx={{ width: '100%' }}>
-//               <PieChart
-//                 height={300}
-//                 series={[
-//                   {
-//                     data: mobileAndDesktopOS.slice(0, 4),
-//                     innerRadius: 70,
-//                     arcLabel: (params) => params.label ?? '',
-//                     arcLabelMinAngle: 20,
-//                     valueFormatter,
-//                   },
-//                 ]}
-//                 skipAnimation={false}
-//               />
-//             </Box>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div
-//         className="mt-4 pt-4 pb-2 px-3"
-//         style={{
-//           boxShadow: "3px 4px 12px 10px rgba(151, 150, 150, .1)",
-//           borderRadius: "20px",
-//         }}
-//       >
-//         <div className="mx-3 d-flex justify-content-between fs-6 ">
-//           <h2 style={{ fontWeight: "700" }}>Top Choices</h2>
-//           <Link
-//             to={"/book"}
-//             style={{
-//               textDecoration: "none",
-//               color: "#145250",
-//               fontWeight: "600",
-//               paddingTop: "8px",
-//             }}
-//           >
-//             View All
-//           </Link>
-//         </div>
-//         <div className="d-flex flex-direction-column overflow-auto">
-//           {books.map((book) => {
-//             console.log("book", book);
-//             return (
-//               <div
-//                 key={book.bookId}
-//                 style={{ margin: "20px", lineHeight: 0.4, cursor: "pointer" }}
-//                 className="card1 shadow border"
-//               >
-//                 <img src={book.bookURL} alt={book.title} height={"230px"} width={"160px"} />
-//                 <div className="px-2">
-//                   <h6 className="mt-2">{book.title}</h6>
-//                   <p style={{ color: "#145250" }}>{book.author}</p>
-//                   <h6 style={{ color: "#145250" }}>{book.category}</h6>
-//                 </div>
-//               </div>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-import React from 'react'
+import {
+  UserOutlined,
+  TeamOutlined,
+  BookOutlined,
+  ExclamationCircleOutlined,
+  ReadOutlined,
+  HourglassOutlined,
+} from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { ReaderType } from "./ReaderManagement";
+import { GetReaderData } from "./Services/ReaderServices";
+import { GetBookData } from "./Services/BookServices";
+import { GetTransaction } from "./Services/TransactionServices";
+import { BookType } from "./Book";
+import { TransactionType } from "./Transaction";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  const [reader, setReaders] = useState<ReaderType[]>([]);
+  const [book, setBook] = useState<BookType[]>([]);
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const activeReadersCount = reader.filter((r) => r.status === "Active").length;
 
-export default Dashboard
+  useEffect(() => {
+    (async () => {
+      try {
+        const book = await GetBookData();
+        const reader = await GetReaderData();
+        const transaction = await GetTransaction();
+        setBook(book);
+        setReaders(reader);
+        setTransactions(transaction);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
+  const borrowedBooksCount = transactions.filter(
+    (r) => r.type === "Borrow"
+  ).length;
+
+  const calculateOverdues = () => {
+    const today = new Date();
+    const borrowingPeriod = 2; // Assume a borrowing period of 2 days
+
+    const overdueBooks = transactions.filter((t) => {
+      if (t.type === "Borrow") {
+        const borrowDate = new Date(t.date);
+        const dueDate = new Date(borrowDate);
+        dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
+
+        return (
+          today > dueDate &&
+          !transactions.some(
+            (tr) => tr.bookISBN === t.bookISBN && tr.type === "Return"
+          )
+        );
+      }
+      return false;
+    });
+
+    return overdueBooks.length;
+  };
+
+  return (
+    <div>
+      <div className="d-flex justify-content-between">
+        <div
+          className="cardz d-flex justify-content-between"
+          style={{ width: "100%", fontFamily: "Poppins" }}
+        >
+          <div className="TR2">
+            <div className="p0">
+              <div className="p1">
+                <h2>{book.length}</h2>
+                <div className="p2">
+                  <BookOutlined
+                    style={{ fontSize: "35px", color: "#145250" }}
+                  />
+                </div>
+              </div>
+              <h3>Total Books</h3>
+            </div>
+          </div>
+
+          <div className="TR2">
+            <div className="p0">
+              <div className="p1">
+                <h2>{borrowedBooksCount}</h2>
+                <div className="p2">
+                  <ReadOutlined
+                    style={{ fontSize: "35px", color: "#145250" }}
+                  />
+                </div>
+              </div>
+              <h3>Borrowed Books</h3>
+            </div>
+          </div>
+
+          <div className="TR2">
+            <div className="p0">
+              <div className="p1">
+                <h2>{calculateOverdues()}</h2>
+                <div className="p2">
+                  <HourglassOutlined
+                    style={{ fontSize: "35px", color: "#145250" }}
+                  />
+                </div>
+              </div>
+              <h3>Overdue Books</h3>
+            </div>
+          </div>
+
+          <div className="TR2">
+            <div className="p0">
+              <div className="p1">
+                <h2>{reader.length}</h2>
+                <div className="p2">
+                  <TeamOutlined
+                    style={{ fontSize: "35px", color: "#145250" }}
+                  />
+                </div>
+              </div>
+              <h3>Total Readers</h3>
+            </div>
+          </div>
+
+          <div className="TR2">
+            <div className="p0">
+              <div className="p1">
+                <h2>{activeReadersCount}</h2>
+                <div className="p2">
+                  <UserOutlined
+                    style={{ fontSize: "35px", color: "#145250" }}
+                  />
+                </div>
+              </div>
+              <h3>Active Readers</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
