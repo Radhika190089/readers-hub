@@ -357,9 +357,9 @@ const Book: React.FC = () => {
 
   return (
     <div>
-      <div className="my-1">
-        <div className="d-flex justify-content-between">
-          <div className="mb-3 d-flex justify-content-between">
+      <div>
+        <div className="d-flex justify-content-between mb-3">
+          <div className="d-flex justify-content-between">
             <Input
               className="search"
               placeholder="Search by Book Title or BookISBN"
@@ -374,7 +374,6 @@ const Book: React.FC = () => {
               icon={<PlusOutlined />}
               style={{
                 padding: '22px 12px',
-                margin: '0px 5px',
                 fontSize: '1rem',
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "10px",
@@ -389,8 +388,8 @@ const Book: React.FC = () => {
               icon={<BookOutlined />}
               style={{
                 padding: '22px 12px',
-                margin: '0px 5px',
                 fontSize: '1rem',
+                marginLeft:"8px",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "10px",
                 backgroundColor: "#145250",
@@ -404,8 +403,8 @@ const Book: React.FC = () => {
               icon={<ArrowLeftOutlined />}
               style={{
                 padding: '22px 12px',
-                margin: '0px 5px 20px 5px',
                 fontSize: '1rem',
+                marginLeft:"8px",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "10px",
                 backgroundColor: "#145250",

@@ -413,6 +413,7 @@ body,
     display: none;
 }
 
+
 @media screen and (max-width: 768px) {
     .mobileHidden {
         display: none;
@@ -493,6 +494,5 @@ body,
         padding: 5px;
         background-color: #145250;
     }
-
 
 }

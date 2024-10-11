@@ -468,7 +468,7 @@ const AdminPortal: React.FC = () => {
         >
           <div
             style={{
-              padding: 15,
+              padding: "16px",
               height: "100%",
               boxSizing: "border-box",
             }}

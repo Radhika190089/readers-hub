@@ -211,17 +211,15 @@ const ReaderManagement: React.FC = () => {
 
   return (
     <>
-      <div className="mt-4" style={{ fontFamily: "sans-serif" }}>
+      <div style={{ fontFamily: "poppins" }}>
         <div
-          className="p-3"
           style={{
-            boxShadow: "3px 4px 8px 6px rgba(151, 150, 150, .1)",
             borderRadius: "10px",
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <div className="mb-4 d-flex justify-content-between">
+          <div className="mb-3 d-flex justify-content-between">
             <Input
               className="search"
               placeholder="Search by Name or Reader ID"
