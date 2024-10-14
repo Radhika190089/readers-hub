@@ -413,6 +413,12 @@ body,
     display: none;
 }
 
+:where(.css-dev-only-do-not-override-ccdg5a).ant-dropdown .ant-dropdown-menu,
+:where(.css-dev-only-do-not-override-ccdg5a).ant-dropdown-menu-submenu .ant-dropdown-menu {
+    width: 150px;
+    position: absolute;
+    right: 15px;
+}
 
 @media screen and (max-width: 768px) {
     .mobileHidden {

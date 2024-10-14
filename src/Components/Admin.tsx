@@ -8,6 +8,7 @@ import {
   MenuOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -51,11 +52,13 @@ const items: MenuProps["items"] = [
     label: "Profile",
     key: "1",
     icon: <UserOutlined />,
+    onClick: () => window.location.href = '/profile'
   },
   {
     label: "LogOut",
     key: "2",
-    icon: <UserOutlined />,
+    icon: <LogoutOutlined />,
+    onClick: () => window.location.href = '/login'
   },
 ];
 
@@ -288,22 +291,20 @@ const AdminPortal: React.FC = () => {
             </Button> */}
             <Dropdown menu={menuProps}>
               <div className="d-flex align-items-center ms-auto">
-                <div className="d-flex align-items-center ms-auto">
-                  <div className="mt-4">
-                    <Avatar
-                      src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-                      name={"Suresh"}
-                      size={50}
-                      style={{ cursor: "pointer" }}
-                    />
-                  </div>
-                  <div
-                    className="linh text-end mx-3"
-                    style={{ fontFamily: "poppins" }}
-                  >
-                    <h5 style={{ cursor: "pointer" }}>Suresh</h5>
-                    <p style={{ cursor: "pointer" }}>Admin</p>
-                  </div>
+                <div className="mt-4">
+                  <Avatar
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
+                    name={"Naresh"}
+                    size={50}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+                <div
+                  className="linh mx-3"
+                  style={{ fontFamily: "poppins" }}
+                >
+                  <h5 style={{ cursor: "pointer" }}>Naresh Suthar</h5>
+                  <p style={{ cursor: "pointer" }}>Admin</p>
                 </div>
               </div>
             </Dropdown>
@@ -460,7 +461,7 @@ const AdminPortal: React.FC = () => {
         <Content
           style={{
             margin: "15px",
-            borderRadius:"10px",
+            borderRadius: "10px",
             backgroundColor: "white",
             height: "calc(100vh - 124px)",
             overflowY: "auto",
