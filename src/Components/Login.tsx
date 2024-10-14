@@ -2,23 +2,21 @@ import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import "antd/dist/reset.css";
 import "./Styles/st.css";
+import { LoginAdmin } from "./Services/AdminServices";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const onFinish = (values: { email: string; password: string }) => {
-    const users = JSON.parse(localStorage.getItem("admin") || "") || [];
-    const user =
-      users?.find(
-        (user: { email: string; password: string }) =>
-          user.email === values.email && user.password === values.password
-      ) || [];
+  const onFinish = async (value: any) => {
+    try {
+      const response = await LoginAdmin(value);
 
-    if (user) {
-      message.success("Login successful!");
-      localStorage.setItem("loggedUser", "true");
-      navigate("/");
-    } else {
+      if (response) {
+        message.success("Login successful!");
+        localStorage.setItem("loggedUser", JSON.stringify(response));
+        navigate("/");
+      }
+    } catch (error) {
       message.error("Invalid login details!");
     }
   };
@@ -96,7 +94,7 @@ const Login = () => {
               <span
                 className="span"
                 onClick={() => navigate("/signup")}
-                style={{ color: "rgb(0 181 175)  ", cursor: "pointer" }}
+                style={{ color: "rgb(0 181 175)", cursor: "pointer" }}
               >
                 Sign Up
               </span>

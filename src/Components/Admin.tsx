@@ -52,13 +52,13 @@ const items: MenuProps["items"] = [
     label: "Profile",
     key: "1",
     icon: <UserOutlined />,
-    onClick: () => window.location.href = '/profile'
+    onClick: () => (window.location.href = "/profile"),
   },
   {
     label: "LogOut",
     key: "2",
     icon: <LogoutOutlined />,
-    onClick: () => window.location.href = '/login'
+    onClick: () => (window.location.href = "/login"),
   },
 ];
 
@@ -244,25 +244,6 @@ const AdminPortal: React.FC = () => {
             >
               Transactions
             </Menu.Item>
-
-            {/* <Menu.Item
-            key="/profile"
-            icon={
-              <UserOutlined
-                style={{
-                  color: selectedNavItems === "/profile" ? "#145250" : "white",
-                  fontSize: "20px",
-                }}
-              />
-            }
-            style={{
-              color: selectedNavItems === "/profile" ? "#145250" : "white",
-              position: "relative",
-              top: 600,
-            }} // Adjusted to the same position
-          >
-            Profile
-          </Menu.Item> */}
           </Menu>
         </Sider>
       </div>
@@ -275,20 +256,6 @@ const AdminPortal: React.FC = () => {
           }}
         >
           <div className="menumobaHidden" style={{ width: "100%" }}>
-            {/* <Button
-              onClick={toggleCollapsed}
-              style={{
-                marginBottom: 16,
-                backgroundColor: "#1E6F6D",
-                color: "white",
-                height: "40px",
-                border: "none",
-                margin: "10px",
-                width: "60px",
-              }}
-            >
-              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </Button> */}
             <Dropdown menu={menuProps}>
               <div className="d-flex align-items-center ms-auto">
                 <div className="mt-4">
@@ -299,10 +266,7 @@ const AdminPortal: React.FC = () => {
                     style={{ cursor: "pointer" }}
                   />
                 </div>
-                <div
-                  className="linh mx-3"
-                  style={{ fontFamily: "poppins" }}
-                >
+                <div className="linh mx-3" style={{ fontFamily: "poppins" }}>
                   <h5 style={{ cursor: "pointer" }}>Naresh Suthar</h5>
                   <p style={{ cursor: "pointer" }}>Admin</p>
                 </div>
