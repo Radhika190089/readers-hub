@@ -59,6 +59,11 @@ const Profile: React.FC = () => {
             className="avatar"
           />
         </div>
+        <div className="mobbt">
+          <button className="logoutButton" onClick={() => navigate("/Login")} style={{ marginBottom: '50px', marginRight: '120px' }}>
+            Log Out
+          </button>
+        </div>
       </div>
     </div>
   );

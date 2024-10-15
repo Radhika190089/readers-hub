@@ -75,11 +75,11 @@ const Dashboard = () => {
                 <h2>{book.length}</h2>
                 <div className="p2">
                   <BookOutlined
-                    style={{ fontSize: "35px", color: "#145250" }}
+                    style={{ fontSize: "30px", color: "#145250" }}
                   />
                 </div>
               </div>
-              <h3>Total Books</h3>
+              <h4>Total Books</h4>
             </div>
           </div>
 
@@ -89,11 +89,11 @@ const Dashboard = () => {
                 <h2>{borrowedBooksCount}</h2>
                 <div className="p2">
                   <ReadOutlined
-                    style={{ fontSize: "35px", color: "#145250" }}
+                    style={{ fontSize: "30px", color: "#145250" }}
                   />
                 </div>
               </div>
-              <h3>Borrowed Books</h3>
+              <h4>Borrowed Books</h4>
             </div>
           </div>
 
@@ -103,11 +103,11 @@ const Dashboard = () => {
                 <h2>{calculateOverdues()}</h2>
                 <div className="p2">
                   <HourglassOutlined
-                    style={{ fontSize: "35px", color: "#145250" }}
+                    style={{ fontSize: "30px", color: "#145250" }}
                   />
                 </div>
               </div>
-              <h3>Overdue Books</h3>
+              <h4>Overdue Books</h4>
             </div>
           </div>
 
@@ -117,11 +117,11 @@ const Dashboard = () => {
                 <h2>{reader.length}</h2>
                 <div className="p2">
                   <TeamOutlined
-                    style={{ fontSize: "35px", color: "#145250" }}
+                    style={{ fontSize: "30px", color: "#145250" }}
                   />
                 </div>
               </div>
-              <h3>Total Readers</h3>
+              <h4>Total Readers</h4>
             </div>
           </div>
 
@@ -131,11 +131,11 @@ const Dashboard = () => {
                 <h2>{activeReadersCount}</h2>
                 <div className="p2">
                   <UserOutlined
-                    style={{ fontSize: "35px", color: "#145250" }}
+                    style={{ fontSize: "30px", color: "#145250" }}
                   />
                 </div>
               </div>
-              <h3>Active Readers</h3>
+              <h4>Active Readers</h4>
             </div>
           </div>
         </div>
