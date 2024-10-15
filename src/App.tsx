@@ -9,8 +9,13 @@ import Login from "./Components/Login";
 import Admin from "./Components/Admin";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const App = () => {
+
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const isLoggedIn = localStorage.getItem("loggedUser");
+  return isLoggedIn ? children : <Navigate to="/login" />;
+};
+
+const App = () => {
 
   return (
     <Router>
@@ -18,8 +23,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
-          path="/"
-          element={isLoggedIn ? <Admin /> : <Navigate to="/login" />}
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </Router>

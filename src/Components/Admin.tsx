@@ -47,6 +47,11 @@ const handleMenuClick: MenuProps["onClick"] = (e) => {
   console.log("click", e);
 };
 
+const handleLogout = () => {
+  localStorage.removeItem("loggedUser");
+  (window.location.href = "/login")
+}
+
 const items: MenuProps["items"] = [
   {
     label: "Profile",
@@ -58,7 +63,8 @@ const items: MenuProps["items"] = [
     label: "LogOut",
     key: "2",
     icon: <LogoutOutlined />,
-    onClick: () => (window.location.href = "/login"),
+    onClick: handleLogout
+
   },
 ];
 
@@ -223,7 +229,7 @@ const AdminPortal: React.FC = () => {
                 marginTop: "5px",
               }}
             >
-              Reader
+              Readers
             </Menu.Item>
             <Menu.Item
               key="/transaction"
