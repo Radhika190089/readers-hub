@@ -36,7 +36,7 @@ const ReaderForm: React.FC<ReaderProps> = ({
         rules={[
           { required: true, message: "Please input the email!" },
           {
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            pattern: /^[^\s@]+@[a-zA-Z]+[a-zA-Z0-9.-]*\.[a-zA-Z]{2,}$/,
             message: "Please enter a valid email!",
           },
         ]}
