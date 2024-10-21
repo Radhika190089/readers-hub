@@ -13,8 +13,10 @@ import { GetTransaction } from "./Services/TransactionServices";
 import { BookType } from "./Book";
 import { TransactionType } from "./Transaction";
 import { Table, Button } from "antd"; // Import Button here
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [reader, setReaders] = useState<ReaderType[]>([]);
   const [book, setBook] = useState<BookType[]>([]);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
@@ -67,8 +69,8 @@ const Dashboard = () => {
   };
 
   const getTopBooks = (books: BookType[], count: number) => {
-    const shuffled = [...books].sort(() => 0.5 - Math.random()); 
-    const selectedBooks = shuffled.slice(0, count); 
+    const shuffled = [...books].sort(() => 0.5 - Math.random());
+    const selectedBooks = shuffled.slice(0, count);
     return [...selectedBooks, ...Array(count - selectedBooks.length).fill(null)].slice(0, count);
   };
 
@@ -157,7 +159,10 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="topchoices">
-        <h2>Top Choices</h2>
+        <div className="d-flex justify-content-between m-0">
+          <h2>Top Choices</h2>
+          <h5 className="view mt-2" onClick={()=>(navigate("/book"))} >View All</h5>
+        </div>
         <div className="topbooks">
           {topBooks.map((book, index) => (
             <div key={book ? book.bookISBN : `placeholder-${index}`} className="book-card">
@@ -175,12 +180,15 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="reader">
-        <h2>Readers List</h2>
+        <div className="d-flex justify-content-between m-0">
+          <h2>Readers List</h2>
+          <h5 className="view mt-2" onClick={()=>(navigate("/readerManagement"))}>View All</h5>
+        </div>
         <Table
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          scroll={{ y: 300 }}
+          style={{borderRadius:'20px'}}
         />
       </div>
     </div>
