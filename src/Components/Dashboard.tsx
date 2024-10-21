@@ -12,26 +12,27 @@ import { GetBookData } from "./Services/BookServices";
 import { GetTransaction } from "./Services/TransactionServices";
 import { BookType } from "./Book";
 import { TransactionType } from "./Transaction";
+import { Table } from "antd";
 
 const Dashboard = () => {
   const [reader, setReaders] = useState<ReaderType[]>([]);
   const [book, setBook] = useState<BookType[]>([]);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const [topBooks, setTopBooks] = useState<BookType[]>([]);
+  const [topBooks, setTopBooks] = useState<(BookType | null)[]>([]); // Allow null for placeholders
   const activeReadersCount = reader.filter((r) => r.status === "Active").length;
 
   useEffect(() => {
     (async () => {
       try {
-        const book = await GetBookData();
-        const reader = await GetReaderData();
-        const transaction = await GetTransaction();
-        setBook(book);
-        setReaders(reader);
-        setTransactions(transaction);
+        const bookData = await GetBookData();
+        const readerData = await GetReaderData();
+        const transactionData = await GetTransaction();
+        setBook(bookData);
+        setReaders(readerData);
+        setTransactions(transactionData);
 
-        // Set random top 6-7 books
-        setTopBooks(getRandomBooks(book, 6)); // Select 6 random books
+        // Set top books
+        setTopBooks(getTopBooks(bookData, 6)); // Ensure exactly 6 books
       } catch (error) {
         console.error(error);
       }
@@ -65,10 +66,12 @@ const Dashboard = () => {
     return overdueBooks.length;
   };
 
-  // Function to get random books
-  const getRandomBooks = (books: BookType[], count: number) => {
+  const getTopBooks = (books: BookType[], count: number) => {
     const shuffled = [...books].sort(() => 0.5 - Math.random()); // Shuffle array
-    return shuffled.slice(0, count); // Return random number of books
+    const selectedBooks = shuffled.slice(0, count); // Get up to the requested count
+
+    // Ensure exactly 'count' books, pad with nulls if needed
+    return [...selectedBooks, ...Array(count - selectedBooks.length).fill(null)].slice(0, count);
   };
 
   return (
@@ -149,20 +152,27 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
       <div className="topchoices">
-        <h3>Top Picks</h3>
+        <h2>Top Choices</h2>
         <div className="topbooks">
-          {topBooks.map((book) => (
-            <div key={book.bookISBN} className="book-card">
-              <img src={book.bookURL} alt={book.title} />
-              <h5>{book.title}</h5>
-              <p>{book.author}</p>
+          {topBooks.map((book, index) => (
+            <div key={book ? book.bookISBN : `placeholder-${index}`} className="book-card">
+              {book ? (
+                <>
+                  <img src={book.bookURL} alt={book.title} />
+                  <h5>{book.title}</h5>
+                  <p>{book.author}</p>
+                </>
+              ) : (
+                <div className="placeholder">No Book Available</div>
+              )}
             </div>
           ))}
         </div>
       </div>
-      <div>
-        
+      <div className="mt-1">
+
       </div>
     </div>
   );
