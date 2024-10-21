@@ -88,12 +88,15 @@
 
 .book-card img {
     width: 180px;
-    height: 250px;
-    object-fit: cover;
+    height: 250px;  
     border-radius: 8px;
     margin-bottom: 10px;
 }
-
+.book-card {
+    width: 180px;
+    height: 250px;
+    overflow-y: auto;
+}
 .book-card h5 {
     font-size: 18px;
     font-weight: 500;
@@ -564,5 +567,17 @@ body,
 
     .modal1 {
         width: 60px;
+    }
+
+    .topbooks {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .book-card h5 {
+        font-size: 16px;
+    }
+
+    .book-card p {
+        font-size: 12px;
     }
 }

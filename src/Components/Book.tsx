@@ -349,8 +349,8 @@ const Book: React.FC = () => {
           <Image
             src={record.bookURL}
             alt={record.title}
-            height={"80px"}
-            width={"60px"}
+            height={"120px"}
+            width={"80px"}
           />
         </div>
       ),
@@ -361,10 +361,8 @@ const Book: React.FC = () => {
       dataIndex: "title",
       width: "15%",
       render: (_: any, record: BookType) => (
-        <div className="d-flex fs-7 gap-3">
-          <span className="d-flex justify-content-center align-items-center">
-            <p className="ms-4">{record.title}</p>
-          </span>
+        <div style={{ textAlign: "center" }}> 
+          <span>{record.title}</span>
         </div>
       ),
       sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
@@ -515,8 +513,6 @@ const Book: React.FC = () => {
         title="Book Details"
         open={viewDetailsModal}
         style={{
-          margin: 0,
-          top: 0,
           alignContent: "center",
           marginRight: "auto",
           marginLeft: "auto",

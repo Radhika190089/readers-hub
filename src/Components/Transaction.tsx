@@ -74,6 +74,7 @@ const Transaction: React.FC = () => {
       dataIndex: "sno",
       render: (_: any, __: TransactionType, index: number) => index + 1,
       width: "8%",
+      className: "text-center"
     },
     {
       title: "Reader Name",
@@ -81,6 +82,7 @@ const Transaction: React.FC = () => {
       key: "readerName",
       render: (readerId: number) => getReaderName(readerId),
       width: "20%",
+      className: "text-center"
     },
     {
       title: "Book Name",
@@ -88,12 +90,14 @@ const Transaction: React.FC = () => {
       key: "bookName",
       render: (bookISBN: string) => getBookName(bookISBN),
       width: "20%",
+      className: "text-center"
     },
     {
       title: "Book ISBN",
       dataIndex: "bookISBN",
       key: "bookISBN",
       width: "20%",
+      className: "text-center"
     },
     {
       title: "Date",
@@ -101,12 +105,14 @@ const Transaction: React.FC = () => {
       key: "date",
       render: (date: any) => new Date(date).toLocaleDateString(),
       width: "13%",
+      className: "text-center"
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
       width: "13%",
+      className: "text-center"
     },
   ];
 
@@ -116,6 +122,7 @@ const Transaction: React.FC = () => {
       dataIndex: "sno",
       render: (_: any, __: TransactionType, index: number) => index + 1,
       width: "8%",
+      className: "text-center"
     },
     {
       title: "Reader Name",
@@ -123,6 +130,7 @@ const Transaction: React.FC = () => {
       key: "readerName",
       render: (readerId: number) => getReaderName(readerId),
       width: "20%",
+      className: "text-center"
     },
     {
       title: "Book Name",
@@ -130,12 +138,14 @@ const Transaction: React.FC = () => {
       key: "bookName",
       render: (bookISBN: string) => getBookName(bookISBN),
       width: "20%",
+      className: "text-center"
     },
     {
       title: "Book ISBN",
       dataIndex: "bookISBN",
       key: "bookISBN",
       width: "20%",
+      className: "text-center"
     },
     {
       title: "Date",
@@ -143,6 +153,7 @@ const Transaction: React.FC = () => {
       key: "date",
       render: (date: any) => new Date(date).toLocaleDateString(),
       width: "13%",
+      className: "text-center"
     },
   ];
 
@@ -199,24 +210,28 @@ const Transaction: React.FC = () => {
               dataIndex: "sno",
               render: (_: any, __: TransactionType, index: number) => index + 1,
               width: "8%",
+               className: "text-center" 
             },
             {
               title: "Reader Name",
               dataIndex: "readerName",
               key: "readerName",
               width: "20%",
+               className: "text-center" 
             },
             {
               title: "Book Name",
               dataIndex: "bookName",
               key: "bookName",
               width: "20%",
+               className: "text-center" 
             },
             {
               title: "Book ISBN",
               dataIndex: "bookISBN",
               key: "bookISBN",
               width: "20%",
+               className: "text-center" 
             },
             {
               title: "Date",
@@ -224,6 +239,7 @@ const Transaction: React.FC = () => {
               key: "date",
               render: (date: any) => new Date(date).toLocaleDateString(),
               width: "13%",
+               className: "text-center" 
             },
             {
               title: "Fine",
@@ -246,6 +262,7 @@ const Transaction: React.FC = () => {
                 return "No Fine";
               },
               width: "13%",
+               className: "text-center" 
             },
           ]}
           dataSource={transaction.filter((t) => {
@@ -278,7 +295,7 @@ const Transaction: React.FC = () => {
       <Tabs
         defaultActiveKey="1"
         items={tabItems}
-        style={{ fontFamily: "Poppins",}} />
+        style={{ fontFamily: "Poppins", }} />
     </div>
   );
 };

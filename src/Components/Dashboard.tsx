@@ -64,7 +64,6 @@ const Dashboard = () => {
       }
       return false;
     });
-
     return overdueBooks.length;
   };
 
@@ -80,14 +79,14 @@ const Dashboard = () => {
     {
       title: "S No.",
       dataIndex: "sno",
-      render: (_: any, __: any, index: number) => index + 1,
+      render: (_: any, __: any, index: number) => index + 1, className: "text-center"
     },
-    { title: "Reader ID", dataIndex: "readerId" },
-    { title: "Name", dataIndex: "name" },
-    { title: "Email", dataIndex: "email" },
-    { title: "Phone No", dataIndex: "phoneNo" },
-    { title: "Gender", dataIndex: "gender" },
-    { title: "Status", dataIndex: "status" },
+    { title: "Reader ID", dataIndex: "readerId", className: "text-center" },
+    { title: "Name", dataIndex: "name", className: "text-center" },
+    { title: "Email", dataIndex: "email", className: "text-center" },
+    { title: "Phone No", dataIndex: "phoneNo", className: "text-center" },
+    { title: "Gender", dataIndex: "gender", className: "text-center" },
+    { title: "Status", dataIndex: "status", className: "text-center" },
   ];
 
   return (
@@ -161,7 +160,7 @@ const Dashboard = () => {
       <div className="topchoices">
         <div className="d-flex justify-content-between m-0">
           <h2>Top Choices</h2>
-          <h5 className="view mt-2" onClick={()=>(navigate("/book"))} >View All</h5>
+          <h5 className="view mt-2" onClick={() => (navigate("/book"))}>View All</h5>
         </div>
         <div className="topbooks">
           {topBooks.map((book, index) => (
@@ -180,16 +179,18 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="reader">
-        <div className="d-flex justify-content-between m-0">
+        <div className="d-flex justify-content-between m-0 mb-2">
           <h2>Readers List</h2>
-          <h5 className="view mt-2" onClick={()=>(navigate("/readerManagement"))}>View All</h5>
+          <h5 className="view mt-2" onClick={() => (navigate("/readerManagement"))}>View All</h5>
         </div>
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          pagination={false}
-          style={{borderRadius:'20px'}}
-        />
+        <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+          <Table
+            columns={columns}
+            dataSource={dataSource}
+            pagination={false}
+            style={{ borderRadius: '20px', width: '100%', borderCollapse: 'collapse' }}
+          />
+        </div>
       </div>
     </div>
   );
