@@ -384,6 +384,10 @@ body,
     color: #145250;
 }
 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >thead>tr>th,td{
+    text-align: center;
+}
+
 .mobileHidden {
     height: 100vh;
     background-color: #145250;

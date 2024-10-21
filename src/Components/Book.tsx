@@ -7,8 +7,8 @@ import {
   PlusOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { Menu, Dropdown, Popconfirm, Image } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
+import { Menu, Dropdown, Popconfirm, Image } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, notification, Spin, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
 import BookForm from "./Book Comp/BookForm";
@@ -27,9 +27,7 @@ import {
 } from "./Services/TransactionServices";
 import { TransactionType } from "./Transaction";
 import generateUniqueId from "generate-unique-id";
-import { MoreOutlined } from '@ant-design/icons';
-
-
+import { MoreOutlined } from "@ant-design/icons";
 
 export interface BookType {
   title: string;
@@ -63,7 +61,6 @@ const Book: React.FC = () => {
   const [borrowBookForm] = Form.useForm();
   const [returnBookForm] = Form.useForm();
 
-
   interface BookRecord {
     id: number;
     title: string;
@@ -74,19 +71,23 @@ const Book: React.FC = () => {
   type HandleViewDetails = (record: BookRecord) => void;
   type HandleDeleteBook = (record: BookRecord) => void;
 
-  const menu = (record: BookRecord, handleViewDetails: HandleViewDetails, handleDeleteBook: HandleDeleteBook) => (
+  const menu = (
+    record: BookRecord,
+    handleViewDetails: HandleViewDetails,
+    handleDeleteBook: HandleDeleteBook
+  ) => (
     <Menu
       items={[
         {
-          key: '1',
+          key: "1",
           icon: <EditOutlined />,
-          label: 'Edit',
+          label: "Edit",
           onClick: () => handleViewDetails(record),
         },
         {
-          key: '2',
+          key: "2",
           icon: <DeleteOutlined />,
-          label: 'Delete',
+          label: "Delete",
           onClick: () => handleDeleteBook(record),
         },
       ]}
@@ -99,8 +100,15 @@ const Book: React.FC = () => {
     handleDeleteBook: HandleDeleteBook;
   }
 
-  const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ record, handleViewDetails, handleDeleteBook }) => (
-    <Dropdown overlay={menu(record, handleViewDetails, handleDeleteBook)} trigger={['click']}>
+  const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({
+    record,
+    handleViewDetails,
+    handleDeleteBook,
+  }) => (
+    <Dropdown
+      overlay={menu(record, handleViewDetails, handleDeleteBook)}
+      trigger={["click"]}
+    >
       <Button
         icon={<MoreOutlined />}
         className="mx-2 px-3"
@@ -114,10 +122,6 @@ const Book: React.FC = () => {
       />
     </Dropdown>
   );
-
-
-
-
 
   useEffect(() => {
     (async () => {
@@ -306,10 +310,6 @@ const Book: React.FC = () => {
   };
 
   const handleDeleteBook = async (bookId: any) => {
-
-
-
-
     //   const isConfirmed = window.confirm(
     //     `Are you sure you want to delete the book titled: "${record.title}"?`
     //   );
@@ -317,8 +317,7 @@ const Book: React.FC = () => {
     //   if (isConfirmed) {
     try {
       await DeleteBook(bookId);
-      const updatedData = book.filter((item) => item.bookId !== bookId
-      );
+      const updatedData = book.filter((item) => item.bookId !== bookId);
       setBook(updatedData);
       notification.success({ message: "Book deleted successfully!" });
     } catch (error: any) {
@@ -343,8 +342,7 @@ const Book: React.FC = () => {
     {
       title: "Preview",
       dataIndex: "Preview",
-      width: "15%",
-
+      width: "10%",
 
       render: (_: any, record: BookType) => (
         <div className="d-flex justify-content-center align-items-center fs-7 gap-2">
@@ -375,7 +373,7 @@ const Book: React.FC = () => {
     {
       title: "Author",
       dataIndex: "author",
-      width: "12%",
+      width: "15%",
       sorter: (a: BookType, b: BookType) => a.author.localeCompare(b.author),
     },
     {
@@ -385,22 +383,27 @@ const Book: React.FC = () => {
       sorter: (a: BookType, b: BookType) =>
         a.category.localeCompare(b.category),
     },
-    { title: "ISBN", dataIndex: "bookISBN", width: "12%" },
+    { title: "ISBN", dataIndex: "bookISBN", width: "14%" },
     {
       title: "Price",
       dataIndex: "price",
-      width: "15%",
+      width: "5%",
       sorter: (a: any, b: any) => a.price - b.price,
     },
     { title: "Book Count", dataIndex: "bookCount", width: "8%" },
     {
       title: "Action",
       dataIndex: "action",
+      width: "5%",
       render: (_: any, record: any) => (
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key="edit" icon={<EditOutlined />} onClick={() => handleViewDetails(record)}>
+              <Menu.Item
+                key="edit"
+                icon={<EditOutlined />}
+                onClick={() => handleViewDetails(record)}
+              >
                 Edit
               </Menu.Item>
               <Popconfirm
@@ -416,30 +419,24 @@ const Book: React.FC = () => {
               </Popconfirm>
             </Menu>
           }
-          trigger={['click']}
+          trigger={["click"]}
         >
           <Button
             shape="circle"
             icon={<EllipsisOutlined />}
             style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
               borderRadius: "6px",
               color: "#145250",
-              backgroundColor: "lightgrey",
-              border: "2px solid #145250",
-
             }}
-
           />
         </Dropdown>
-
       ),
     },
   ];
 
   return (
     <div>
-      <div >
+      <div>
         <div className="d-flex justify-content-between mb-3 box">
           <div className="d-flex justify-content-between">
             <Input
@@ -452,12 +449,10 @@ const Book: React.FC = () => {
             />
           </div>
           <div className="box1 d-flex ">
-
-
             <Button
               icon={<PlusOutlined />}
               style={{
-                padding: '22px 12px',
+                padding: "22px 12px",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "7px",
                 backgroundColor: "#145250",
@@ -468,12 +463,10 @@ const Book: React.FC = () => {
               Add Book
             </Button>
 
-
             <Button
               icon={<BookOutlined />}
               style={{
-                padding: '22px 12px',
-
+                padding: "22px 12px",
 
                 marginLeft: "8px",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
@@ -488,7 +481,7 @@ const Book: React.FC = () => {
             <Button
               icon={<ArrowLeftOutlined />}
               style={{
-                padding: '22px 12px',
+                padding: "22px 12px",
                 marginLeft: "8px",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
                 borderRadius: "7px",
@@ -507,7 +500,7 @@ const Book: React.FC = () => {
           <Spin tip="Loading..." size="large" />
         </div>
       ) : (
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: "auto" }}>
           <Table
             className="modal1"
             bordered
@@ -519,10 +512,15 @@ const Book: React.FC = () => {
         </div>
       )}
       <Modal
-
         title="Book Details"
         open={viewDetailsModal}
-        style={{ margin: 0, top: 0, alignContent: 'center', marginRight: 'auto', marginLeft: 'auto' }}
+        style={{
+          margin: 0,
+          top: 0,
+          alignContent: "center",
+          marginRight: "auto",
+          marginLeft: "auto",
+        }}
         onCancel={() => {
           setViewDetailsModal(false);
           form.resetFields();
