@@ -59,6 +59,12 @@
     color: #145250;
 }
 
+.view {
+    cursor: pointer;
+    font-weight: 400;
+    color: #145250;
+}
+
 .reader {
     margin-top: 15px;
 }
