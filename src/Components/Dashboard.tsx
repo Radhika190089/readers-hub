@@ -12,7 +12,7 @@ import { GetBookData } from "./Services/BookServices";
 import { GetTransaction } from "./Services/TransactionServices";
 import { BookType } from "./Book";
 import { TransactionType } from "./Transaction";
-import { Table, Button } from "antd"; // Import Button here
+import { Table } from "antd"; // Import Button here
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -33,8 +33,8 @@ const Dashboard = () => {
         setReaders(readerData);
         setTransactions(transactionData);
 
-        // Set top books
-        setTopBooks(getTopBooks(bookData, 6)); // Ensure exactly 6 books
+        // Set top books to ensure exactly 7 random books
+        setTopBooks(getTopBooks(bookData, 7));
       } catch (error) {
         console.error(error);
       }

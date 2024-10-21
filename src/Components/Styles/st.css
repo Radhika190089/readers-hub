@@ -71,8 +71,8 @@
 
 .topbooks {
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto;
-    justify-content: space-between;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+gap: 37px;
 }
 
 .book-card {
@@ -87,16 +87,12 @@
 }
 
 .book-card img {
-    width: 180px;
-    height: 250px;  
-    border-radius: 8px;
+    width: 185px;
+    height: 270px;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
-.book-card {
-    width: 180px;
-    height: 250px;
-    overflow-y: auto;
-}
+
 .book-card h5 {
     font-size: 18px;
     font-weight: 500;
@@ -387,7 +383,8 @@ body,
     color: #145250;
 }
 
-.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >thead>tr>th,td{
+.ant-table-wrapper .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th,
+td {
     text-align: center;
 }
 
