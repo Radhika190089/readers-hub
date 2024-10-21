@@ -45,15 +45,23 @@
 .topchoices {
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
+    margin-top: 15px;
     font-family: 'Poppins', sans-serif;
 }
 
 .topchoices h2 {
-    font-weight: 600;
+    font-weight: 400;
     color: #145250;
 }
 
+.reader h2 {
+    font-weight: 400;
+    color: #145250;
+}
+
+.reader {
+    margin-top: 15px;
+}
 
 .topbooks {
     display: grid;

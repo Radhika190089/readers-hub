@@ -12,7 +12,7 @@ import { GetBookData } from "./Services/BookServices";
 import { GetTransaction } from "./Services/TransactionServices";
 import { BookType } from "./Book";
 import { TransactionType } from "./Transaction";
-import { Table } from "antd";
+import { Table, Button } from "antd"; // Import Button here
 
 const Dashboard = () => {
   const [reader, setReaders] = useState<ReaderType[]>([]);
@@ -74,6 +74,28 @@ const Dashboard = () => {
     return [...selectedBooks, ...Array(count - selectedBooks.length).fill(null)].slice(0, count);
   };
 
+  // Prepare data for the table
+  const dataSource = reader.map((r, index) => ({
+    key: r.readerId, // Assuming readerId is unique
+    sno: index + 1,
+    ...r,
+  }));
+
+  // Define columns for the table
+  const columns = [
+    {
+      title: "S No.",
+      dataIndex: "sno",
+      render: (_: any, __: any, index: number) => index + 1,
+    },
+    { title: "Reader ID", dataIndex: "readerId" },
+    { title: "Name", dataIndex: "name" },
+    { title: "Email", dataIndex: "email" },
+    { title: "Phone No", dataIndex: "phoneNo" },
+    { title: "Gender", dataIndex: "gender" },
+    { title: "Status", dataIndex: "status" },
+  ];
+
   return (
     <div className="d-flex flex-column gap-3">
       <div className="d-flex justify-content-between">
@@ -86,9 +108,7 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{book.length}</h2>
                 <div className="p2">
-                  <BookOutlined
-                    style={{ fontSize: "30px", color: "#145250" }}
-                  />
+                  <BookOutlined style={{ fontSize: "30px", color: "#145250" }} />
                 </div>
               </div>
               <h4>Total Books</h4>
@@ -100,9 +120,7 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{borrowedBooksCount}</h2>
                 <div className="p2">
-                  <ReadOutlined
-                    style={{ fontSize: "30px", color: "#145250" }}
-                  />
+                  <ReadOutlined style={{ fontSize: "30px", color: "#145250" }} />
                 </div>
               </div>
               <h4>Borrowed Books</h4>
@@ -114,9 +132,7 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{calculateOverdues()}</h2>
                 <div className="p2">
-                  <HourglassOutlined
-                    style={{ fontSize: "30px", color: "#145250" }}
-                  />
+                  <HourglassOutlined style={{ fontSize: "30px", color: "#145250" }} />
                 </div>
               </div>
               <h4>Overdue Books</h4>
@@ -128,9 +144,7 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{reader.length}</h2>
                 <div className="p2">
-                  <TeamOutlined
-                    style={{ fontSize: "30px", color: "#145250" }}
-                  />
+                  <TeamOutlined style={{ fontSize: "30px", color: "#145250" }} />
                 </div>
               </div>
               <h4>Total Readers</h4>
@@ -142,9 +156,7 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{activeReadersCount}</h2>
                 <div className="p2">
-                  <UserOutlined
-                    style={{ fontSize: "30px", color: "#145250" }}
-                  />
+                  <UserOutlined style={{ fontSize: "30px", color: "#145250" }} />
                 </div>
               </div>
               <h4>Active Readers</h4>
@@ -152,7 +164,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
       <div className="topchoices">
         <h2>Top Choices</h2>
         <div className="topbooks">
@@ -171,8 +182,14 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
-      <div className="mt-1">
-
+      <div className="reader">
+        <h2>Readers List</h2>
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          pagination={{ pageSize: 5 }}
+          scroll={{ y: 300 }}
+        />
       </div>
     </div>
   );
