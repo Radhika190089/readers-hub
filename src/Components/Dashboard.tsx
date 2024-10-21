@@ -67,21 +67,13 @@ const Dashboard = () => {
   };
 
   const getTopBooks = (books: BookType[], count: number) => {
-    const shuffled = [...books].sort(() => 0.5 - Math.random()); // Shuffle array
-    const selectedBooks = shuffled.slice(0, count); // Get up to the requested count
-
-    // Ensure exactly 'count' books, pad with nulls if needed
+    const shuffled = [...books].sort(() => 0.5 - Math.random()); 
+    const selectedBooks = shuffled.slice(0, count); 
     return [...selectedBooks, ...Array(count - selectedBooks.length).fill(null)].slice(0, count);
   };
 
-  // Prepare data for the table
-  const dataSource = reader.map((r, index) => ({
-    key: r.readerId, // Assuming readerId is unique
-    sno: index + 1,
-    ...r,
-  }));
+  const dataSource = reader.slice(0, 5);
 
-  // Define columns for the table
   const columns = [
     {
       title: "S No.",
@@ -187,7 +179,7 @@ const Dashboard = () => {
         <Table
           columns={columns}
           dataSource={dataSource}
-          pagination={{ pageSize: 5 }}
+          pagination={false}
           scroll={{ y: 300 }}
         />
       </div>
