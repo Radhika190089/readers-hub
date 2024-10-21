@@ -33,13 +33,3 @@ export const UpdateReader = async (readerId : number , updateReader : ReaderType
     }
 };
 
-export const DeleteReader = async (readerId : number) => {
-    try {    
-      await axios.post(
-        `${apiBaseURL}/LMS/Readers/Delete_Reader/${readerId}`
-      )
-    } catch (error) {
-      console.error(error)
-      throw error;
-    }
-};

@@ -3,25 +3,28 @@ import React, { useEffect, useState } from "react";
 import { Table, Tabs } from "antd";
 import {
   BookOutlined,
-  ClockCircleOutlined,
   FileTextOutlined,
   ExclamationCircleOutlined,
   CheckCircleOutlined,
 } from "@ant-design/icons";
 import { ColumnsType } from "antd/es/table";
 import { GetTransaction } from "./Services/TransactionServices";
+import { GetReaderData } from "./Services/ReaderServices";
+import { GetBookData } from "./Services/BookServices";
+import { ReaderType } from "./ReaderManagement";
+import { BookType } from "./Book";
 
 export interface TransactionType {
   transactionId: number;
   readerId: number;
-  readerName: string;
   bookISBN: string;
-  bookName: string;
   date: Date;
   type: "Borrow" | "Return";
 }
 
 const Transaction: React.FC = () => {
+  const [reader, setReaders] = useState<ReaderType[]>([]);
+  const [book, setBook] = useState<BookType[]>([]);
   const [filteredData, setFilteredData] = useState<TransactionType[]>([]);
   const [transaction, setTransaction] = useState<TransactionType[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -29,8 +32,13 @@ const Transaction: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const transaction = await GetTransaction();
-        setTransaction(transaction);
+        const transactions = await GetTransaction();
+        const books = await GetBookData();
+        const readers = await GetReaderData();
+
+        setTransaction(transactions);
+        setBook(books);
+        setReaders(readers);
       } catch (err) {
         console.error(err);
       }
@@ -40,15 +48,25 @@ const Transaction: React.FC = () => {
   useEffect(() => {
     if (searchTerm.trim()) {
       const filtered = transaction.filter(
-        (reader) =>
-          reader.readerId.toString().includes(searchTerm) ||
-          reader.bookISBN.toString().includes(searchTerm)
+        (t) =>
+          t.readerId.toString().includes(searchTerm) ||
+          t.bookISBN.toString().includes(searchTerm)
       );
       setFilteredData(filtered);
     } else {
       setFilteredData(transaction);
     }
   }, [searchTerm, transaction]);
+
+  const getReaderName = (readerId: number) => {
+    const readerObj = reader.find((r) => r.readerId === readerId);
+    return readerObj?.name;
+  };
+
+  const getBookName = (bookISBN: string) => {
+    const bookObj = book.find((b) => b.bookISBN === bookISBN);
+    return bookObj?.title;
+  };
 
   const columns: ColumnsType<TransactionType> = [
     {
@@ -59,15 +77,16 @@ const Transaction: React.FC = () => {
     },
     {
       title: "Reader Name",
-      dataIndex: "readerName",
+      dataIndex: "readerId",
       key: "readerName",
+      render: (readerId: number) => getReaderName(readerId),
       width: "20%",
     },
-
     {
       title: "Book Name",
-      dataIndex: "bookName",
+      dataIndex: "bookISBN",
       key: "bookName",
+      render: (bookISBN: string) => getBookName(bookISBN),
       width: "20%",
     },
     {
@@ -91,14 +110,56 @@ const Transaction: React.FC = () => {
     },
   ];
 
+  const brColumns: ColumnsType<TransactionType> = [
+    {
+      title: "S No.",
+      dataIndex: "sno",
+      render: (_: any, __: TransactionType, index: number) => index + 1,
+      width: "8%",
+    },
+    {
+      title: "Reader Name",
+      dataIndex: "readerId",
+      key: "readerName",
+      render: (readerId: number) => getReaderName(readerId),
+      width: "20%",
+    },
+    {
+      title: "Book Name",
+      dataIndex: "bookISBN",
+      key: "bookName",
+      render: (bookISBN: string) => getBookName(bookISBN),
+      width: "20%",
+    },
+    {
+      title: "Book ISBN",
+      dataIndex: "bookISBN",
+      key: "bookISBN",
+      width: "20%",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+      render: (date: any) => new Date(date).toLocaleDateString(),
+      width: "13%",
+    },
+  ];
+
   const tabItems = [
     {
       label: "All Transactions",
       key: "1",
       icon: <FileTextOutlined />,
       children: (
-        <Table columns={columns} dataSource={filteredData} pagination={false} />
+        <Table
+          columns={columns}
+          dataSource={filteredData}
+          pagination={false}
+          scroll={{ x: 800 }}
+        />
       ),
+
     },
     {
       label: "Borrowed Books",
@@ -106,9 +167,10 @@ const Transaction: React.FC = () => {
       icon: <BookOutlined />,
       children: (
         <Table
-          columns={columns}
+          columns={brColumns}
           dataSource={transaction.filter((t) => t.type === "Borrow")}
           pagination={false}
+          scroll={{ x: 800 }}
         />
       ),
     },
@@ -118,9 +180,10 @@ const Transaction: React.FC = () => {
       icon: <CheckCircleOutlined />,
       children: (
         <Table
-          columns={columns}
+          columns={brColumns}
           dataSource={transaction.filter((t) => t.type === "Return")}
           pagination={false}
+          scroll={{ x: 800 }}
         />
       ),
     },
@@ -130,7 +193,61 @@ const Transaction: React.FC = () => {
       icon: <ExclamationCircleOutlined />,
       children: (
         <Table
-          columns={columns}
+          columns={[
+            {
+              title: "S No.",
+              dataIndex: "sno",
+              render: (_: any, __: TransactionType, index: number) => index + 1,
+              width: "8%",
+            },
+            {
+              title: "Reader Name",
+              dataIndex: "readerName",
+              key: "readerName",
+              width: "20%",
+            },
+            {
+              title: "Book Name",
+              dataIndex: "bookName",
+              key: "bookName",
+              width: "20%",
+            },
+            {
+              title: "Book ISBN",
+              dataIndex: "bookISBN",
+              key: "bookISBN",
+              width: "20%",
+            },
+            {
+              title: "Date",
+              dataIndex: "date",
+              key: "date",
+              render: (date: any) => new Date(date).toLocaleDateString(),
+              width: "13%",
+            },
+            {
+              title: "Fine",
+              dataIndex: "fine",
+              key: "fine",
+              render: (_: any, record: TransactionType) => {
+                const today = new Date();
+                const borrowDate = new Date(record.date);
+                const borrowingPeriod = 1;
+                const dueDate = new Date(borrowDate);
+                dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
+
+                if (today > dueDate) {
+                  const overdueDays = Math.floor(
+                    (today.getTime() - dueDate.getTime()) / (1000 * 3600 * 24)
+                  );
+                  const fine = overdueDays * 200;
+                  return `₹${fine}`;
+                }
+                return "No Fine";
+              },
+              width: "13%",
+            },
+          ]}
           dataSource={transaction.filter((t) => {
             const today = new Date();
             const borrowingPeriod = 1;
@@ -150,6 +267,7 @@ const Transaction: React.FC = () => {
             return false;
           })}
           pagination={false}
+          scroll={{ x: 800 }}
         />
       ),
     },
@@ -160,8 +278,7 @@ const Transaction: React.FC = () => {
       <Tabs
         defaultActiveKey="1"
         items={tabItems}
-        style={{ fontFamily: "Poppins" }}
-      />
+        style={{ fontFamily: "Poppins",}} />
     </div>
   );
 };

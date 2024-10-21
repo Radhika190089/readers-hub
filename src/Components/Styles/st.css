@@ -28,8 +28,6 @@
     width: 100%;
 }
 
-
-
 .twobox {
     display: "flex";
     flex-direction: "row";
@@ -54,8 +52,66 @@
     transform: translate(-50%, -50%);
     z-index: -1;
     filter: blur(10px);
-    /* background-color: black; */
 }
+
+.topchoices {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.topchoices h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #145250;
+}
+
+
+.topbooks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+
+.book-card {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    width: calc(16.66% - 15px);
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+}
+
+.book-card img {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.book-card h5 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+.book-card p {
+    font-size: 14px;
+    color: #777;
+    margin: 0;
+}
+
 
 .formdes2 {
     width: 600px;
@@ -113,69 +169,6 @@ body,
     background-color: white !important;
     color: #145250 !important;
     border-color: #145250 !important;
-}
-
-.slidebar-1 {
-    height: 370px;
-    color: white;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    background-image: url("https://th.bing.com/th/id/OIP.S4kfyvj45mft6mgfrB0xkQHaD-?w=340&h=182&c=7&r=0&o=5&dpr=1.4&pid=1.7");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    justify-content: space-between;
-    font-family: 'poppins';
-}
-
-.slidebar-1 h1 {
-    font-size: 74px;
-}
-
-.slidebar-2 {
-    height: 370px;
-    color: white;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    background-image: url("https://png.pngtree.com/background/20230602/original/pngtree-blur-abstract-background-of-corner-book-on-bookshelves-in-bookstore-blurry-picture-image_2845930.jpg");
-    border-radius: 10px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
-    position: relative;
-    justify-content: space-between;
-    font-family: 'poppins';
-}
-
-.slidebar-2 h1 {
-    font-size: 74px;
-}
-
-.slidebar-3 {
-    height: 370px;
-    color: white;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    background-image: url("https://th.bing.com/th?id=OIP.W_Ws6-LXasydZYegGmRCnQHaE7&w=306&h=204&c=8&rs=1&qlt=90&o=6&dpr=1.4&pid=3.1&rm=2");
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
-    background-size: cover;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    justify-content: space-between;
-    font-family: 'poppins';
-}
-
-.slidebar-3 h1 {
-    font-size: 74px;
 }
 
 .bottom-left {
@@ -295,27 +288,31 @@ body,
 
 .profileCard {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 4rem;
     border: 1px solid #e0e0e0;
     border-radius: 15px;
     background-color: #ffffff;
     box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    height: auto;
     position: relative;
-    width: 950px;
-    max-width: 100%;
 }
 
 .profileDetails {
-    flex: 1;
-    margin-right: 3rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .profileTitle {
     color: #145250;
-    font-size: 5rem;
+    font-size: 70px;
     font-weight: 700;
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .profileLabel {
@@ -335,19 +332,21 @@ body,
 
 .profileValue {
     color: #777777;
-    margin-top: 0.75rem;
+    margin-top: 0.25rem;
     font-size: 1.25rem;
 }
 
 .avatarContainer {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    align-items: center;
+    gap: 2rem;
 }
 
 .avatar {
     border: 2px solid #145250;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
 }
 
 .logoutButton {
@@ -369,8 +368,9 @@ body,
 }
 
 .logoutButton:hover {
-    background-color: #145250;
+    background-color: #0c3a36;
 }
+
 
 .search.ant-input-outlined:hover {
     border: 1px solid #145250;
@@ -420,6 +420,11 @@ body,
     position: absolute;
     right: 15px;
 }
+
+.cont {
+    margin: 10px;
+}
+
 
 @media screen and (max-width: 768px) {
     .mobileHidden {
@@ -502,4 +507,61 @@ body,
         background-color: #145250;
     }
 
+    .table-container {
+        padding: 5px;
+    }
+
+    .ant-table-cell {
+        font-size: 12px;
+    }
+
+    .TR2 {
+        width: 100%;
+    }
+
+    .cardz {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .ant-layout-content {
+        margin-top: 20px;
+    }
+
+    .cont {
+        margin-top: 20px;
+    }
+
+    .profileCard {
+        padding: 2rem;
+    }
+
+    .profileTitle {
+        font-size: 2.5rem;
+    }
+
+    .profileDetails {
+        gap: 1rem;
+    }
+
+    .mobbt {
+        display: block;
+    }
+}
+@media screen and (max-width: 340px){
+
+.box{
+   flex-direction: column;
+   justify-content: space-between;
+}
+.box1 button{
+     width: 90px;
+     font-size: 11px;
+     margin-top: 20px;
+     height: 30px;
+}
+    .modal1{
+     width:60px;
+    }    
 }

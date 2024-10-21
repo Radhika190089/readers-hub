@@ -43,14 +43,13 @@ export interface AdminType {
   password: string;
 }
 const handleMenuClick: MenuProps["onClick"] = (e) => {
-  message.info("Click on menu item.");
   console.log("click", e);
 };
 
 const handleLogout = () => {
   localStorage.removeItem("loggedUser");
-  (window.location.href = "/login")
-}
+  window.location.href = "/login";
+};
 
 const items: MenuProps["items"] = [
   {
@@ -63,8 +62,7 @@ const items: MenuProps["items"] = [
     label: "LogOut",
     key: "2",
     icon: <LogoutOutlined />,
-    onClick: handleLogout
-
+    onClick: handleLogout,
   },
 ];
 
@@ -82,9 +80,6 @@ const AdminPortal: React.FC = () => {
     location.pathname
   );
   const [open, setOpen] = useState(false);
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
 
   const showDrawer = () => {
     setOpen(true);
@@ -115,7 +110,6 @@ const AdminPortal: React.FC = () => {
         <Sider
           width={350}
           style={{ backgroundColor: "#145250" }}
-          // breakpoint="lg"
           onCollapse={(value) => setCollapsed(value)}
           collapsible
           collapsed={collapsed}
@@ -267,13 +261,13 @@ const AdminPortal: React.FC = () => {
                 <div className="mt-4">
                   <Avatar
                     src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-                    name={"Naresh"}
+                    name={user}
                     size={50}
                     style={{ cursor: "pointer" }}
                   />
                 </div>
                 <div className="linh mx-3" style={{ fontFamily: "poppins" }}>
-                  <h5 style={{ cursor: "pointer" }}>Naresh Suthar</h5>
+                  <h5 style={{ cursor: "pointer" }}>{user}</h5>
                   <p style={{ cursor: "pointer" }}>Admin</p>
                 </div>
               </div>
@@ -429,8 +423,8 @@ const AdminPortal: React.FC = () => {
           </div>
         </Header>
         <Content
+        className="cont"
           style={{
-            margin: "15px",
             borderRadius: "10px",
             backgroundColor: "white",
             height: "calc(100vh - 124px)",

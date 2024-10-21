@@ -2,7 +2,6 @@ import {
   UserOutlined,
   TeamOutlined,
   BookOutlined,
-  ExclamationCircleOutlined,
   ReadOutlined,
   HourglassOutlined,
 } from "@ant-design/icons";
@@ -18,6 +17,7 @@ const Dashboard = () => {
   const [reader, setReaders] = useState<ReaderType[]>([]);
   const [book, setBook] = useState<BookType[]>([]);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const [topBooks, setTopBooks] = useState<BookType[]>([]);
   const activeReadersCount = reader.filter((r) => r.status === "Active").length;
 
   useEffect(() => {
@@ -29,6 +29,9 @@ const Dashboard = () => {
         setBook(book);
         setReaders(reader);
         setTransactions(transaction);
+
+        // Set random top 6-7 books
+        setTopBooks(getRandomBooks(book, 6)); // Select 6 random books
       } catch (error) {
         console.error(error);
       }
@@ -62,8 +65,14 @@ const Dashboard = () => {
     return overdueBooks.length;
   };
 
+  // Function to get random books
+  const getRandomBooks = (books: BookType[], count: number) => {
+    const shuffled = [...books].sort(() => 0.5 - Math.random()); // Shuffle array
+    return shuffled.slice(0, count); // Return random number of books
+  };
+
   return (
-    <div>
+    <div className="d-flex flex-column gap-3">
       <div className="d-flex justify-content-between">
         <div
           className="cardz d-flex justify-content-between"
@@ -139,6 +148,21 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="topchoices">
+        <h3>Top Picks</h3>
+        <div className="topbooks">
+          {topBooks.map((book) => (
+            <div key={book.bookISBN} className="book-card">
+              <img src={book.bookURL} alt={book.title} />
+              <h5>{book.title}</h5>
+              <p>{book.author}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        
       </div>
     </div>
   );

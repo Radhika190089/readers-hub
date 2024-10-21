@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   SearchOutlined,
   EditOutlined,
-  DeleteOutlined,
   BookOutlined,
   ArrowLeftOutlined,
   PlusOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
+import { Menu, Dropdown, Popconfirm, Image } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, notification, Spin, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
 import BookForm from "./Book Comp/BookForm";
@@ -25,6 +27,9 @@ import {
 } from "./Services/TransactionServices";
 import { TransactionType } from "./Transaction";
 import generateUniqueId from "generate-unique-id";
+import { MoreOutlined } from '@ant-design/icons';
+
+
 
 export interface BookType {
   title: string;
@@ -57,6 +62,62 @@ const Book: React.FC = () => {
   const [addBookForm] = Form.useForm();
   const [borrowBookForm] = Form.useForm();
   const [returnBookForm] = Form.useForm();
+
+
+  interface BookRecord {
+    id: number;
+    title: string;
+    author: string;
+  }
+
+  // Define the types for the handler functions
+  type HandleViewDetails = (record: BookRecord) => void;
+  type HandleDeleteBook = (record: BookRecord) => void;
+
+  const menu = (record: BookRecord, handleViewDetails: HandleViewDetails, handleDeleteBook: HandleDeleteBook) => (
+    <Menu
+      items={[
+        {
+          key: '1',
+          icon: <EditOutlined />,
+          label: 'Edit',
+          onClick: () => handleViewDetails(record),
+        },
+        {
+          key: '2',
+          icon: <DeleteOutlined />,
+          label: 'Delete',
+          onClick: () => handleDeleteBook(record),
+        },
+      ]}
+    />
+  );
+
+  interface ThreeDotsMenuProps {
+    record: BookRecord;
+    handleViewDetails: HandleViewDetails;
+    handleDeleteBook: HandleDeleteBook;
+  }
+
+  const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ record, handleViewDetails, handleDeleteBook }) => (
+    <Dropdown overlay={menu(record, handleViewDetails, handleDeleteBook)} trigger={['click']}>
+      <Button
+        icon={<MoreOutlined />}
+        className="mx-2 px-3"
+        style={{
+          boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
+          borderRadius: "10px",
+          padding: "20px 0px",
+          fontFamily: "poppins",
+          backgroundColor: "#145250",
+        }}
+      />
+    </Dropdown>
+  );
+
+
+
+
 
   useEffect(() => {
     (async () => {
@@ -244,28 +305,31 @@ const Book: React.FC = () => {
     }
   };
 
-  const handleDeleteBook = async (record: BookType) => {
-    const isConfirmed = window.confirm(
-      `Are you sure you want to delete the book titled: "${record.title}"?`
-    );
+  const handleDeleteBook = async (bookId: any) => {
 
-    if (isConfirmed) {
-      try {
-        await DeleteBook(record.bookId);
-        const updatedData = book.filter(
-          (item) => item.bookId !== record.bookId
-        );
-        setBook(updatedData);
-        notification.success({ message: "Book deleted successfully!" });
-      } catch (error: any) {
-        console.error(error);
-        notification.error({
-          message: "Failed to delete book",
-          description: error.message,
-        });
-      }
-    } else {
-      console.log("Deletion canceled");
+
+
+
+    //   const isConfirmed = window.confirm(
+    //     `Are you sure you want to delete the book titled: "${record.title}"?`
+    //   );
+
+    //   if (isConfirmed) {
+    try {
+      await DeleteBook(bookId);
+      const updatedData = book.filter((item) => item.bookId !== bookId
+      );
+      setBook(updatedData);
+      notification.success({ message: "Book deleted successfully!" });
+    } catch (error: any) {
+      console.error(error);
+      notification.error({
+        message: "Failed to delete book",
+        description: error.message,
+      });
+      //     }
+      //   } else {
+      //     console.log("Deletion canceled");
     }
   };
 
@@ -277,17 +341,29 @@ const Book: React.FC = () => {
       width: "5%",
     },
     {
-      title: "Book Title",
-      dataIndex: "title",
-      width: "25%",
+      title: "Preview",
+      dataIndex: "Preview",
+      width: "15%",
+
+
       render: (_: any, record: BookType) => (
-        <div className="d-flex fs-7 gap-3">
-          <img
+        <div className="d-flex justify-content-center align-items-center fs-7 gap-2">
+          <Image
             src={record.bookURL}
             alt={record.title}
-            height={"140px"}
-            width={"100px"}
+            height={"80px"}
+            width={"60px"}
           />
+        </div>
+      ),
+    },
+
+    {
+      title: "Title",
+      dataIndex: "title",
+      width: "15%",
+      render: (_: any, record: BookType) => (
+        <div className="d-flex fs-7 gap-3">
           <span className="d-flex justify-content-center align-items-center">
             <p className="ms-4">{record.title}</p>
           </span>
@@ -295,70 +371,76 @@ const Book: React.FC = () => {
       ),
       sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
     },
+
     {
       title: "Author",
       dataIndex: "author",
-      width: "15%",
+      width: "12%",
       sorter: (a: BookType, b: BookType) => a.author.localeCompare(b.author),
     },
     {
       title: "Category",
       dataIndex: "category",
-      width: "10%",
+      width: "15%",
       sorter: (a: BookType, b: BookType) =>
         a.category.localeCompare(b.category),
     },
-    { title: "ISBN", dataIndex: "bookISBN", width: "10%" },
+    { title: "ISBN", dataIndex: "bookISBN", width: "12%" },
     {
       title: "Price",
       dataIndex: "price",
-      width: "8%",
+      width: "15%",
       sorter: (a: any, b: any) => a.price - b.price,
     },
-    { title: "Book Count", dataIndex: "bookCount", width: "7%" },
+    { title: "Book Count", dataIndex: "bookCount", width: "8%" },
     {
       title: "Action",
       dataIndex: "action",
-      render: (_: any, record: BookType) => (
-        <div className="d-flex gap-3">
+      render: (_: any, record: any) => (
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="edit" icon={<EditOutlined />} onClick={() => handleViewDetails(record)}>
+                Edit
+              </Menu.Item>
+              <Popconfirm
+                title="Delete the task"
+                description="Are you sure you want to delete this book?"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={() => handleDeleteBook(record.bookId)} // Move onClick here
+              >
+                <Menu.Item key="delete" icon={<DeleteOutlined />}>
+                  Delete
+                </Menu.Item>
+              </Popconfirm>
+            </Menu>
+          }
+          trigger={['click']}
+        >
           <Button
-            icon={<EditOutlined />}
-            type="primary"
-            className="mx-2 px-3 "
+            shape="circle"
+            icon={<EllipsisOutlined />}
             style={{
               boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-              borderRadius: "10px",
-              padding: "20px 0px",
-              fontFamily: "poppins",
+              borderRadius: "6px",
+              color: "#145250",
+              backgroundColor: "lightgrey",
+              border: "2px solid #145250",
+
             }}
-            onClick={() => handleViewDetails(record)}
-          >
-            Edit
-          </Button>
-          <Button
-            type="primary"
-            className="mx-2 px-3 "
-            icon={<DeleteOutlined />}
-            style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-              borderRadius: "10px",
-              backgroundColor: "#145250",
-              padding: "20px 0px",
-              fontFamily: "poppins",
-            }}
-            onClick={() => handleDeleteBook(record)}
-          >
-            Delete
-          </Button>
-        </div>
+
+          />
+        </Dropdown>
+
       ),
     },
   ];
 
   return (
     <div>
-      <div>
-        <div className="d-flex justify-content-between mb-3">
+      <div >
+        <div className="d-flex justify-content-between mb-3 box">
           <div className="d-flex justify-content-between">
             <Input
               className="search"
@@ -369,14 +451,15 @@ const Book: React.FC = () => {
               style={{ width: 300, height: 40 }}
             />
           </div>
-          <div>
+          <div className="box1 d-flex ">
+
+
             <Button
               icon={<PlusOutlined />}
               style={{
                 padding: '22px 12px',
-                fontSize: '1rem',
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "10px",
+                borderRadius: "7px",
                 backgroundColor: "#145250",
               }}
               type="primary"
@@ -384,14 +467,17 @@ const Book: React.FC = () => {
             >
               Add Book
             </Button>
+
+
             <Button
               icon={<BookOutlined />}
               style={{
                 padding: '22px 12px',
-                fontSize: '1rem',
-                marginLeft:"8px",
+
+
+                marginLeft: "8px",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "10px",
+                borderRadius: "7px",
                 backgroundColor: "#145250",
               }}
               type="primary"
@@ -403,10 +489,9 @@ const Book: React.FC = () => {
               icon={<ArrowLeftOutlined />}
               style={{
                 padding: '22px 12px',
-                fontSize: '1rem',
-                marginLeft:"8px",
+                marginLeft: "8px",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .5)",
-                borderRadius: "10px",
+                borderRadius: "7px",
                 backgroundColor: "#145250",
               }}
               type="primary"
@@ -422,18 +507,22 @@ const Book: React.FC = () => {
           <Spin tip="Loading..." size="large" />
         </div>
       ) : (
-        <Table
-          bordered
-          dataSource={filteredData}
-          columns={columns}
-          rowKey="bookId"
-          pagination={{ pageSize: 10 }}
-        />
+        <div style={{ overflowX: 'auto' }}>
+          <Table
+            className="modal1"
+            bordered
+            dataSource={filteredData}
+            columns={columns}
+            rowKey="bookId"
+            pagination={{ pageSize: 10 }}
+          />
+        </div>
       )}
       <Modal
+
         title="Book Details"
         open={viewDetailsModal}
-        style={{ margin: 0, top: 0 }}
+        style={{ margin: 0, top: 0, alignContent: 'center', marginRight: 'auto', marginLeft: 'auto' }}
         onCancel={() => {
           setViewDetailsModal(false);
           form.resetFields();

@@ -17,7 +17,6 @@ import {
 } from "antd";
 import {
   AddNewReader,
-  DeleteReader,
   GetReaderData,
   UpdateReader,
 } from "./Services/ReaderServices";
@@ -134,23 +133,6 @@ const ReaderManagement: React.FC = () => {
     });
   };
 
-  const handleDeleteUser = async (record: ReaderType) => {
-    const updatedData = reader.filter(
-      (item) => item.readerId !== record.readerId
-    );
-
-    try {
-      await DeleteReader(record.readerId);
-      setLoading(true);
-      setRefresh(!refresh);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setReader(updatedData);
-      setLoading(false);
-    }
-  };
-
   const columns = [
     {
       title: "S No.",
@@ -172,38 +154,20 @@ const ReaderManagement: React.FC = () => {
     {
       title: "Action",
       dataIndex: "action",
+      width: "5%",
       render: (_: any, record: ReaderType) => (
         <div className="d-flex">
           <Button
             icon={<EditOutlined />}
-            className="mx-2 px-3 "
             style={{
               boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
               borderRadius: "10px",
-              padding: "20px 0px",
+              padding: "10px 20px",
               fontFamily: "poppins",
             }}
             type="primary"
             onClick={() => handleViewDetails(record)}
-          >
-            Edit
-          </Button>
-          <Button
-            icon={<DeleteOutlined />}
-            key="delete"
-            style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-              borderRadius: "10px",
-              backgroundColor: "#145250",
-              padding: "20px 0px",
-              fontFamily: "poppins",
-            }}
-            className="mx-2 px-3 "
-            type="primary"
-            onClick={() => handleDeleteUser(record)}
-          >
-            Delete
-          </Button>
+          />
         </div>
       ),
     },
@@ -231,8 +195,8 @@ const ReaderManagement: React.FC = () => {
             <Button
               icon={<PlusOutlined />}
               style={{
-                padding: '22px 12px',
-                fontSize: '1rem',
+                padding: "22px 12px",
+                fontSize: "1rem",
                 boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
                 borderRadius: "10px",
                 backgroundColor: "#145250",
