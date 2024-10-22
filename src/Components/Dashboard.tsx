@@ -218,7 +218,7 @@ const Dashboard = () => {
       <div className="topchoices">
         <div className="d-flex justify-content-between m-0">
           <h2>Top Choices</h2>
-          <h5 className="view mt-2" onClick={() => navigate("/book")}>
+          <h5 className="view" onClick={() => navigate("/book")}>
             View All
           </h5>
         </div>
@@ -230,9 +230,11 @@ const Dashboard = () => {
             >
               {book ? (
                 <>
-                  <img src={book.bookURL} alt={book.title} />
+                  <div className="bookcontainer">
+                    <img src={book.bookURL} alt={book.title} className="book-image" />
                   <h5>{book.title}</h5>
                   <p>{book.author}</p>
+                  </div>
                 </>
               ) : (
                 <div className="placeholder">No Book Available</div>
@@ -245,7 +247,7 @@ const Dashboard = () => {
         <div className="d-flex justify-content-between m-0 mb-2">
           <h2>Overdue Books</h2>
           <h5
-            className="view mt-2"
+            className="view"
             onClick={() =>
               navigate("/transaction", { state: { activeTab: "4" } })
             }
