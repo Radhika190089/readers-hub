@@ -249,6 +249,7 @@ const Book: React.FC = () => {
     setViewAddModal(false);
     addBookForm.resetFields();
   };
+  
 
   const handleCancelBorrowModal = () => {
     setViewBorrowModal(false);
@@ -265,6 +266,7 @@ const Book: React.FC = () => {
     try {
       await AddNewBook(values);
       setRefresh(!refresh);
+      notification.success({ message: "Book added successfully!" });
     } catch (error) {
       console.error(error);
     } finally {
@@ -310,11 +312,6 @@ const Book: React.FC = () => {
   };
 
   const handleDeleteBook = async (bookId: any) => {
-    //   const isConfirmed = window.confirm(
-    //     `Are you sure you want to delete the book titled: "${record.title}"?`
-    //   );
-
-    //   if (isConfirmed) {
     try {
       await DeleteBook(bookId);
       const updatedData = book.filter((item) => item.bookId !== bookId);
@@ -326,9 +323,6 @@ const Book: React.FC = () => {
         message: "Failed to delete book",
         description: error.message,
       });
-      //     }
-      //   } else {
-      //     console.log("Deletion canceled");
     }
   };
 
@@ -361,7 +355,7 @@ const Book: React.FC = () => {
       dataIndex: "title",
       width: "15%",
       render: (_: any, record: BookType) => (
-        <div style={{ textAlign: "center" }}> 
+        <div style={{ textAlign: "center" }}>
           <span>{record.title}</span>
         </div>
       ),
@@ -536,7 +530,11 @@ const Book: React.FC = () => {
         onCancel={handleCancelAddModal}
         footer={null}
       >
-        <BookForm form={form} onSubmit={handleAddBook} submitText="Add Book" />
+        <BookForm
+          form={addBookForm}
+          onSubmit={handleAddBook}
+          submitText="Add Book"
+        />
       </Modal>
 
       {/* Borrow Book Modal */}

@@ -138,7 +138,7 @@ const ReaderManagement: React.FC = () => {
       title: "S No.",
       dataIndex: "sno",
       render: (_: any, __: ReaderType, index: number) => index + 1,
-      width: "5%",
+      width: "4%",
     },
     { title: "Reader Id", dataIndex: "readerId", width: "8%" },
     {
