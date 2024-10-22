@@ -29,7 +29,7 @@ const BRBook: React.FC<BRProps> = ({
           <Form.Item
             name="reader"
             label="Select Reader"
-            rules={[{ required: true, message: "Please select a reader" }]}
+            rules={[{ required: true, message: "Please select a reader!" }]}
           >
             <Select
               placeholder="Select Reader"
@@ -46,7 +46,7 @@ const BRBook: React.FC<BRProps> = ({
           <Form.Item
             name="book"
             label="Select Book"
-            rules={[{ required: true, message: "Please select a book" }]}
+            rules={[{ required: true, message: "Please select a book!" }]}
           >
             <Select
               placeholder="Select Book"

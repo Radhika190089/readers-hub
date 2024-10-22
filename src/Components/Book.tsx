@@ -249,7 +249,6 @@ const Book: React.FC = () => {
     setViewAddModal(false);
     addBookForm.resetFields();
   };
-  
 
   const handleCancelBorrowModal = () => {
     setViewBorrowModal(false);
@@ -381,6 +380,7 @@ const Book: React.FC = () => {
       dataIndex: "price",
       width: "5%",
       sorter: (a: any, b: any) => a.price - b.price,
+      render: (price: number) => `₹${price}`,
     },
     { title: "Book Count", dataIndex: "bookCount", width: "8%" },
     {
@@ -413,14 +413,7 @@ const Book: React.FC = () => {
           }
           trigger={["click"]}
         >
-          <Button
-            shape="circle"
-            icon={<EllipsisOutlined />}
-            style={{
-              borderRadius: "6px",
-              color: "#145250",
-            }}
-          />
+          <Button icon={<MoreOutlined />} />
         </Dropdown>
       ),
     },

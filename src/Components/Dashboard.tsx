@@ -47,7 +47,7 @@ const Dashboard = () => {
 
   const calculateOverdues = () => {
     const today = new Date();
-    const borrowingPeriod = 2; // Assume a borrowing period of 2 days
+    const borrowingPeriod = 2;
 
     const overdueBooks = transactions.filter((t) => {
       if (t.type === "Borrow") {
