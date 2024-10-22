@@ -183,14 +183,13 @@ const ReaderManagement: React.FC = () => {
             flexDirection: "column",
           }}
         >
-          <div className="mb-3 d-flex justify-content-between">
+          <div className="res mb-3 d-flex justify-content-between">
             <Input
               className="search"
               placeholder="Search by Name or Reader ID"
               prefix={<SearchOutlined style={{ paddingRight: "6px" }} />}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ width: 300, height: 40 }}
             />
             <Button
               icon={<PlusOutlined />}
@@ -218,6 +217,7 @@ const ReaderManagement: React.FC = () => {
               dataSource={filteredData}
               columns={columns}
               pagination={{ pageSize: 10 }}
+              scroll={{ x: 320 }}
             />
           )}
         </div>
