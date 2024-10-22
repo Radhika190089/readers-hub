@@ -232,12 +232,12 @@ const Dashboard = () => {
                 <>
                   <div className="bookcontainer">
                     <img src={book.bookURL} alt={book.title} className="book-image" />
-                  <h5>{book.title}</h5>
-                  <p>{book.author}</p>
+                    <h5>{book.title}</h5>
+                    <p>{book.author}</p>
                   </div>
                 </>
               ) : (
-                <div className="placeholder">No Book Available</div>
+                <></>
               )}
             </div>
           ))}
