@@ -67,26 +67,74 @@ const Dashboard = () => {
     return overdueBooks.length;
   };
 
+  const overdueBooks = transactions.filter((t) => {
+    const today = new Date();
+    const borrowingPeriod = 2;
+
+    if (t.type === "Borrow") {
+      const borrowDate = new Date(t.date);
+      const dueDate = new Date(borrowDate);
+      dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
+
+      return (
+        today > dueDate &&
+        !transactions.some(
+          (tr) => tr.bookISBN === t.bookISBN && tr.type === "Return"
+        )
+      );
+    }
+    return false;
+  });
+
   const getTopBooks = (books: BookType[], count: number) => {
     const shuffled = [...books].sort(() => 0.5 - Math.random());
     const selectedBooks = shuffled.slice(0, count);
-    return [...selectedBooks, ...Array(count - selectedBooks.length).fill(null)].slice(0, count);
+    return [
+      ...selectedBooks,
+      ...Array(count - selectedBooks.length).fill(null),
+    ].slice(0, count);
   };
 
-  const dataSource = reader.slice(0, 5);
-
-  const columns = [
+  const overdueColumns = [
     {
       title: "S No.",
       dataIndex: "sno",
-      render: (_: any, __: any, index: number) => index + 1, className: "text-center"
+      render: (_: any, __: any, index: number) => index + 1,
+      className: "text-center",
     },
-    { title: "Reader ID", dataIndex: "readerId", className: "text-center" },
-    { title: "Name", dataIndex: "name", className: "text-center" },
-    { title: "Email", dataIndex: "email", className: "text-center" },
-    { title: "Phone No", dataIndex: "phoneNo", className: "text-center" },
-    { title: "Gender", dataIndex: "gender", className: "text-center" },
-    { title: "Status", dataIndex: "status", className: "text-center" },
+    {
+      title: "Reader Name",
+      dataIndex: "readerId",
+      className: "text-center",
+      render: (readerId: number) =>
+        reader.find((r) => r.readerId === readerId)?.name || "",
+    },
+    {
+      title: "Book Name",
+      dataIndex: "bookISBN",
+      className: "text-center",
+      render: (bookISBN: string) =>
+        book.find((b) => b.bookISBN === bookISBN)?.title || "",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      className: "text-center",
+      render: (date: any) => new Date(date).toLocaleDateString(),
+    },
+    {
+      title: "Days Issued",
+      dataIndex: "date",
+      className: "text-center",
+      render: (date: any) => {
+        const issueDate = new Date(date);
+        const today = new Date();
+        const daysIssued = Math.floor(
+          (today.getTime() - issueDate.getTime()) / (1000 * 3600 * 24)
+        );
+        return `${daysIssued} days`;
+      },
+    },
   ];
 
   return (
@@ -101,7 +149,9 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{book.length}</h2>
                 <div className="p2">
-                  <BookOutlined style={{ fontSize: "30px", color: "#145250" }} />
+                  <BookOutlined
+                    style={{ fontSize: "30px", color: "#145250" }}
+                  />
                 </div>
               </div>
               <h4>Total Books</h4>
@@ -113,7 +163,9 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{borrowedBooksCount}</h2>
                 <div className="p2">
-                  <ReadOutlined style={{ fontSize: "30px", color: "#145250" }} />
+                  <ReadOutlined
+                    style={{ fontSize: "30px", color: "#145250" }}
+                  />
                 </div>
               </div>
               <h4>Borrowed Books</h4>
@@ -125,7 +177,9 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{calculateOverdues()}</h2>
                 <div className="p2">
-                  <HourglassOutlined style={{ fontSize: "30px", color: "#145250" }} />
+                  <HourglassOutlined
+                    style={{ fontSize: "30px", color: "#145250" }}
+                  />
                 </div>
               </div>
               <h4>Overdue Books</h4>
@@ -137,7 +191,9 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{reader.length}</h2>
                 <div className="p2">
-                  <TeamOutlined style={{ fontSize: "30px", color: "#145250" }} />
+                  <TeamOutlined
+                    style={{ fontSize: "30px", color: "#145250" }}
+                  />
                 </div>
               </div>
               <h4>Total Readers</h4>
@@ -149,7 +205,9 @@ const Dashboard = () => {
               <div className="p1">
                 <h2>{activeReadersCount}</h2>
                 <div className="p2">
-                  <UserOutlined style={{ fontSize: "30px", color: "#145250" }} />
+                  <UserOutlined
+                    style={{ fontSize: "30px", color: "#145250" }}
+                  />
                 </div>
               </div>
               <h4>Active Readers</h4>
@@ -160,11 +218,16 @@ const Dashboard = () => {
       <div className="topchoices">
         <div className="d-flex justify-content-between m-0">
           <h2>Top Choices</h2>
-          <h5 className="view mt-2" onClick={() => (navigate("/book"))}>View All</h5>
+          <h5 className="view mt-2" onClick={() => navigate("/book")}>
+            View All
+          </h5>
         </div>
         <div className="topbooks">
           {topBooks.map((book, index) => (
-            <div key={book ? book.bookISBN : `placeholder-${index}`} className="book-card">
+            <div
+              key={book ? book.bookISBN : `placeholder-${index}`}
+              className="book-card"
+            >
               {book ? (
                 <>
                   <img src={book.bookURL} alt={book.title} />
@@ -180,15 +243,26 @@ const Dashboard = () => {
       </div>
       <div className="reader">
         <div className="d-flex justify-content-between m-0 mb-2">
-          <h2>Readers List</h2>
-          <h5 className="view mt-2" onClick={() => (navigate("/readerManagement"))}>View All</h5>
+          <h2>Overdue Books</h2>
+          <h5
+            className="view mt-2"
+            onClick={() =>
+              navigate("/transaction", { state: { activeTab: "4" } })
+            }
+          >
+            View All
+          </h5>
         </div>
-        <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
           <Table
-            columns={columns}
-            dataSource={dataSource}
+            columns={overdueColumns}
+            dataSource={overdueBooks}
             pagination={false}
-            style={{ borderRadius: '20px', width: '100%', borderCollapse: 'collapse' }}
+            style={{
+              borderRadius: "20px",
+              width: "100%",
+              borderCollapse: "collapse",
+            }}
           />
         </div>
       </div>

@@ -74,7 +74,7 @@ const Transaction: React.FC = () => {
       dataIndex: "sno",
       render: (_: any, __: TransactionType, index: number) => index + 1,
       width: "8%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Reader Name",
@@ -82,7 +82,7 @@ const Transaction: React.FC = () => {
       key: "readerName",
       render: (readerId: number) => getReaderName(readerId),
       width: "20%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Book Name",
@@ -90,14 +90,14 @@ const Transaction: React.FC = () => {
       key: "bookName",
       render: (bookISBN: string) => getBookName(bookISBN),
       width: "20%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Book ISBN",
       dataIndex: "bookISBN",
       key: "bookISBN",
       width: "20%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Date",
@@ -105,14 +105,14 @@ const Transaction: React.FC = () => {
       key: "date",
       render: (date: any) => new Date(date).toLocaleDateString(),
       width: "13%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
       width: "13%",
-      className: "text-center"
+      className: "text-center",
     },
   ];
 
@@ -122,7 +122,7 @@ const Transaction: React.FC = () => {
       dataIndex: "sno",
       render: (_: any, __: TransactionType, index: number) => index + 1,
       width: "8%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Reader Name",
@@ -130,7 +130,7 @@ const Transaction: React.FC = () => {
       key: "readerName",
       render: (readerId: number) => getReaderName(readerId),
       width: "20%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Book Name",
@@ -138,14 +138,14 @@ const Transaction: React.FC = () => {
       key: "bookName",
       render: (bookISBN: string) => getBookName(bookISBN),
       width: "20%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Book ISBN",
       dataIndex: "bookISBN",
       key: "bookISBN",
       width: "20%",
-      className: "text-center"
+      className: "text-center",
     },
     {
       title: "Date",
@@ -153,7 +153,7 @@ const Transaction: React.FC = () => {
       key: "date",
       render: (date: any) => new Date(date).toLocaleDateString(),
       width: "13%",
-      className: "text-center"
+      className: "text-center",
     },
   ];
 
@@ -170,7 +170,6 @@ const Transaction: React.FC = () => {
           scroll={{ x: 800 }}
         />
       ),
-
     },
     {
       label: "Borrowed Books",
@@ -210,28 +209,30 @@ const Transaction: React.FC = () => {
               dataIndex: "sno",
               render: (_: any, __: TransactionType, index: number) => index + 1,
               width: "8%",
-               className: "text-center" 
+              className: "text-center",
             },
             {
               title: "Reader Name",
-              dataIndex: "readerName",
+              dataIndex: "readerId",
               key: "readerName",
+              render: (readerId: number) => getReaderName(readerId),
               width: "20%",
-               className: "text-center" 
+              className: "text-center",
             },
             {
               title: "Book Name",
-              dataIndex: "bookName",
+              dataIndex: "bookISBN",
               key: "bookName",
+              render: (bookISBN: string) => getBookName(bookISBN),
               width: "20%",
-               className: "text-center" 
+              className: "text-center",
             },
             {
               title: "Book ISBN",
               dataIndex: "bookISBN",
               key: "bookISBN",
               width: "20%",
-               className: "text-center" 
+              className: "text-center",
             },
             {
               title: "Date",
@@ -239,7 +240,7 @@ const Transaction: React.FC = () => {
               key: "date",
               render: (date: any) => new Date(date).toLocaleDateString(),
               width: "13%",
-               className: "text-center" 
+              className: "text-center",
             },
             {
               title: "Fine",
@@ -248,7 +249,7 @@ const Transaction: React.FC = () => {
               render: (_: any, record: TransactionType) => {
                 const today = new Date();
                 const borrowDate = new Date(record.date);
-                const borrowingPeriod = 1;
+                const borrowingPeriod = 1; // Set borrowing period (days)
                 const dueDate = new Date(borrowDate);
                 dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
 
@@ -256,33 +257,49 @@ const Transaction: React.FC = () => {
                   const overdueDays = Math.floor(
                     (today.getTime() - dueDate.getTime()) / (1000 * 3600 * 24)
                   );
-                  const fine = overdueDays * 200;
+                  const fine = overdueDays * 200; // ₹200 fine per day
                   return `₹${fine}`;
                 }
-                return "No Fine";
+                return null; // Return nothing if no fine
               },
               width: "13%",
-               className: "text-center" 
+              className: "text-center",
             },
           ]}
-          dataSource={transaction.filter((t) => {
-            const today = new Date();
-            const borrowingPeriod = 1;
+          dataSource={transaction
+            .filter((t) => {
+              const today = new Date();
+              const borrowingPeriod = 1; // Set borrowing period (days)
 
-            if (t.type === "Borrow") {
+              if (t.type === "Borrow") {
+                const borrowDate = new Date(t.date);
+                const dueDate = new Date(borrowDate);
+                dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
+
+                // Check if overdue and no return transaction exists for this book
+                const isOverdue = today > dueDate;
+                const hasNotReturned = !transaction.some(
+                  (tr) => tr.bookISBN === t.bookISBN && tr.type === "Return"
+                );
+
+                // Only include overdue entries where there would be a fine
+                return isOverdue && hasNotReturned;
+              }
+              return false;
+            })
+            .filter((t) => {
+              // Further filter out any entries where the fine would be zero
+              const today = new Date();
               const borrowDate = new Date(t.date);
               const dueDate = new Date(borrowDate);
-              dueDate.setDate(borrowDate.getDate() + borrowingPeriod);
+              dueDate.setDate(borrowDate.getDate() + 1); // borrowingPeriod = 1
 
-              return (
-                today > dueDate &&
-                !transaction.some(
-                  (tr) => tr.bookISBN === t.bookISBN && tr.type === "Return"
-                )
+              const overdueDays = Math.floor(
+                (today.getTime() - dueDate.getTime()) / (1000 * 3600 * 24)
               );
-            }
-            return false;
-          })}
+
+              return overdueDays > 0; // Only keep transactions with positive overdue days
+            })}
           pagination={false}
           scroll={{ x: 800 }}
         />
@@ -295,7 +312,8 @@ const Transaction: React.FC = () => {
       <Tabs
         defaultActiveKey="1"
         items={tabItems}
-        style={{ fontFamily: "Poppins", }} />
+        style={{ fontFamily: "Poppins" }}
+      />
     </div>
   );
 };
