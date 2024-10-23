@@ -75,6 +75,12 @@ const Login = () => {
                 name="password"
                 rules={[
                   { required: true, message: "Please enter your password" },
+                  {
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+                    message:
+                      "Password must be 8-20 characters long, include at least one uppercase, one lowercase letter, one number, and one special character.",
+                  },
                 ]}
               >
                 <Input.Password placeholder="Enter your Password" />

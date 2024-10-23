@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+body {
+    overflow: hidden;
+}
+
 .fds {
     margin: 0 auto;
     display: flex;

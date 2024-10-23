@@ -12,5 +12,13 @@ export const LoginAdmin = async (login: AdminType) => {
 };
 
 export const RegisterAdmin = async (newAdmin: AdminType) => {
-    await axios.post(`${apiBaseURL}/LMS/Admins/Register`, newAdmin);
+  try {
+    const response = await axios.post(
+      `${apiBaseURL}/LMS/Admins/Register`,
+      newAdmin
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Signup failed");
+  }
 };

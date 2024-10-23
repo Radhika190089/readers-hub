@@ -544,7 +544,7 @@ const Book: React.FC = () => {
           read={readers}
           book={book}
           setSelectedReaderId={setSelectedReaderId}
-          setselectedBookISBN={setSelectedBookISBN}
+          setSelectedBookISBN={setSelectedBookISBN}
         />
       </Modal>
 
@@ -562,8 +562,21 @@ const Book: React.FC = () => {
           read={readers}
           book={book}
           setSelectedReaderId={setSelectedReaderId}
-          setselectedBookISBN={setSelectedBookISBN}
+          setSelectedBookISBN={setSelectedBookISBN}
+          transactions={transactions}
         />
+
+        {/*<BRBook
+  form={form}
+  onSubmit={handleReturn}
+  submitText="Return Book"
+  readers={reader}
+  allBooks={book}
+  transactions={transaction} // Pass the transactions here
+  setSelectedReaderId={setSelectedReaderId}
+  setSelectedBookISBN={setSelectedBookISBN}
+/>
+*/}
       </Modal>
     </div>
   );

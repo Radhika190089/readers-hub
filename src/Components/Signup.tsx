@@ -10,9 +10,12 @@ const Signup = () => {
 
   const onFinish = async (values: AdminType) => {
     try {
-      await RegisterAdmin(values);
-      message.success("Signup successful!");
-      navigate("/");
+      const resp = await RegisterAdmin(values);
+      if (resp) {
+        message.success("Signup successful!");
+        localStorage.setItem("loggedUser", JSON.stringify(resp));
+        navigate("/");
+      }
     } catch (error) {
       message.error("Signup failed.");
       console.error("Error during signup:", error);
@@ -81,6 +84,12 @@ const Signup = () => {
                 name="password"
                 rules={[
                   { required: true, message: "Please enter your password" },
+                  {
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+                    message:
+                      "Password must be 8-20 characters long, include at least one uppercase, one lowercase letter, one number, and one special character.",
+                  },
                 ]}
               >
                 <Input.Password placeholder="Enter your Password" />

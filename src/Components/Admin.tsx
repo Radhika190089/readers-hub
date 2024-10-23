@@ -259,12 +259,7 @@ const AdminPortal: React.FC = () => {
             <Dropdown menu={menuProps}>
               <div className="d-flex align-items-center ms-auto">
                 <div className="mt-4">
-                  <Avatar
-                    src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg"
-                    name={user}
-                    size={50}
-                    style={{ cursor: "pointer" }}
-                  />
+                  <Avatar name={user} size={50} style={{ cursor: "pointer" }} />
                 </div>
                 <div className="linh mx-3" style={{ fontFamily: "poppins" }}>
                   <h5 style={{ cursor: "pointer" }}>{user}</h5>
@@ -423,7 +418,7 @@ const AdminPortal: React.FC = () => {
           </div>
         </Header>
         <Content
-        className="cont"
+          className="cont"
           style={{
             borderRadius: "10px",
             backgroundColor: "white",
