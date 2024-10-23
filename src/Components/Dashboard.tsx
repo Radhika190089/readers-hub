@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [reader, setReaders] = useState<ReaderType[]>([]);
   const [book, setBook] = useState<BookType[]>([]);
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  const [topBooks, setTopBooks] = useState<(BookType | null)[]>([]); // Allow null for placeholders
+  const [topBooks, setTopBooks] = useState<(BookType | null)[]>([]);
   const activeReadersCount = reader.filter((r) => r.status === "Active").length;
 
   useEffect(() => {
@@ -217,7 +217,7 @@ const Dashboard = () => {
       </div>
       <div className="topchoices">
         <div className="d-flex justify-content-between m-0">
-          <h2>Top Choices</h2>
+          <h4>Top Choices</h4>
           <h5 className="view" onClick={() => navigate("/book")}>
             View All
           </h5>
@@ -245,7 +245,7 @@ const Dashboard = () => {
       </div>
       <div className="reader">
         <div className="d-flex justify-content-between m-0 mb-2">
-          <h2>Overdue Books</h2>
+          <h4>Overdue Books</h4>
           <h5
             className="view"
             onClick={() =>
