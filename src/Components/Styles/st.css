@@ -75,7 +75,7 @@ body {
 
 .topbooks {
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto ;
+    grid-template-columns: auto auto auto auto auto auto auto;
     gap: 33.5px;
 }
 
