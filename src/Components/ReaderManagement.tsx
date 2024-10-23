@@ -156,19 +156,10 @@ const ReaderManagement: React.FC = () => {
       dataIndex: "action",
       width: "5%",
       render: (_: any, record: ReaderType) => (
-        <div className="d-flex">
-          <Button
-            icon={<EditOutlined />}
-            style={{
-              boxShadow: "3px 4px 12px rgba(151, 150, 150, .4)",
-              borderRadius: "10px",
-              padding: "10px 20px",
-              fontFamily: "poppins",
-            }}
-            type="primary"
-            onClick={() => handleViewDetails(record)}
-          />
-        </div>
+        <Button
+          icon={<EditOutlined />}
+          onClick={() => handleViewDetails(record)}
+        />
       ),
     },
   ];

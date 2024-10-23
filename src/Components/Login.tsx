@@ -61,6 +61,10 @@ const Login = () => {
                 rules={[
                   { required: true, message: "Please enter your email" },
                   { type: "email", message: "The input is not valid E-mail!" },
+                  {
+                    pattern: /^[^\s@]+@[a-zA-Z]+[a-zA-Z0-9.-]*\.[a-zA-Z]{2,}$/,
+                    message: "Please enter a valid email!",
+                  },
                 ]}
               >
                 <Input placeholder="Enter your Email" />

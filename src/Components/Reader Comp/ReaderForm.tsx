@@ -69,7 +69,10 @@ const ReaderForm: React.FC<ReaderProps> = ({
       <Form.Item
         name="age"
         label="Age"
-        rules={[{ required: true, message: "Please input the age!" }]}
+        rules={[
+          { required: true, message: "Please input the age!" },
+          { type: "number", min: 0, message: "Age cannot be negative!" },
+        ]}
       >
         <InputNumber style={{ width: "100%" }} autoComplete="off" />
       </Form.Item>

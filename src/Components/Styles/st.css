@@ -72,7 +72,7 @@
 .topbooks {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto;
-    gap: 37px;
+    gap: 33.5px;
 }
 
 .book-card {
@@ -373,7 +373,6 @@ body,
     border: 1px solid #145250;
 }
 
-/* Responsive styles for max-width 340px */
 @media (max-width: 340px) {
     .profileCard {
         padding: 1.5rem;
