@@ -385,10 +385,6 @@ body,
         height: 100px;
     }
 
-    .profileTitle {
-        font-size: 24px;
-    }
-
     .profileDetails {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -585,10 +581,6 @@ td {
         padding: 2rem;
     }
 
-    .profileTitle {
-        font-size: 2.5rem;
-    }
-
     .profileDetails {
         gap: 1rem;
     }
@@ -713,8 +705,7 @@ td {
     }
 
     .profileTitle {
-        font-size: 50px;
-
+        font-size: 40px;
     }
 
     .profileLabel {
