@@ -174,6 +174,28 @@ const Book: React.FC = () => {
       const bookISBN = selectedBookISBN;
       const readerID = Number(selectedReaderId);
 
+      const existingTransaction = transactions.find(
+        (transaction) =>
+          transaction.bookISBN === bookISBN &&
+          transaction.readerId === readerID &&
+          transaction.type === "Borrow" &&
+          !transactions.some(
+            (t) =>
+              t.bookISBN === bookISBN &&
+              t.readerId === readerID &&
+              t.type === "Return"
+          )
+      );
+
+      if (existingTransaction) {
+        notification.error({
+          message: "Book Already Borrowed",
+          description:
+            "The reader has already borrowed this book and hasn't returned it yet.",
+        });
+        return;
+      }
+
       const bookIndex = book.findIndex((b) => b.bookISBN === bookISBN);
 
       if (bookIndex !== -1 && book[bookIndex].bookCount > 0) {
@@ -194,6 +216,11 @@ const Book: React.FC = () => {
           setViewBorrowModal(false);
           borrowBookForm.resetFields();
         }
+      } else {
+        notification.error({
+          message: "Book Out of Stock",
+          description: "The book is currently out of stock.",
+        });
       }
     } else {
       notification.error({ message: "Please select a Reader and Book." });
@@ -283,7 +310,7 @@ const Book: React.FC = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const updatedValues = await form.validateFields(); // Get updated form values
+      const updatedValues = await form.validateFields(); 
       if (selectedBook) {
         const updatedBook = { ...selectedBook, ...updatedValues };
         await UpdateBook(selectedBook.bookId, updatedBook);
@@ -360,7 +387,6 @@ const Book: React.FC = () => {
       ),
       sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
     },
-
     {
       title: "Author",
       dataIndex: "author",
@@ -382,7 +408,12 @@ const Book: React.FC = () => {
       sorter: (a: any, b: any) => a.price - b.price,
       render: (price: number) => `₹${price}`,
     },
-    { title: "Book Count", dataIndex: "bookCount", width: "8%" },
+    {
+      title: "Book Count",
+      dataIndex: "bookCount",
+      width: "8%",
+      sorter: (a: any, b: any) => a.bookCount - b.bookCount,
+    },
     {
       title: "Action",
       dataIndex: "action",

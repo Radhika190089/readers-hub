@@ -95,6 +95,11 @@ const Dashboard = () => {
     ].slice(0, count);
   };
 
+  const totalBookCount = book.reduce(
+    (acc, curr) => acc + (curr.bookCount || 0),
+    0
+  );
+
   const overdueColumns = [
     {
       title: "S No.",
@@ -123,7 +128,7 @@ const Dashboard = () => {
       render: (date: any) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "Days Issued",
+      title: "Overdue Days",
       dataIndex: "date",
       className: "text-center",
       render: (date: any) => {
@@ -154,7 +159,21 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
-              <h4>Total Books</h4>
+              <h4>Books</h4>
+            </div>
+          </div>
+
+          <div className="TR2">
+            <div className="p0">
+              <div className="p1">
+                <h2>{totalBookCount}</h2>
+                <div className="p2">
+                  <BookOutlined
+                    style={{ fontSize: "30px", color: "#145250" }}
+                  />
+                </div>
+              </div>
+              <h4>Total Book Count</h4>
             </div>
           </div>
 
@@ -231,18 +250,21 @@ const Dashboard = () => {
               {book ? (
                 <>
                   <div className="bookcontainer">
-                    <img src={book.bookURL} alt={book.title} className="book-image" />
+                    <img
+                      src={book.bookURL}
+                      alt={book.title}
+                      className="book-image"
+                    />
                     <h5>{book.title}</h5>
                     <p>{book.author}</p>
                   </div>
                 </>
-              ) : (
-                <></>
-              )}
+              ) : null}
             </div>
           ))}
         </div>
       </div>
+
       <div className="reader">
         <div className="d-flex justify-content-between m-0 mb-2">
           <h4>Overdue Books</h4>

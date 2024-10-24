@@ -17,7 +17,7 @@ const Signup = () => {
         navigate("/");
       }
     } catch (error) {
-      message.error("Signup failed.");
+      message.error("User email already exists.");
       console.error("Error during signup:", error);
     }
   };

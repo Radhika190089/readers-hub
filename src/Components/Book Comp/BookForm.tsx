@@ -63,11 +63,19 @@ const BookForm: React.FC<BookProps> = ({
         label="Book Count"
         rules={[
           { required: true, message: "Please enter book count!" },
-          { type: "number", min: 0, message: "Book Count cannot be negative!" },
+          {
+            type: "number",
+            min: 0,
+            message: "Book Count cannot be negative!",
+          },
         ]}
+        normalize={(value) => {
+          return Number(value);
+        }}
       >
         <Input type="number" autoComplete="off" />
       </Form.Item>
+
       <Form.Item name="bookURL" label="Book Cover Image URL">
         <Input type="string" autoComplete="off" />
       </Form.Item>
