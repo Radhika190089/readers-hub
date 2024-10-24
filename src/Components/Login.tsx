@@ -32,9 +32,7 @@ const Login = () => {
               height={"150px"}
               width={"150px"}
             />
-            <div
-              style={{ fontSize: "60px", fontWeight: "bold", color: "white" }}
-            >
+            <div className="projectName">
               LIBRARY
               <br />
               MANAGEMENT
@@ -76,10 +74,8 @@ const Login = () => {
                 rules={[
                   { required: true, message: "Please enter your password" },
                   {
-                    pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
-                    message:
-                      "Password must be 8-20 characters long, include at least one uppercase, one lowercase letter, one number, and one special character.",
+                    pattern: /^.{8,20}$/,
+                    message: "Password must be 8-20 characters long.",
                   },
                 ]}
               >

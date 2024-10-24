@@ -17,11 +17,17 @@ body {
 }
 
 .fds1 {
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 60px;
     background-color: #2A8C8A;
     width: 95%;
-    height: 95;
+}
+
+.projectName {
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    line-height: 1.3;
 }
 
 .fds2 {
@@ -73,36 +79,6 @@ body {
     margin-top: 15px;
 }
 
-/* .topbooks {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 2fr));
-    gap: 16px;
-    width: 100%;
-}
-
-.book-card {
-    background-color: #fff;
-    border: 1px solid #f0f0f0;
-    border-radius: 10px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-
-.book-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.book-card:hover {
-    transform: scale(1.05);
-} */
 
 .topbooks {
     display: grid;
@@ -309,7 +285,6 @@ body,
     height: 690px;
 }
 
-/* Default styles */
 .profileContainer {
     display: flex;
     justify-content: center;
@@ -467,7 +442,7 @@ body,
 
 .ant-table-wrapper .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th,
 td {
-    text-align: center;
+    text-align: left;
 }
 
 .mobileHidden {

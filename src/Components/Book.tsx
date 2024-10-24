@@ -8,7 +8,6 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import { Menu, Dropdown, Popconfirm, Image } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, notification, Spin, Table } from "antd";
 import { ReaderType } from "./ReaderManagement";
 import BookForm from "./Book Comp/BookForm";
@@ -26,7 +25,6 @@ import {
   ReturnTransaction,
 } from "./Services/TransactionServices";
 import { TransactionType } from "./Transaction";
-import generateUniqueId from "generate-unique-id";
 import { MoreOutlined } from "@ant-design/icons";
 
 export interface BookType {
@@ -66,8 +64,6 @@ const Book: React.FC = () => {
     title: string;
     author: string;
   }
-
-  // Define the types for the handler functions
   type HandleViewDetails = (record: BookRecord) => void;
   type HandleDeleteBook = (record: BookRecord) => void;
 
@@ -310,7 +306,7 @@ const Book: React.FC = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const updatedValues = await form.validateFields(); 
+      const updatedValues = await form.validateFields();
       if (selectedBook) {
         const updatedBook = { ...selectedBook, ...updatedValues };
         await UpdateBook(selectedBook.bookId, updatedBook);
@@ -362,45 +358,41 @@ const Book: React.FC = () => {
     {
       title: "Preview",
       dataIndex: "Preview",
-      width: "10%",
+      width: "7%",
 
       render: (_: any, record: BookType) => (
-        <div className="d-flex justify-content-center align-items-center fs-7 gap-2">
-          <Image
-            src={record.bookURL}
-            alt={record.title}
-            height={"120px"}
-            width={"80px"}
-          />
-        </div>
+        <Image
+          src={record.bookURL}
+          alt={record.title}
+          height={"80px"}
+          width={"55px"}
+        />
       ),
     },
 
     {
       title: "Title",
       dataIndex: "title",
-      width: "15%",
+      width: "20%",
       render: (_: any, record: BookType) => (
-        <div style={{ textAlign: "center" }}>
           <span>{record.title}</span>
-        </div>
       ),
       sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
     },
     {
       title: "Author",
       dataIndex: "author",
-      width: "15%",
+      width: "20%",
       sorter: (a: BookType, b: BookType) => a.author.localeCompare(b.author),
     },
     {
       title: "Category",
       dataIndex: "category",
-      width: "15%",
+      width: "12%",
       sorter: (a: BookType, b: BookType) =>
         a.category.localeCompare(b.category),
     },
-    { title: "ISBN", dataIndex: "bookISBN", width: "14%" },
+    { title: "ISBN", dataIndex: "bookISBN", width: "12%" },
     {
       title: "Price",
       dataIndex: "price",

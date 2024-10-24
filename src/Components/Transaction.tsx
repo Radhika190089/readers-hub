@@ -74,7 +74,6 @@ const Transaction: React.FC = () => {
       dataIndex: "sno",
       render: (_: any, __: TransactionType, index: number) => index + 1,
       width: "8%",
-      className: "text-center",
     },
     {
       title: "Reader Name",
@@ -82,7 +81,6 @@ const Transaction: React.FC = () => {
       key: "readerName",
       render: (readerId: number) => getReaderName(readerId),
       width: "20%",
-      className: "text-center",
     },
     {
       title: "Book Name",
@@ -90,14 +88,12 @@ const Transaction: React.FC = () => {
       key: "bookName",
       render: (bookISBN: string) => getBookName(bookISBN),
       width: "20%",
-      className: "text-center",
     },
     {
       title: "Book ISBN",
       dataIndex: "bookISBN",
       key: "bookISBN",
       width: "20%",
-      className: "text-center",
     },
     {
       title: "Date",
@@ -105,14 +101,26 @@ const Transaction: React.FC = () => {
       key: "date",
       render: (date: any) => new Date(date).toLocaleDateString(),
       width: "13%",
-      className: "text-center",
+    },
+    {
+      title: "Days After Issuing",
+      dataIndex: "date",
+      key: "daysAfterIssuing",
+      render: (date: any) => {
+        const issueDate = new Date(date);
+        const today = new Date();
+        const daysIssued = Math.floor(
+          (today.getTime() - issueDate.getTime()) / (1000 * 3600 * 24)
+        );
+        return daysIssued === 0 ? " - " : `${daysIssued} days`;
+      },
+      width: "13%",
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
       width: "13%",
-      className: "text-center",
     },
   ];
 
@@ -122,7 +130,6 @@ const Transaction: React.FC = () => {
       dataIndex: "sno",
       render: (_: any, __: TransactionType, index: number) => index + 1,
       width: "8%",
-      className: "text-center",
     },
     {
       title: "Reader Name",
@@ -130,7 +137,6 @@ const Transaction: React.FC = () => {
       key: "readerName",
       render: (readerId: number) => getReaderName(readerId),
       width: "20%",
-      className: "text-center",
     },
     {
       title: "Book Name",
@@ -138,14 +144,12 @@ const Transaction: React.FC = () => {
       key: "bookName",
       render: (bookISBN: string) => getBookName(bookISBN),
       width: "20%",
-      className: "text-center",
     },
     {
       title: "Book ISBN",
       dataIndex: "bookISBN",
       key: "bookISBN",
       width: "20%",
-      className: "text-center",
     },
     {
       title: "Date",
@@ -153,7 +157,20 @@ const Transaction: React.FC = () => {
       key: "date",
       render: (date: any) => new Date(date).toLocaleDateString(),
       width: "13%",
-      className: "text-center",
+    },
+    {
+      title: "Days After Issuing",
+      dataIndex: "date",
+      key: "daysAfterIssuing",
+      render: (date: any) => {
+        const issueDate = new Date(date);
+        const today = new Date();
+        const daysIssued = Math.floor(
+          (today.getTime() - issueDate.getTime()) / (1000 * 3600 * 24)
+        );
+        return daysIssued === 0 ? " - " : `${daysIssued} days`;
+      },
+      width: "15%",
     },
   ];
 
@@ -172,7 +189,7 @@ const Transaction: React.FC = () => {
       ),
     },
     {
-      label: "Borrowed Books",
+      label: "Books Issued",
       key: "2",
       icon: <BookOutlined />,
       children: (
@@ -209,7 +226,6 @@ const Transaction: React.FC = () => {
               dataIndex: "sno",
               render: (_: any, __: TransactionType, index: number) => index + 1,
               width: "8%",
-              className: "text-center",
             },
             {
               title: "Reader Name",
@@ -217,7 +233,6 @@ const Transaction: React.FC = () => {
               key: "readerName",
               render: (readerId: number) => getReaderName(readerId),
               width: "20%",
-              className: "text-center",
             },
             {
               title: "Book Name",
@@ -225,14 +240,12 @@ const Transaction: React.FC = () => {
               key: "bookName",
               render: (bookISBN: string) => getBookName(bookISBN),
               width: "20%",
-              className: "text-center",
             },
             {
               title: "Book ISBN",
               dataIndex: "bookISBN",
               key: "bookISBN",
               width: "20%",
-              className: "text-center",
             },
             {
               title: "Date",
@@ -240,7 +253,19 @@ const Transaction: React.FC = () => {
               key: "date",
               render: (date: any) => new Date(date).toLocaleDateString(),
               width: "13%",
-              className: "text-center",
+            },
+            {
+              title: "Overdue Days",
+              dataIndex: "date",
+              width: "10%",
+              render: (date: any) => {
+                const issueDate = new Date(date);
+                const today = new Date();
+                const daysIssued = Math.floor(
+                  (today.getTime() - issueDate.getTime()) / (1000 * 3600 * 24)
+                );
+                return `${daysIssued} days`;
+              },
             },
             {
               title: "Fine",
@@ -262,8 +287,7 @@ const Transaction: React.FC = () => {
                 }
                 return null; // Return nothing if no fine
               },
-              width: "13%",
-              className: "text-center",
+              width: "6%",
             },
           ]}
           dataSource={transaction

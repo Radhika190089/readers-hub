@@ -33,9 +33,7 @@ const Signup = () => {
               height={"150px"}
               width={"150px"}
             />
-            <div
-              style={{ fontSize: "60px", fontWeight: "bold", color: "white" }}
-            >
+            <div className="projectName">
               LIBRARY
               <br />
               MANAGEMENT

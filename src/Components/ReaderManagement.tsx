@@ -73,7 +73,9 @@ const ReaderManagement: React.FC = () => {
     }
   }, [searchTerm, reader]);
 
-  const showUserModal = () => {
+  const showReaderModal = () => {
+    form.resetFields();
+    setSelectedReader(null);
     setViewAddUserModal(true);
   };
 
@@ -88,12 +90,12 @@ const ReaderManagement: React.FC = () => {
     try {
       await AddNewReader(newReader);
       setRefresh(!refresh);
+      form.resetFields(); // Reset form after adding new reader
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
       setViewAddUserModal(false);
-      form.resetFields();
     }
   };
 
@@ -121,6 +123,7 @@ const ReaderManagement: React.FC = () => {
           );
           setRefresh(!refresh);
           setReader(updatedData);
+          form.resetFields();
         } catch (error) {
           console.error(error);
         } finally {
@@ -192,7 +195,7 @@ const ReaderManagement: React.FC = () => {
                 backgroundColor: "#145250",
               }}
               type="primary"
-              onClick={showUserModal}
+              onClick={showReaderModal}
             >
               Add Reader
             </Button>
@@ -218,11 +221,7 @@ const ReaderManagement: React.FC = () => {
           onCancel={handleCancelAddUser}
           footer={null}
         >
-          <ReaderForm
-            form={form}
-            onSubmit={handleAddReader}
-            submitText="Add User"
-          />
+          <ReaderForm form={form} onSubmit={handleAddReader} submitText="Add" />
         </Modal>
 
         <Modal

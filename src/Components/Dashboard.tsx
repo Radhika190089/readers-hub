@@ -105,32 +105,31 @@ const Dashboard = () => {
       title: "S No.",
       dataIndex: "sno",
       render: (_: any, __: any, index: number) => index + 1,
-      className: "text-center",
     },
     {
       title: "Reader Name",
       dataIndex: "readerId",
-      className: "text-center",
+
       render: (readerId: number) =>
         reader.find((r) => r.readerId === readerId)?.name || "",
     },
     {
       title: "Book Name",
       dataIndex: "bookISBN",
-      className: "text-center",
+
       render: (bookISBN: string) =>
         book.find((b) => b.bookISBN === bookISBN)?.title || "",
     },
     {
       title: "Date",
       dataIndex: "date",
-      className: "text-center",
+
       render: (date: any) => new Date(date).toLocaleDateString(),
     },
     {
       title: "Overdue Days",
       dataIndex: "date",
-      className: "text-center",
+
       render: (date: any) => {
         const issueDate = new Date(date);
         const today = new Date();
@@ -187,7 +186,7 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
-              <h4>Borrowed Books</h4>
+              <h4>Books Issued</h4>
             </div>
           </div>
 

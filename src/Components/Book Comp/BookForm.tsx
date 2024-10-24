@@ -86,6 +86,9 @@ const BookForm: React.FC<BookProps> = ({
           { required: true, message: "Please input the price!" },
           { type: "number", min: 0, message: "Price cannot be negative!" },
         ]}
+        normalize={(value) => {
+          return Number(value);
+        }}
       >
         <Input type="number" autoComplete="off" />
       </Form.Item>
