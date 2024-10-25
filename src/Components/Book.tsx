@@ -374,9 +374,7 @@ const Book: React.FC = () => {
       title: "Title",
       dataIndex: "title",
       width: "20%",
-      render: (_: any, record: BookType) => (
-          <span>{record.title}</span>
-      ),
+      render: (_: any, record: BookType) => <span>{record.title}</span>,
       sorter: (a: BookType, b: BookType) => a.title.localeCompare(b.title),
     },
     {
@@ -389,8 +387,11 @@ const Book: React.FC = () => {
       title: "Category",
       dataIndex: "category",
       width: "12%",
-      sorter: (a: BookType, b: BookType) =>
-        a.category.localeCompare(b.category),
+      filters: book
+        .map((b) => b.category)
+        .filter((value, index, self) => self.indexOf(value) === index)
+        .map((category) => ({ text: category, value: category })),
+      onFilter: (value: any, record: BookType) => record.category === value,
     },
     { title: "ISBN", dataIndex: "bookISBN", width: "12%" },
     {
@@ -426,7 +427,7 @@ const Book: React.FC = () => {
                 description="Are you sure you want to delete this book?"
                 okText="Yes"
                 cancelText="No"
-                onConfirm={() => handleDeleteBook(record.bookId)} // Move onClick here
+                onConfirm={() => handleDeleteBook(record.bookId)}
               >
                 <Menu.Item key="delete" icon={<DeleteOutlined />}>
                   Delete

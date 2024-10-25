@@ -53,14 +53,8 @@ const handleLogout = () => {
 
 const items: MenuProps["items"] = [
   {
-    label: "Profile",
-    key: "1",
-    icon: <UserOutlined />,
-    onClick: () => (window.location.href = "/profile"),
-  },
-  {
     label: "LogOut",
-    key: "2",
+    key: "1",
     icon: <LogoutOutlined />,
     onClick: handleLogout,
   },
@@ -395,24 +389,6 @@ const AdminPortal: React.FC = () => {
                 >
                   Transactions
                 </Menu.Item>
-                <Menu.Item
-                  key="/profile"
-                  icon={
-                    <UserOutlined
-                      style={{
-                        color:
-                          selectedNavItems === "/profile" ? "#145250" : "white",
-                        fontSize: "15px",
-                      }}
-                    />
-                  }
-                  style={{
-                    color:
-                      selectedNavItems === "/profile" ? "#145250" : "white",
-                  }}
-                >
-                  Profile
-                </Menu.Item>
               </Menu>
             </Drawer>
           </div>
@@ -437,7 +413,6 @@ const AdminPortal: React.FC = () => {
               <Route path="/" element={<Dashboard />} />
               <Route path="/transaction" element={<Transaction />} />
               <Route path="/readerManagement" element={<ReaderManagement />} />
-              <Route path="/profile" element={<Profile />} />
               <Route path="/book" element={<Book />} />
             </Routes>
           </div>

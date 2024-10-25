@@ -55,11 +55,11 @@ const Signup = () => {
               layout="vertical"
             >
               <Form.Item
-                label="User Name"
+                label="Name"
                 name="userName"
-                rules={[{ required: true, message: "Please enter user name" }]}
+                rules={[{ required: true, message: "Please enter your name" }]}
               >
-                <Input placeholder="Enter your User Name" />
+                <Input placeholder="Enter your Name" />
               </Form.Item>
 
               <Form.Item

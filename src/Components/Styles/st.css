@@ -202,7 +202,7 @@ body,
     background-color: #f3f3f3;
     padding: 15px;
     height: 125px;
-    width: 16%;
+    width: 19%;
     border-radius: 10px;
 }
 
@@ -230,6 +230,7 @@ body,
     justify-content: space-between;
     width: 100%;
 }
+
 
 .p1 {
     display: flex;
@@ -604,7 +605,6 @@ td {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
         height: 300px;
         margin-bottom: 20px;
     }
@@ -616,7 +616,10 @@ td {
     }
 
     .topbooks {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: auto;
+        align-items: center;
     }
 
     .book-card h5 {
@@ -654,12 +657,17 @@ td {
         padding: 10px;
     }
 
+    .ant-table-wrapper .ant-table-pagination.ant-pagination {
+        display: flex;
+        flex-direction: row;
+    }
+
     .modal1 {
         width: 60px;
     }
 
     .topbooks {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        grid-template-columns: auto;
     }
 
     .book-card h5 {

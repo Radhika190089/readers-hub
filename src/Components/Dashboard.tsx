@@ -95,11 +95,6 @@ const Dashboard = () => {
     ].slice(0, count);
   };
 
-  const totalBookCount = book.reduce(
-    (acc, curr) => acc + (curr.bookCount || 0),
-    0
-  );
-
   const overdueColumns = [
     {
       title: "S No.",
@@ -158,21 +153,7 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
-              <h4>Books</h4>
-            </div>
-          </div>
-
-          <div className="TR2">
-            <div className="p0">
-              <div className="p1">
-                <h2>{totalBookCount}</h2>
-                <div className="p2">
-                  <BookOutlined
-                    style={{ fontSize: "30px", color: "#145250" }}
-                  />
-                </div>
-              </div>
-              <h4>Total Book Count</h4>
+              <h5>Total Books</h5>
             </div>
           </div>
 
@@ -186,7 +167,7 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
-              <h4>Books Issued</h4>
+              <h5>Books Issued By Readers</h5>
             </div>
           </div>
 
@@ -200,7 +181,7 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
-              <h4>Overdue Books</h4>
+              <h5>Overdue Books</h5>
             </div>
           </div>
 
@@ -214,7 +195,7 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
-              <h4>Total Readers</h4>
+              <h5>Total Readers</h5>
             </div>
           </div>
 
@@ -228,7 +209,7 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
-              <h4>Active Readers</h4>
+              <h5>Active Readers</h5>
             </div>
           </div>
         </div>
@@ -254,8 +235,8 @@ const Dashboard = () => {
                       alt={book.title}
                       className="book-image"
                     />
-                    <h5>{book.title}</h5>
-                    <p>{book.author}</p>
+                      <h5>{book.title}</h5>
+                      <p>{book.author}</p>
                   </div>
                 </>
               ) : null}

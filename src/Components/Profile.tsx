@@ -59,7 +59,7 @@ const Profile: React.FC = () => {
               <FontAwesomeIcon icon={faEnvelope} className="profileLabelIcon" />
               <span>Email</span>
             </div>
-            <div className="profileValue">suresh@gmail.com</div>
+            <div className="profileValue">example@gmail.com</div>
           </div>
           <div>
             <div className="profileLabel">

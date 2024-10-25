@@ -99,7 +99,12 @@ const Transaction: React.FC = () => {
       title: "Date",
       dataIndex: "date",
       key: "date",
-      render: (date: any) => new Date(date).toLocaleDateString(),
+      render: (date: any) =>
+        new Date(date).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
       width: "13%",
     },
     {
@@ -155,7 +160,12 @@ const Transaction: React.FC = () => {
       title: "Date",
       dataIndex: "date",
       key: "date",
-      render: (date: any) => new Date(date).toLocaleDateString(),
+      render: (date: any) =>
+        new Date(date).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
       width: "13%",
     },
     {
@@ -251,7 +261,12 @@ const Transaction: React.FC = () => {
               title: "Date",
               dataIndex: "date",
               key: "date",
-              render: (date: any) => new Date(date).toLocaleDateString(),
+              render: (date: any) =>
+                new Date(date).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                }),
               width: "13%",
             },
             {
